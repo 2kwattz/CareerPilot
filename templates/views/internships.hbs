@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerMeta}}
+    {{>header}}
+    <title>Internships Search : CarrerPilot</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <p class="summary">
+            Search for any internships of your choice based on your skillsets. Use filters accordingly whenever required
+        </p>
+
+    </div>
+
+    <center>
+    <div class="section-2">
+
+        <form method="post" action="/internships">
+
+        <input type="text" name="internshipSearch" placeholder="For eg : Web Development" style="margin-top:10px;padding:10px">
+        <button class="btn" id="searchInternshipBtn" type="submit"> Search Internships </button>
+
+        </form>
+    </div>
+
+    </center>
+
+    
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerMeta}}
+    <title>Scholarship Search : CarrerPilot</title>
+</head>
+<body>
+    {{>header}}
+    
+
+    <div class="container">
+
+        <h1> Scholarship Search Portal</h1>
+    </div>
+
+    <div class="scholarshipPortal">
+
+        <form action="/scholarships" method="POST">
+        
+        <h2> India's No. #1 Scholarship Search Engine </h2>
+        <br>
+        <label for="education"> Your Goal/Education </label>
+        <input type="text" id="educationForScholarship" name="educationForScholarship">
+
+        <label for="location"> Your Location </label>
+        <input type="text" id="locationForScholarship" name="locationForScholarship">
+
+        <button class="btn" type="submit"> Search </button>
+        
+        </form>
+    </div>
+</body>
+</html>

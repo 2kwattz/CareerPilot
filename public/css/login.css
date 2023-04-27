@@ -1,0 +1,146 @@
+/* CSS RESET */
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* UTILITY CLASS */
+
+
+.btn{
+
+    background-color: #ffc61a;
+    color: black;
+    padding: 10px;
+    border-radius: 12px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.btn-2{
+    background-color: black;
+    color:#CBB26A;
+    font-size: 0.9rem;
+    padding: 10px;
+}
+
+/* SCROLLBAR  */
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CBB26A;
+}
+
+
+/* HEADER SECTION */
+
+.top_header{
+
+    width: 100%;
+    border: 2px solid black;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 70px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#title{
+    float: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #CBB26A;
+    font-size: 1.4rem;
+
+}
+
+#title h1 :hover{
+
+    color: #ffc61a;
+    cursor: pointer;
+}
+
+.header_logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top_header ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header_navbar{
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.top_header ul li{
+    padding: 9px;
+    list-style-type: none;
+}
+
+.login_box{
+    display: inline-block;
+}
+
+.small_navbar{
+
+    background-color: #CBB26A;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.small_navbar ul{
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.small_navbar ul li{
+    list-style-type: none;
+    padding: 7px;
+    margin: 0px 5px;
+}
+
+h1{
+    text-align: center;
+}
+
+/* COVER */
+
+.container {
+
+    background-image: url(/public/img/cover.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 80px 10px;
+    opacity: 0.9;
+
+    
+}
+
+form input{
+
+    padding: 10px;
+    border: 0px;
+}
+
+form{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}

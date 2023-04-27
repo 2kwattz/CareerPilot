@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>headerMeta}}
+    <title>Registration Page : CarrerPilot </title>
+</head>
+
+<body>
+    {{>header}}
+    <div class="container">
+
+        <h1> Registration Page </h1>
+
+        <script src="/js/cityStateCountryAPI.js">
+        </script>
+
+        <div id="loader"><img src="/img/other/loadingAirplane.gif" height: "40px" width="40px"></div>
+
+        <form class="form-reg" action="/registration" method="POST">
+            <input type="text" class="form-control" placeholder="Enter Full Name" required name="fullName">
+            <input type="text" class="form-control" placeholder="Enter Email Address" required name="email">
+            <input type="password" class="form-control" placeholder="Choose Password" required name="password">
+            <input type="password" class="form-control" placeholder="Confirm Password" required name="confirmPassword">
+
+            <label class="radio gender">
+                <input type="radio" name="gender" value="male" checked>
+                <span> Male </span>
+            </label>
+
+            <label class="radio gender">
+                <input type="radio" name="gender" value="female">
+                <span> Female </span>
+            </label>
+
+            <input type="text" class="form-control" placeholder="Enter your age " name="age">
+
+            <input type="text" class="form-control" placeholder="Choose City" name="city">
+            <input type="text" class="form-control" placeholder="Choose State" name="state">
+            <select class="reg-select" class="form-control" name="country-sel" id="country">
+                <option value=""> Country </option>
+                </select>
+            <input type="text" class="form-control" placeholder="Enter Pincode" required name="Pincode">
+
+            <input type="text" class="form-control" placeholder="Enter your college name" required name="collegeName">
+            <input type="text" class="form-control" placeholder="Enter your Branch" required name="collegeBranch">
+            <input type="text" class="form-control" placeholder="Enter your course" required name="collegeCourse">
+
+            <input type="text" class="form-control" placeholder="Current Status?" required name="currentStatus">
+
+            <input type="text" class="form-control" placeholder="Enter Security Question" required name="secQuestion">
+            <input type="text" class="form-control" placeholder="Enter Answer" required name="secQuestionAnswer">
+
+            <textarea rows="1" cols="3" id="interests" name="interests"> </textarea>
+            <button class="btn" type="submit"> Create Account </button>
+            <label class="check-box"> Remember Me? <input type="checkbox"> </label>
+            <label><a href="forgotpassword"> Forgot Password? </a></label>
+        </form>
+    </div>
+
+</body>
+
+</html>

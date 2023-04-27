@@ -1,0 +1,19 @@
+{
+  "name": "web_scraping",
+  "version": "1.0.0",
+  "main": "adbs_exchange_scrapping.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "roshan bhatia",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.11",
+    "htmlparser2": "^8.0.1",
+    "node-fetch": "^3.2.5",
+    "puppeteer": "^14.4.1"
+  },
+  "keywords": [],
+  "description": ""
+}
