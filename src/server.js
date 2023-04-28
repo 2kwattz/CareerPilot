@@ -23,17 +23,25 @@ const app = express();
 
 // Fetching country-state-city for Registration 
 
-const country  = require('country-state-city').Country;
+const country = require('country-state-city').Country;
 const state = require('country-state-city').State;
 const city = require('country-state-city').City;
 
 // BCrypt Hashing Algorithm for Security
 
-const bcrypt = require('bcryptjs'); 
+const bcrypt = require('bcryptjs');
+
+// Cookie Parser for JWT Token Authentication
+
+const cookieParser = require("cookie-parser");
+
+// Importing Auth.js for Authorizing/Verifying User
+
+const auth = require("./middleware/auth");
 
 // Hashing Password
 
-const securePassword = async function(password){
+const securePassword = async function (password) {
 
     const passwordHash = await bcrypt.hash(password, 10);
     console.log(` Bycrypt Password Hash Test ${passwordHash}`);
@@ -56,8 +64,6 @@ const registrationRouter = require("./routers/signup.js");
 // Registering the router
 app.use(router);
 
-
-
 const port = process.env.PORT || 80; // Server Port Number
 
 // Database Code stored in /src/conn.js
@@ -71,8 +77,9 @@ const registrationData = require('./models/registration');
 
 app.use(express.static(staticPath)); // Defining path for static HTML,CSS and Javascript files
 hbs.registerPartials(partialsPath);
-app.use(bodyParser.urlencoded({ extended: false})); //Middlewares for parsing the request body
+app.use(bodyParser.urlencoded({ extended: false })); //Middlewares for parsing the request body
 app.use(bodyParser.json());
+app.use(cookieParser()); // Initializing CookieParser Middleware
 
 // Path to Views Directory 
 app.set('views', './templates/views');
@@ -84,7 +91,7 @@ const scholarshipWebsites = [
     {
         name: "National Scholarship Portal of India",
         url: "https://scholarships.gov.in/",
-        selectors:{
+        selectors: {
             container: '.scholarship',
             name: '.scholarship-title',
             description: '.scholarship-summary',
@@ -97,115 +104,115 @@ console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${p
 
 // Routes
 
-router.get("/", function(req,res){
+router.get("/", function (req, res) {
     res.render("index");
     app.set('title', 'CareerPilot : Home Page');
 });
 
-router.get("/signup", function(req,res){
+router.get("/signup", function (req, res) {
     res.status(200).send("test");
 });
 
-router.post("/internships", function(req,res){
+router.post("/internships", function (req, res) {
     let internshipKeyword = req.body.internshipSearch;
     console.log(internshipKeyword);
 
     // LinkedIn Scrapping
 
     let linkedinSource = `https://www.linkedin.com/jobs/search/?currentJobId=3569088404&f_JT=I&geoId=102713980&keywords=${internshipKeyword}&location=India&originalSubdomain=in&refresh=true`;
-    request(linkedinSource,callback);
-    
+    request(linkedinSource, callback);
+
     // Scrapping Internship Data
 
-    function callback(error,response,html){
-        if(error){
+    function callback(error, response, html) {
+        if (error) {
             console.log(error);
         }
-        else{
-            
+        else {
+
             handelHtml(html);
         }
     }
 
-    function handelHtml(html){
+    function handelHtml(html) {
         const $ = cheerio.load(html);
         const lnInternshipsTitleArray = $('.jobs-search__results-list .base-search-card__title');
 
-        try{
+        try {
             fs.writeFileSync(lnInternshipsTitleArray.text(), "Internship.txt");
-            console.log(lnInternshipsTitleArray);  
+            console.log(lnInternshipsTitleArray);
         }
 
-        catch(error){
+        catch (error) {
             res.send(error);
         }
     }
 })
 
-router.get("/internships", function(req,res){
+router.get("/internships", function (req, res) {
     console.log(req);
     res.status(200).render("internships");
 });
 
-router.get("/certifications", function(req,res){
+router.get("/certifications", function (req, res) {
     console.log(req);
     res.status(200).render("certifications");
 });
 
-router.get("/grants", function(req,res){
+router.get("/grants", function (req, res) {
     console.log(req);
     res.status(200).render("grants");
 });
 
-router.get("/jobs", function(req,res){
+router.get("/jobs", function (req, res) {
     console.log(req);
     res.status(200).render("jobs");
 });
 
-router.get("/hackathons", function(req,res){
+router.get("/hackathons", function (req, res) {
     console.log(req);
     res.status(200).render("hackathons");
 });
 
-app.get("/feedbackPage", function(req,res){
+app.get("/feedbackPage", function (req, res) {
     res.status(200).render("feedback");
 });
 
-app.post("/feedback", function(req,res){
+app.post("/feedback", function (req, res) {
     const feedback = new feedbackData(req.body);
-    feedback.save().then(function(){
+    feedback.save().then(function () {
         const feedbackResponse = `Thank you for your valuable feedback!! `;
         res.status(201).render("feedback");
-    }).catch(function(error){
+    }).catch(function (error) {
         res.status(400).send(error);
-    }) 
+    })
 });
 
-app.post("/scholarships", function(req,res){
-    
+app.post("/scholarships", function (req, res) {
+
 });
 
-app.get("/scholarships", function(req,res){
+app.get("/scholarships", function (req, res) {
     console.log(req);
     res.status(200).render("scholarships");
 });
 
-app.get("/faq", function(req,res){
+app.get("/faq", function (req, res) {
     console.log(req);
     res.status(200).render("faq");
 });
 
-app.get("/contactus", function(req,res){
+app.get("/contactus", function (req, res) {
     console.log(req);
     res.status(200).render("contactus");
 });
 
-app.post("/contactus", function(req,res){
+app.post("/contactus", function (req, res) {
     console.log(req);
     res.status(200).send("Still in construction...")
 });
 
-app.get("/services", function(req,res){
+app.get("/services", function (req, res) {
     console.log(req);
     res.status(200).render("services");
 });
@@ -214,40 +221,51 @@ app.get("/services", function(req,res){
 
 // Login and registration
 
-app.get('/loginPage', function(req,res){
+app.get('/loginPage', function (req, res) {
     res.render("loginPage");
 });
 
-app.post('/login', async function(req,res){
+app.post('/login', async function (req, res) {
 
-    try{
+    try {
 
         //  Storing users login data from login page 
+
         const email = req.body.email;
         const password = req.body.password;
-        const emailIsMatch = await registrationData.findOne({email}); //Verfying Email from Database 
-        // verifiedEmail.password === password && verifiedEmail.email === email? res.status(201).render("index"):res.status(400).send("Invalid Login Details\n");
+        const emailIsMatch = await registrationData.findOne({ email }); //Verfying Email from Database 
 
         const passwordIsMatch = await bcrypt.compare(password, emailIsMatch.password); // Verifying Password from Databases
 
         // Generating tokens via middleware
 
         const token = await emailIsMatch.generateAuthToken();
-        console.log("Email JWT Token is generated via route/login. Token << "+token);
-        
-        if(passwordIsMatch){
+        console.log("Email JWT Token is generated via route/login. Token << " + token);
+
+        // Set Cookie based on jwt token
+
+        res.cookie("jwtLogin", token, {
+
+            expires: new Date(Date.now() + 900000),  //  Test Cookie expires in 15minutes
+            httpOnly: true,
+            // secure: true
+        });
+
+        console.log(`Cookie for User Login Generated. ${req.cookies.jwtLogin}`)
+
+        if (passwordIsMatch) {
             res.status(201).render("index");
         }
 
-        else{
+        else {
             res.send("Invalid Login Details");
         }
     }
 
-    catch (error){
+    catch (error) {
         res.status(400).send(error);
     }
-    
+
     // const user = new loginData(req.body);
     // user.save().then(function(){
     //     res.status(201).send(user);
@@ -257,69 +275,78 @@ app.post('/login', async function(req,res){
     // console.log(user);
 });
 
-app.get('/registration', function(req,res){
+app.get('/registration', function (req, res) {
     res.render("registration");
 });
 
-app.post('/registration', async function(req,res){
+app.post('/registration', async function (req, res) {
 
     // Create a new user in our database
 
-    try{
+    try {
         const password = req.body.password;
         const confirmPassword = req.body.confirmPassword;
 
-        if(password === confirmPassword){
+        if (password === confirmPassword) {
 
-           const registerUser = new registrationData({
-            fullName: req.body.fullName,
-            email: req.body.email,
-            gender: req.body.gender,
-            age: req.body.age,
-            password: password,
-            confirmPassword: confirmPassword,
-            city: req.body.city,
-            state: req.body.state,
-            country: req.body.country,
-            semester: req.body.semester,
-            currentStatus: req.body.currentStatus,
-            secQuestion: req.body.secQuestion,
-            secQuestionAnswer: req.body.secQuestionAnswer,
-            collegeCourse: req.body.collegeCourse,
-            collegeName: req.body.collegeName,
-            collegeBranch: req.body.collegeBranch,
-           });
+            const registerUser = new registrationData({
+                fullName: req.body.fullName,
+                email: req.body.email,
+                gender: req.body.gender,
+                age: req.body.age,
+                password: password,
+                confirmPassword: confirmPassword,
+                city: req.body.city,
+                state: req.body.state,
+                country: req.body.country,
+                semester: req.body.semester,
+                currentStatus: req.body.currentStatus,
+                secQuestion: req.body.secQuestion,
+                secQuestionAnswer: req.body.secQuestionAnswer,
+                collegeCourse: req.body.collegeCourse,
+                collegeName: req.body.collegeName,
+                collegeBranch: req.body.collegeBranch,
+            });
 
-           console.log(registerUser)
+            console.log(registerUser)
 
-           // JWT Token middleware
+            // JWT Token middleware
 
             const token = await registerUser.generateAuthToken();
-            console.log("The token part is "+token);
-           
-           // Password Hash Middleware
+            console.log("The token part is " + token);
 
-           const registered = await registerUser.save();
-           res.status(201).render("index");
+            // Set Cookie based on jwt token
+
+            res.cookie("JWT Registration", token, {
+
+                expires: new Date(Date.now() + 50000),  //  Test Cookie expires in 3 seconds
+                httpOnly: true,
+                // secure: true
+            });
+
+            // Password Hash Middleware
+
+            const registered = await registerUser.save();
+            res.status(201).render("index");
         }
 
-        else{
-           res.send("Passwords are not matching\n")
+        else {
+            res.send("Passwords are not matching\n")
         }
     }
-    catch(error){
+    catch (error) {
 
         res.status(400).send(error);
     }
-        // newUser.save().then(function(){
-        //     res.status(201).send(newUser);
-        // }).catch(function(error){
-        //     res.status(400).send(error);
-        // });
+    // newUser.save().then(function(){
+    //     res.status(201).send(newUser);
+    // }).catch(function(error){
+    //     res.status(400).send(error);
+    // });
 
 });
 
-router.get("/carreradvice", function(req,res){
+router.get("/carreradvice", function (req, res) {
     res.render("carreradvice");
 })
 
@@ -327,52 +354,60 @@ router.get("/carreradvice", function(req,res){
 
 // Users Login Data
 
-app.get("/login", async function(req,res){
+app.get("/login", async function (req, res) {
 
-    try{
+    try {
+
         const usersData = await loginData.find()
         res.send(usersData);
     }
-    catch(error){
+    catch (error) {
         res.send(error)
     }
 })
 
 // Get user's data by ID
 
-app.get("/login/:id", async function(req, res){
-    try{
+app.get("/login/:id", async function (req, res) {
+    try {
         // const _id = mongoose.Types.ObjectId(req.params.id);
         const objectId = ObjectId(_id);
         const studentData = await loginData.findById(objectId);
-        if(!studentData){
+        if (!studentData) {
             return res.status(404).send(`error`);
         }
-        else{
+        else {
 
             res.send(studentData);
             console.log('done');
         }
-    } catch(error){
+    } catch (error) {
         res.status(500).send(error);
     }
 });
 
-router.get("/reportproblem", function(req,res){
+router.get("/reportproblem", function (req, res) {
     res.render("reportproblem");
+})
+
+// Secret Pages ( Only for Authorized Users)
+
+router.get("/dashboard", auth , function(req,res){
+    // console.log(`Cookie for User Dashboard. ${req.cookies.jwt}`)
+    res.render("dashboard");
 })
 
 //  404 error page
 
-app.get('*', function(req,res){
+app.get('*', function (req, res) {
     res.status(404).render("404error", {
-      errorComment : "Not found"  
+        errorComment: "Not found"
     });
 })
 
 
 // Server Listen
 
-app.listen(port, function(){
+app.listen(port, function () {
     console.log(`The server has started. Listening on port ${port}`);
 })
