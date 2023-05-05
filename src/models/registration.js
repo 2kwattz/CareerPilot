@@ -99,7 +99,7 @@ const registrationSchema = new mongoose.Schema({
 
     confirmPassword:{
         type:String,
-        required: true,
+        // required: true,
         trim: true,
         minlength: [5, "Minimum length of the Password should be 5 characters"],
         maxlength:[150, "Password cannot exceed more than 50 characters"],
