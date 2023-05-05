@@ -3,7 +3,7 @@
 const dotenv = require('dotenv').config();
 
 const express = require('express'); // NodeJs Framework
-const mongoose = require("./db/conn");
+const mongoose = require("./db/conn"); // 
 const http = require('http'); // Default http module 
 const axios = require('axios'); // Https Request Maker
 const request = require('request'); // Web Scraping Tool 1
@@ -31,13 +31,14 @@ const city = require('country-state-city').City;
 
 const bcrypt = require('bcryptjs');
 
+// JWT Tokens for authentication and verifying users identity
+const jwt = require('jsonwebtoken'); // Importing JWT Library
+
 // Cookie Parser for JWT Token Authentication
 
 const cookieParser = require("cookie-parser");
+app.use(cookieParser()); // Initializing CookieParser Middleware
 
-// Importing Auth.js for Authorizing/Verifying User
-
-const auth = require("./middleware/auth");
 
 // Hashing Password
 
@@ -45,33 +46,22 @@ const securePassword = async function (password) {
 
     const passwordHash = await bcrypt.hash(password, 10);
     console.log(` Bycrypt Password Hash Test ${passwordHash}`);
-
+    
     const passwordMatch = await bcrypt.compare("randompassword", passwordHash);
     console.log(` Verifying Bycrypt Password Match ${passwordMatch}`);
 }
 
 securePassword("roshanisdashing"); // Just an example to see if its working or not!!
 
-// JWT Tokens for authentication and verifying users identity
-const jwt = require('jsonwebtoken'); // Importing JWT Library
+// Nodemailer for verification mail
 
-//  Creating a new router
-const router = new express.Router();
+const nodemailer = require('nodemailer');
 
-// Defining the router
-const registrationRouter = require("./routers/signup.js");
 
-// Registering the router
-app.use(router);
 
 const port = process.env.PORT || 80; // Server Port Number
 
 // Database Code stored in /src/conn.js
-
-// Importing Database Schemas
-const loginData = require('./models/login')
-const feedbackData = require('./models/feedback')
-const registrationData = require('./models/registration');
 
 // Initializing Middlewares
 
@@ -79,11 +69,28 @@ app.use(express.static(staticPath)); // Defining path for static HTML,CSS and Ja
 hbs.registerPartials(partialsPath);
 app.use(bodyParser.urlencoded({ extended: false })); //Middlewares for parsing the request body
 app.use(bodyParser.json());
-app.use(cookieParser()); // Initializing CookieParser Middleware
+// app.use(auth)
 
 // Path to Views Directory 
 app.set('views', './templates/views');
 app.set('view engine', 'hbs');
+
+// Importing Auth.js for Authorizing/Verifying User
+
+const auth = require("./middleware/auth");
+
+//  Creating a new router
+const router = new express.Router();
+
+// Defining the router
+const registrationRouter = require("./routers/signup.js");
+// Registering the router
+app.use(router);
+
+// Importing Database Schemas
+const loginData = require('./models/login')
+const feedbackData = require('./models/feedback')
+const registrationData = require('./models/registration');
 
 // Initalize Scrapers
 
@@ -104,55 +111,106 @@ console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${p
 
 // Routes
 
+// Index Home Page
+
 router.get("/", function (req, res) {
     res.render("index");
     app.set('title', 'CareerPilot : Home Page');
 });
 
+// Secret Pages ( Only for Authorized Users)
+
+router.get("/dashboard", auth , function(req,res){
+     console.log(`Cookie for Rohit Mehra. ${req.cookies.login}`)
+    res.render("dashboard");
+})
+
 router.get("/signup", function (req, res) {
     res.status(200).send("test");
 });
 
-router.post("/internships", function (req, res) {
-    let internshipKeyword = req.body.internshipSearch;
-    console.log(internshipKeyword);
-
-    // LinkedIn Scrapping
-
-    let linkedinSource = `https://www.linkedin.com/jobs/search/?currentJobId=3569088404&f_JT=I&geoId=102713980&keywords=${internshipKeyword}&location=India&originalSubdomain=in&refresh=true`;
-    request(linkedinSource, callback);
-
-    // Scrapping Internship Data
-
-    function callback(error, response, html) {
-        if (error) {
-            console.log(error);
-        }
-        else {
-
-            handelHtml(html);
-        }
-    }
-
-    function handelHtml(html) {
-        const $ = cheerio.load(html);
-        const lnInternshipsTitleArray = $('.jobs-search__results-list .base-search-card__title');
-
-        try {
-            fs.writeFileSync(lnInternshipsTitleArray.text(), "Internship.txt");
-            console.log(lnInternshipsTitleArray);
-        }
-
-        catch (error) {
-            res.send(error);
-        }
-    }
-})
 
 router.get("/internships", function (req, res) {
     console.log(req);
     res.status(200).render("internships");
 });
+
+router.post("/internships", async function (req, res) {
+
+    let internshipKeyword = req.body.internshipSearch;
+    const jobLocation = req.body.location;
+    const jobType = `&f_WT=1`
+    console.log(internshipKeyword);
+    const linkedinData = [];
+    const internshalaData = [];
+    
+
+    // LinkedIn Scrapping
+
+    const internshipSources = {
+
+        linkedIn: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
+        internshala: `https://internshala.com/internships/keywords-${internshipKeyword}/`,
+        microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
+
+    }
+
+    let linkedinSource = `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`;
+
+   
+    async function scrapLinkedin(){
+        const response = await axios.get(linkedinSource);
+        console.log(linkedinSource);
+        const $ = cheerio.load(response.data);
+
+        const linkedinInternships = $(".base-card");
+        linkedinInternships.each(function(){
+            title = $(this).find(".base-search-card__title").text();
+            location = $(this).find('.job-search-card__location').text()
+            listDate = $(this).find(".job-search-card__listdate").text()
+            company = $(this).find(".base-search-card__subtitle").text()
+            
+            // link = $(this).find(".base-card__full-link").text()
+            linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
+            
+        })
+
+        // console.log(linkedinData);
+        // res.send(linkedinData);
+    }
+
+    // Internshala Scrapping
+
+    async function scrapInternshala(){
+        const response = await axios.get(internshipSources.internshala);
+        const $ = cheerio.load(response.data);
+        console.log(internshipSources.internshala);
+
+        const internshalaInternships = $(".individual_internship");
+        internshalaInternships.each(function(){
+            title = $(this).find(".company_and_premium").text();
+            location = $(this).find('.location_link').text()
+            // listDate = $(this).find(".job-search-card__listdate").text()
+            // link = $(this).find(".base-card__full-link").text()
+            internshalaData.push(` Title ${title}, Location : ${location}, List Date`);
+            console.log(internshalaData);
+            
+        });
+        
+        res.send(internshalaData);
+    }
+    
+    scrapInternshala();
+
+    async function scrapMicrosoft(){
+
+        const response = await axios.get()
+        
+    }
+
+    scrapLinkedin();
+    
+})
 
 router.get("/certifications", function (req, res) {
     console.log(req);
@@ -244,17 +302,17 @@ app.post('/login', async function (req, res) {
 
         // Set Cookie based on jwt token
 
-        res.cookie("jwtLogin", token, {
+        res.cookie("login", token, {
 
             expires: new Date(Date.now() + 900000),  //  Test Cookie expires in 15minutes
             httpOnly: true,
             // secure: true
         });
 
-        console.log(`Cookie for User Login Generated. ${req.cookies.jwtLogin}`)
-
+        
         if (passwordIsMatch) {
             res.status(201).render("index");
+            console.log(`Cookie for User Login Generated. ${req.cookies.login}`)
         }
 
         else {
@@ -317,10 +375,10 @@ app.post('/registration', async function (req, res) {
 
             // Set Cookie based on jwt token
 
-            res.cookie("JWT Registration", token, {
+            res.cookie("jwt_registration", token, {
 
-                expires: new Date(Date.now() + 50000),  //  Test Cookie expires in 3 seconds
-                httpOnly: true,
+                expires: new Date(Date.now() + 90000),  //  Test Cookie expires in sometime
+                httpOnly: true
                 // secure: true
             });
 
@@ -386,16 +444,44 @@ app.get("/login/:id", async function (req, res) {
     }
 });
 
+//  Logout 
+
+
+
+router.get("/logout", auth, async function(req,res){
+
+    // User logout by deleting database token
+
+    try{
+
+        req.user.tokens = req.user.tokens.filter(function(currElement){
+            return currElement.token !== req.token
+        })
+
+        // To logout user from every device, Call this function
+        function allDevicesLogout(){
+
+            req.user.tokens = [];
+        }
+
+        // User logout by deleting cookie 
+
+        res.clearCookie("login");
+        console.log("Logout successful");
+        await req.user.save();
+
+        //  Rendering Login Page
+        res.render("loginPage")
+    }
+    catch(error){
+        res.send(error);
+    }
+})
+
 router.get("/reportproblem", function (req, res) {
     res.render("reportproblem");
 })
 
-// Secret Pages ( Only for Authorized Users)
-
-router.get("/dashboard", auth , function(req,res){
-    // console.log(`Cookie for User Dashboard. ${req.cookies.jwt}`)
-    res.render("dashboard");
-})
 
 //  404 error page
 

@@ -2,10 +2,11 @@ const mongoose = require('mongoose'); //Importing Mongoose
 const validator = require('validator'); // For validating login & registration
 const bcrypt = require('bcryptjs'); // For Hashing passwords
 const jwt = require('jsonwebtoken'); // Importing JWT
+const nodemailer = require('nodemailer');
 
 // Registration Schemas
 
-const registrationSchema = new mongoose.Schema({
+const verificationSchema = new mongoose.Schema({
     fullName : {
         type: String,
         required : true,
@@ -15,61 +16,6 @@ const registrationSchema = new mongoose.Schema({
         maxlength:[50, "Full Name cannot exceed more than 50 characters"],
         
       
-    },
-
-    gender:{
-        type: String,
-        // required: true,
-        minlength: [2, "Minimum length should be 2 characters"],
-        maxlength:[50, "Full Name cannot exceed more than 50 characters"],
-        lowercase: true,
-        trim: true,
-    },
-
-    city:{
-        type:String,
-        // required: true,
-        minlength: [2, "Minimum length should be 2 characters"],
-        maxlength:[50, "Full Name cannot exceed more than 50 characters"],
-        lowercase: true,
-        trim: true,
-    },
-
-    state:{
-        type:String,
-        // required: true,
-        minlength: [2, "Minimum length should be 2 characters"],
-        maxlength:[50, "Full Name cannot exceed more than 50 characters"],
-        lowercase: true,
-        trim: true,
-    },
-
-    country:{
-        type:String,
-        // required: true,
-        minlength: [2, "Minimum length should be 2 characters"],
-        maxlength:[50, "Full Name cannot exceed more than 50 characters"],
-        lowercase: true,
-        trim: true,
-    },
-
-    semester:{
-        type:Number,
-        lowercase: true,
-        trim: true,
-
-    },
-
-    interests:{
-        type:String,
-        lowercase: true,
-        trim: true,
-    },
-
-    currentStatus:{
-        type:String,
-        lowercase: true,
-        trim: true,
     },
 
     email:{
@@ -112,21 +58,6 @@ const registrationSchema = new mongoose.Schema({
         required: true,
     },
 
-    collegeName: {
-        type: String,
-        required: true,
-    },
-
-    collegeBranch: {
-        type: String,
-        // required: true,
-    },
-
-    collegeCourse:{
-        type: String,
-        required: true,
-    },
-
     secQuestion:{
         type: String,
         required: true,
@@ -157,7 +88,7 @@ const registrationSchema = new mongoose.Schema({
 
 // Generating tokens
 
-registrationSchema.methods.generateAuthToken = async function(){
+verificationSchema.methods.generateAuthToken = async function(){
 
     try{
 
@@ -180,7 +111,7 @@ registrationSchema.methods.generateAuthToken = async function(){
 
 // Hashing the password using bycrypt before executing save() function
 
-registrationSchema.pre("save", async function (next){
+verificationSchema.pre("save", async function (next){
 
     if(this.isModified("password")){
 
@@ -194,7 +125,7 @@ registrationSchema.pre("save", async function (next){
     }
 })
 
-const registrationData = new mongoose.model("registrationData",registrationSchema);
+const registrationData = new mongoose.model("verificationData",verificationSchema);
 
 // Exporting Module
-module.exports = registrationData;
+module.exports = verificationData;
