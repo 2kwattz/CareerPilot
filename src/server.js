@@ -14,7 +14,7 @@ const hbs = require('hbs'); // Importing Template Engine HBS
 // Defining paths 
 const path = require('path'); // for defining  static and template paths
 const staticPath = path.join(__dirname, "../public/");  // Used for Template Engine
-const partialsPath = path.join(__dirname, "../templates/partials"); // Used for Template Engine
+const partialsPath = path.join(__dirname, "../templates/views/partials"); // Used for Template Engine
 
 const bodyParser = require('body-parser');  // For getting Web Form Data
 const fs = require('fs'); // For managing files
@@ -57,7 +57,26 @@ securePassword("roshanisdashing"); // Just an example to see if its working or n
 
 const nodemailer = require('nodemailer');
 
+// API Based Modules
 
+// const NewsAPI = require('newsapi');
+// const newsApiKey = 'f44c13c30bee44fcbf221cfab8b8b428';
+// const newsApiSend = new NewsAPI(newsApiKey);
+// newsApiSend.v2.topHeadlines({
+//     sources: 'bbc-news,the-verge',
+//     q: 'IT Companies',
+//     category: 'business',
+//     language: 'en',
+//     country: 'us'
+//   }).then(response => {
+//     console.log(response);
+    
+//       {
+//         status: "ok",
+//         articles: [...]
+//       }
+    
+//   });
 
 const port = process.env.PORT || 80; // Server Port Number
 
@@ -91,6 +110,7 @@ app.use(router);
 const loginData = require('./models/login')
 const feedbackData = require('./models/feedback')
 const registrationData = require('./models/registration');
+const { response } = require('express');
 
 // Initalize Scrapers
 
@@ -109,6 +129,7 @@ const scholarshipWebsites = [
 
 console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${process.env.SECRET_KEY}\n`);
 
+
 // Routes
 
 // Index Home Page
@@ -120,14 +141,46 @@ router.get("/", function (req, res) {
 
 // Secret Pages ( Only for Authorized Users)
 
-router.get("/dashboard", auth , function(req,res){
+// DASHBOARD
+
+router.get("/dashboard", auth , async function(req,res){
      console.log(`Cookie for Rohit Mehra. ${req.cookies.login}`)
-    res.render("dashboard");
+     const userName = req.user.fullName.toUpperCase();
+
+    //  News API for Dashboard Section 1
+     const newsApiKey = `f44c13c30bee44fcbf221cfab8b8b428`;
+     const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApiKey}`;
+
+     const newsResponse = await axios.get(newsApiUrl);
+
+     const articleTitles = [];
+  
+     const apiResponseStatus = newsResponse.data.status;
+     console.log(apiResponseStatus);
+     
+     var responseArray = [];
+     
+     const totalArticles = newsResponse.data.totalResults;
+ 
+    // const at1 = newsResponse.data.articles[0].title;
+    // const at2 = newsResponse.data.articles[1].title;
+    // const at3 = newsResponse.data.articles[2].title;
+    // const at4 = newsResponse.data.articles[3].title;
+
+    // const articlesTitle = at1 + " \n" + at2 + " \n" + at3 + " \n" + at4;
+
+    // console.log(articlesTitle)
+     
+    res.render("dashboard", {userName, newsResponse});
 })
 
 router.get("/signup", function (req, res) {
     res.status(200).send("test");
 });
+
+router.get("/courses", function(req,res){
+    res.status(200).render("courses")
+})
 
 
 router.get("/internships", function (req, res) {
@@ -175,10 +228,9 @@ router.post("/internships", async function (req, res) {
             
         })
 
-        // console.log(linkedinData);
-        // res.send(linkedinData);
+        console.log(linkedinData);
     }
-
+    
     // Internshala Scrapping
 
     async function scrapInternshala(){
@@ -187,7 +239,7 @@ router.post("/internships", async function (req, res) {
         console.log(internshipSources.internshala);
 
         const internshalaInternships = $(".individual_internship");
-        internshalaInternships.each(function(){
+        await internshalaInternships.each(function(){
             title = $(this).find(".company_and_premium").text();
             location = $(this).find('.location_link').text()
             // listDate = $(this).find(".job-search-card__listdate").text()
@@ -197,18 +249,21 @@ router.post("/internships", async function (req, res) {
             
         });
         
-        res.send(internshalaData);
+        // res.send(internshalaData);
     }
     
-    scrapInternshala();
+    await scrapInternshala();
 
     async function scrapMicrosoft(){
-
-        const response = await axios.get()
         
+        const response = await axios.get() 
     }
 
-    scrapLinkedin();
+    await scrapLinkedin();
+
+    const internshalaPost = "<h1> Internshala Data </h1> \n " + internshalaData;
+    const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;  
+    res.render("internships", {internshalaPost, linkedinPost});
     
 })
 
@@ -233,14 +288,14 @@ router.get("/hackathons", function (req, res) {
 });
 
 app.get("/feedbackPage", function (req, res) {
-    res.status(200).render("feedback");
+    res.status(200).render("help/feedback");
 });
 
 app.post("/feedback", function (req, res) {
     const feedback = new feedbackData(req.body);
     feedback.save().then(function () {
         const feedbackResponse = `Thank you for your valuable feedback!! `;
-        res.status(201).render("feedback");
+        res.status(201).render("help/feedback");
     }).catch(function (error) {
         res.status(400).send(error);
     })
@@ -257,7 +312,7 @@ app.get("/scholarships", function (req, res) {
 
 app.get("/faq", function (req, res) {
     console.log(req);
-    res.status(200).render("faq");
+    res.status(200).render("help/faq");
 });
 
 app.get("/contactus", function (req, res) {
@@ -479,7 +534,14 @@ router.get("/logout", auth, async function(req,res){
 })
 
 router.get("/reportproblem", function (req, res) {
-    res.render("reportproblem");
+    res.render("help/reportproblem");
+})
+
+// HELP Pages
+
+router.get("/sitemap", function(req,res){
+    console.log("Sitemap Requested")
+    res.render("help/sitemap.hbs");
 })
 
 

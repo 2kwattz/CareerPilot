@@ -1,6 +1,13 @@
 <div class="internshipContainer">
-    <h2> Internship Title </h2>
+
+    {{#each newsResponse.data.articles}}
+
+
+    <h4> Internship Title : {{title}} </h4>
+
     <p> Location of the internship </p>
     <p> Date Posted </p>
     <button class="btn"> View Internship </button>
+
+       {{/each}}
 </div>

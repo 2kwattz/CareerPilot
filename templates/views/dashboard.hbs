@@ -1,14 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {{>headerMeta}}
+    <link rel="stylesheet" href="/css/internshipPage/newsContainer.css">
     <title>Dashboard : CareerPilot</title>
 </head>
+
 <body>
 
     {{>header}}
 
-    <h1> Welcome, Dear User! </h1>
-    
+    <h1> Welcome, {{userName}} </h1>
+
+    <p>
+        Welcome to CareerPilot, We are excited to have you on board and hope that our platform can help you achieve your
+        career goals.
+    </p>
+
+    {{!-- Latest News / What's hot Section 1 --}}
+
+    <div class="dashboardItems" id="newsContainerDashboard"></div>
+
+    <h2> What's hot? </h2>
+
+    <div class="headlines">
+        <div class="title"> </div> <br><br>
+
+        {{!-- <p> Title : {{this.title}}</p> --}}
+        {{!-- <p> <img src="{{this.urlToImage}}"></p> --}}
+        {{!-- <button class="btn"> <a href="{{this.url}}"> Read More </a></button> --}}
+
+        {{>newsContainerDashboard}}
+
+
+    </div>
+    </div>
+
+    {{!-- Suggestions / Instructions --}}
+
+    <div class="dashboardItems" id="suggestionsContainerDashboard"></div>
+
+    <h2> Learn the best way blah blah blah </h2>
+
+    <div>
+        Lorem ipsum dolor sit amet consectetur.
+    </div>
+    </div>
+
+    {{!-- Courses Section 3 --}}
+
+    <div class="dashboardItems" id="coursesContainerDashboard"></div>
+
+    <h2> Courses </h2>
+
+    <p> The IT industry is constantly evolving, and staying up-to-date with the latest technologies and trends is
+        essential for anyone looking to build a career in this field. IT industry courses can provide valuable training
+        and knowledge to help you stay ahead of the curve and advance your career.</p>
+
+    <div class="dashboard-subitems">
+        <h3> All available courses</h3>
+    </div>
+
+    <div class="dashboard-subitems">
+        Search Courses from various portals
+
+        <br><button class="btn"> <a href="/courses"> Search Courses</a></button>
+    </div>
+
+    <div class="dashboard-subitems">
+        Purchase Courses
+
+        <br><button class="btn"> <a href="/purchaseCourses"> Purchase Courses </a></button>
+    </div>
+
+    </div>
+
+    {{!-- Internships Section 4 --}}
+
+    <div class="dashboardItems" id="internshipContainerDashboard">
+
+        <h2> Internships </h2>
+
+
+
+        <div class="dashboard-subitems">
+            Search Internships from various portals
+
+            <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
+        </div>
+
+        <div class="dashboard-subitems">
+            Search internships from top MNCs
+
+            <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
+        </div>
+
+    </div>
+
+
+
+
 </body>
+
 </html>

@@ -16,13 +16,16 @@ const auth = async function(req,res, next){
         console.log(verifyUser);
         console.log("Dashboard Route Reached\n");
         const user = await registrationData.findOne({_id:verifyUser._id});
-        console.log(user.fullName);
+       
 
         req.token = token;
         req.user = user;
 
+        const userName = user.fullName;
+
         next(); // Mandatory to call
     } catch(error){
+       
         res.status(401).send(error);
     }
 }
