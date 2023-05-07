@@ -170,6 +170,7 @@ router.get("/dashboard", auth , async function(req,res){
     // const articlesTitle = at1 + " \n" + at2 + " \n" + at3 + " \n" + at4;
 
     // console.log(articlesTitle)
+    console.log(newsResponse.data.articles);
      
     res.render("dashboard", {userName, newsResponse});
 })
@@ -192,17 +193,19 @@ router.post("/internships", async function (req, res) {
 
     let internshipKeyword = req.body.internshipSearch;
     const jobLocation = req.body.location;
-    const jobType = `&f_WT=1`
     console.log(internshipKeyword);
+
+    // Array set of Internship Results
+
     const linkedinData = [];
     const internshalaData = [];
     
 
-    // LinkedIn Scrapping
+    // Internship Sources Object 
 
     const internshipSources = {
 
-        linkedIn: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
+        linkedin: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
         internshala: `https://internshala.com/internships/keywords-${internshipKeyword}/`,
         microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
 
@@ -212,8 +215,8 @@ router.post("/internships", async function (req, res) {
 
    
     async function scrapLinkedin(){
-        const response = await axios.get(linkedinSource);
-        console.log(linkedinSource);
+        const response = await axios.get(internshipSources.linkedin);
+        console.log(internshipSources.linkedin);
         const $ = cheerio.load(response.data);
 
         const linkedinInternships = $(".base-card");
@@ -254,9 +257,17 @@ router.post("/internships", async function (req, res) {
     
     await scrapInternshala();
 
+    // Scrap Microsoft Carrers Website for Internship Lists
+
     async function scrapMicrosoft(){
         
-        const response = await axios.get() 
+        const response = await axios.get(internshipSources.microsoft);
+        const $ = cheerio.load(response.data);
+        
+        const microsoftInternships = $('.phs-jobs-list');
+        await microsoftInternships.each(function(){
+            title = $(this).find().text();
+        })
     }
 
     await scrapLinkedin();
@@ -302,6 +313,17 @@ app.post("/feedback", function (req, res) {
 });
 
 app.post("/scholarships", function (req, res) {
+
+    // Scholarship Sources
+
+    const scholarshipSources = {
+
+        linkedin: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
+        internshala: `https://internshala.com/internships/keywords-${internshipKeyword}/`,
+        microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
+
+    }
+
 
 });
 
