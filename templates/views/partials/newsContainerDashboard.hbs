@@ -1,10 +1,19 @@
 <div class="newsContainerDashboard">
 
-     {{#each newsResponse.data.articles}}
 
-    <h5> {{this.title}} </h5>
 
-    <p> {{this.description}}</p>
+     <div class="inner-newscontainer">
 
-     {{/each}}
+          <h5 class="d-news-title"> {{this.title}} </h5>
+
+          <p class="d-news-description"> {{this.description}}</p>
+
+           <button class="btn"> <a href="{{this.url}}"> Read More </a></button> 
+
+           <p class="d-news-source"> {{this.source.name}}</p>
+
+           <p class="d-news-publishedDate"> {{this.publishedAt}}</p>
+
+     </div>
+
 </div>

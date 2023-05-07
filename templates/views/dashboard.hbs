@@ -24,14 +24,25 @@
 
     <h2> What's hot? </h2>
 
+        <p>In today's global economy, multinational corporations (MNCs) play a significant role in shaping the business
+            landscape. These companies operate in multiple countries, employ thousands of people, and generate billions
+            of dollars in revenue. As a student, it's essential to stay up-to-date with the latest news and trends in
+            the MNC world to gain a better understanding of the global business environment. By following the news
+            related to top MNCs such as Amazon, Microsoft, Google, and others, you can gain insights into their
+            strategies, innovations, and challenges.</p>
     <div class="headlines">
-        <div class="title"> </div> <br><br>
+
+        {{#each newsResponse.data.articles}}
 
         {{!-- <p> Title : {{this.title}}</p> --}}
         {{!-- <p> <img src="{{this.urlToImage}}"></p> --}}
         {{!-- <button class="btn"> <a href="{{this.url}}"> Read More </a></button> --}}
 
         {{>newsContainerDashboard}}
+
+
+        {{/each}}
+
 
 
     </div>
@@ -97,6 +108,70 @@
         </div>
 
     </div>
+
+    {{!-- Settings Options // For the side navbar --}}
+
+    <div class="dashboardItems" id="settingsContainerDashboard">
+
+        <h2> User Settings </h2>
+
+
+
+
+        <div class="dashboard-subitems">
+            Switch Dark/Light Mode
+
+            <br><button class="btn"> <a href="/internships"> Go </a></button>
+        </div>
+
+         <div class="dashboard-subitems">
+            Account Settings
+
+            <br><button class="btn"> <a href="/internships"> Go </a></button>
+        </div>
+
+        <div class="dashboard-subitems">
+            Account Settings
+
+            <br><button class="btn"> <a href="/internships"> Go </a></button>
+        </div>
+
+    </div>
+
+    {{!-- TOP MNCS Locationwise Job Vaccancies --}}
+
+    
+    <div class="dashboardItems" id="TopMNCsContainerDashboard">
+
+        <h2> TOP MNCs </h2>
+
+
+
+
+        <div class="dashboard-subitems">
+            Vaccancies - Work from home
+
+            <br><button class="btn"> <a href="/internships"> Go </a></button>
+        </div>
+
+         <div class="dashboard-subitems">
+            Account Settings
+
+            <br><button class="btn"> <a href="/internships"> Go </a></button>
+        </div>
+
+        <div class="dashboard-subitems">
+            Account Settings
+
+            <br><button class="btn"> <a href="/internships"> Go </a></button>
+        </div>
+
+    </div>
+
+
+
+
+
 
 
 
