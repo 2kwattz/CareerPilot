@@ -22,7 +22,7 @@ Technical Specifications
 3. JWT Tokens with conjuction of cookies implemented for verification of the users
 4. Added Extra layer of security using .DOTNEV 
 6. Generalised pages like error 404 implemented incase user makes a typo mistake
-7. Seprate login spi created on /login route
+7. Seprate login api created on /login route
 8. User Authentication implemented ( Dashboard would only be visible if user is logged in) based on JWT and Cookies
 9. Logout system for a single device implemented using Local cookie method
 10. Successfully connected the application with the database for other pages such as feedback form, contact me form etc
@@ -35,7 +35,7 @@ Technical Specifications
 17. Few static pages 100% done
 18. Internshala and Linkedin job scrapping works individually providing data such as job title, posting date, company and location
 19. Nodemailer Functionality added in ContactUs form to create custom emails (test)
-20. NewsAPI Integrated in Dashboard (Gbobal API Now, Will switch to MNCs, IT Company news ones soon) using Dynamic templating
+20. NewsAPI Integrated in Dashboard (Global API Now, Will switch to MNCs, IT Company news ones soon) using Dynamic templating
 i.e The news will keep on updating with news title, description an Read More option
 
  
