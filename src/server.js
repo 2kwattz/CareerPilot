@@ -134,7 +134,12 @@ console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${p
 
 // Index Home Page
 
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
+
+    // Scrapping Top MNC Companies
+
+    const companiesSource = `https://www.glassdoor.co.in/Explore/top-software-developer-companies-india_IO.4,22_IL.33,38_IN115.htm`;
+
     res.render("index");
     app.set('title', 'CareerPilot : Home Page');
 });
@@ -273,7 +278,8 @@ router.post("/internships", async function (req, res) {
     await scrapLinkedin();
 
     const internshalaPost = "<h1> Internshala Data </h1> \n " + internshalaData;
-    const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;  
+     const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;
+    console.log(internshalaData);  
     res.render("internships", {internshalaPost, linkedinPost});
     
 })
@@ -292,6 +298,12 @@ router.get("/jobs", function (req, res) {
     console.log(req);
     res.status(200).render("jobs");
 });
+
+router.post("/jobs", async function(req,res){
+    console.log(req);
+    const jobKeyword = req.body.jobKeyword;
+    console.log(jobKeyword);
+})
 
 router.get("/hackathons", function (req, res) {
     console.log(req);
