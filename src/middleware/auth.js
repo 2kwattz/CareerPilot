@@ -26,7 +26,19 @@ const auth = async function(req,res, next){
         next(); // Mandatory to call
     } catch(error){
        
-        res.status(401).send(error);
+        // res.status(401).send(error);
+
+        let loginErrorIfAny = {
+            errorName : `${error.name}`,
+            errorMessage : `${error.message}`,
+        };
+
+        if(loginErrorIfAny.errorName == `JsonWebTokenError`){
+
+            loginErrorIfAny = `You must log in first\n`;
+        }
+      
+        res.status(401).render("loginPage", {loginErrorIfAny})
     }
 }
 

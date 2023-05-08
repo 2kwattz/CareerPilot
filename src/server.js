@@ -112,6 +112,12 @@ const feedbackData = require('./models/feedback')
 const registrationData = require('./models/registration');
 const { response } = require('express');
 
+// Nodemailer Controller Initialization
+
+const sendMail = require("./controllers/sendMail");
+
+app.get("/mail", sendMail);
+
 // Initalize Scrapers
 
 const scholarshipWebsites = [
@@ -336,7 +342,6 @@ app.post("/scholarships", function (req, res) {
 
     }
 
-
 });
 
 app.get("/scholarships", function (req, res) {
@@ -354,9 +359,39 @@ app.get("/contactus", function (req, res) {
     res.status(200).render("contactus");
 });
 
-app.post("/contactus", function (req, res) {
-    console.log(req);
-    res.status(200).send("Still in construction...")
+app.post("/contactus", async function (req, res) {
+
+
+    // Sending email through nodemailer
+
+
+        const testAccount = await nodemailer.createTestAccount();
+    
+        // Connection with SMTP Server
+    
+        let transporter = await nodemailer.createTransport({
+    
+            host: "smtp.ethereal.email",
+            port: 587,
+            auth: {
+                user: 'roslyn.mertz@ethereal.email',
+                pass: 'eHY3rpZp1Jx6tKzYm7',
+            },
+        });
+    
+        let info = await transporter.sendMail({
+            from: `${req.body.email}`,
+            to: "prakashbhatia1970@gmail.com",
+            text: `${req.body.message}`,
+            // html: `` Just in case 
+        })
+
+        console.group(req.body.username);
+
+        const emailResults = ` Email from : ${info.envelope.from}, \n Email to ${info.envelope.to}`
+        res.render("utility/emailsent", {emailResults});
+  
+
 });
 
 app.get("/services", function (req, res) {

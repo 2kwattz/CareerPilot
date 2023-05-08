@@ -1,4 +1,9 @@
 # CareerPilot
+
+Author :  Roshan Bhatia 
+Instagram : @2kwattz
+
+
 CarrerPilot : NodeJs based integrated web portal with web scraping and APIs usage. Although still in construction,  It is an integrated platform for students and graduates to send educational information such as scholarships, job alerts, certifications and many more based on user’s preferences and skills on a single platform
 
 Features of CareerPilot
@@ -29,6 +34,10 @@ Technical Specifications
 16. Data scrapping for top MNCs completed (only space issues)
 17. Few static pages 100% done
 18. Internshala and Linkedin job scrapping works individually providing data such as job title, posting date, company and location
+19. Nodemailer Functionality added in ContactUs form to create custom emails (test)
+20. NewsAPI Integrated in Dashboard (Gbobal API Now, Will switch to MNCs, IT Company news ones soon) using Dynamic templating
+i.e The news will keep on updating with news title, description an Read More option
+
  
 
 
@@ -36,7 +45,7 @@ Technical Specifications
 Work to be done in future
 
 1. Email confirmation system to verify user
-2. Data scrapping of various datasets for a single category for eg: internships
+2. Data scrapping of various datasets for a single category for eg: internships // Done!
 3. Adding password recovery options
 4. Refining Login and Registration system schemas ( already done but slight upgrades) 
 5. Creating a fully functional dashboard ( Dashboard concept implemented but no functionality implemented in it as of now)
