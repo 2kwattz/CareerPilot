@@ -46,7 +46,7 @@ const securePassword = async function (password) {
 
     const passwordHash = await bcrypt.hash(password, 10);
     console.log(` Bycrypt Password Hash Test ${passwordHash}`);
-    
+
     const passwordMatch = await bcrypt.compare("randompassword", passwordHash);
     console.log(` Verifying Bycrypt Password Match ${passwordMatch}`);
 }
@@ -70,12 +70,12 @@ const nodemailer = require('nodemailer');
 //     country: 'us'
 //   }).then(response => {
 //     console.log(response);
-    
+
 //       {
 //         status: "ok",
 //         articles: [...]
 //       }
-    
+
 //   });
 
 const port = process.env.PORT || 80; // Server Port Number
@@ -154,25 +154,25 @@ router.get("/", async function (req, res) {
 
 // DASHBOARD
 
-router.get("/dashboard", auth , async function(req,res){
-     console.log(`Cookie for Rohit Mehra. ${req.cookies.login}`)
-     const userName = req.user.fullName.toUpperCase();
+router.get("/dashboard", auth, async function (req, res) {
+    console.log(`Cookie for Rohit Mehra. ${req.cookies.login}`)
+    const userName = req.user.fullName.toUpperCase();
 
     //  News API for Dashboard Section 1
-     const newsApiKey = `f44c13c30bee44fcbf221cfab8b8b428`;
-     const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApiKey}`;
+    const newsApiKey = `f44c13c30bee44fcbf221cfab8b8b428`;
+    const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApiKey}`;
 
-     const newsResponse = await axios.get(newsApiUrl);
+    const newsResponse = await axios.get(newsApiUrl);
 
-     const articleTitles = [];
-  
-     const apiResponseStatus = newsResponse.data.status;
-     console.log(apiResponseStatus);
-     
-     var responseArray = [];
-     
-     const totalArticles = newsResponse.data.totalResults;
- 
+    const articleTitles = [];
+
+    const apiResponseStatus = newsResponse.data.status;
+    console.log(apiResponseStatus);
+
+    var responseArray = [];
+
+    const totalArticles = newsResponse.data.totalResults;
+
     // const at1 = newsResponse.data.articles[0].title;
     // const at2 = newsResponse.data.articles[1].title;
     // const at3 = newsResponse.data.articles[2].title;
@@ -182,15 +182,15 @@ router.get("/dashboard", auth , async function(req,res){
 
     // console.log(articlesTitle)
     console.log(newsResponse.data.articles);
-     
-    res.render("dashboard", {userName, newsResponse});
+
+    res.render("dashboard", { userName, newsResponse });
 })
 
 router.get("/signup", function (req, res) {
     res.status(200).send("test");
 });
 
-router.get("/courses", function(req,res){
+router.get("/courses", function (req, res) {
     res.status(200).render("courses")
 })
 
@@ -210,7 +210,12 @@ router.post("/internships", async function (req, res) {
 
     const linkedinData = [];
     const internshalaData = [];
-    
+
+    // Predefined Internshala and Linkedin Objects for rendering
+
+    let linkedinObj = [];
+    let internshalaObj = [];
+
 
     // Internship Sources Object 
 
@@ -224,59 +229,74 @@ router.post("/internships", async function (req, res) {
 
     let linkedinSource = `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`;
 
-   
-    async function scrapLinkedin(){
+
+    async function scrapLinkedin() {
         const response = await axios.get(internshipSources.linkedin);
         console.log(internshipSources.linkedin);
         const $ = cheerio.load(response.data);
 
         const linkedinInternships = $(".base-card");
-        linkedinInternships.each(function(){
+        linkedinInternships.each(function () {
             title = $(this).find(".base-search-card__title").text();
             location = $(this).find('.job-search-card__location').text()
             listDate = $(this).find(".job-search-card__listdate").text()
             company = $(this).find(".base-search-card__subtitle").text()
-            
+
             // link = $(this).find(".base-card__full-link").text()
+
+            // const linkedinResultObject = {
+            //     title: linkedinInternships.title,
+            // }
+
             linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
-            
+
+
+            // linkedinData.push(title,location,listDate,company);
+
+            // const linkedinJSON = JSON.stringify(linkedinData);
+
+            // // Converting JSON to Obj for rendering
+
+            // linkedinObj = JSON.stringify(linkedinJSON);
+            // console.log(linkedinObj);
+
         })
 
         console.log(linkedinData);
     }
-    
+
     // Internshala Scrapping
 
-    async function scrapInternshala(){
+    async function scrapInternshala() {
         const response = await axios.get(internshipSources.internshala);
         const $ = cheerio.load(response.data);
         console.log(internshipSources.internshala);
 
         const internshalaInternships = $(".individual_internship");
-        await internshalaInternships.each(function(){
+        await internshalaInternships.each(function () {
             title = $(this).find(".company_and_premium").text();
             location = $(this).find('.location_link').text()
             // listDate = $(this).find(".job-search-card__listdate").text()
             // link = $(this).find(".base-card__full-link").text()
             internshalaData.push(` Title ${title}, Location : ${location}, List Date`);
             console.log(internshalaData);
-            
+
         });
-        
+
         // res.send(internshalaData);
     }
-    
+
     await scrapInternshala();
 
     // Scrap Microsoft Carrers Website for Internship Lists
 
-    async function scrapMicrosoft(){
-        
+    async function scrapMicrosoft() {
+
         const response = await axios.get(internshipSources.microsoft);
         const $ = cheerio.load(response.data);
-        
+
         const microsoftInternships = $('.phs-jobs-list');
-        await microsoftInternships.each(function(){
+        await microsoftInternships.each(function () {
             title = $(this).find().text();
         })
     }
@@ -284,10 +304,12 @@ router.post("/internships", async function (req, res) {
     await scrapLinkedin();
 
     const internshalaPost = "<h1> Internshala Data </h1> \n " + internshalaData;
-     const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;
-    console.log(internshalaData);  
-    res.render("internships", {internshalaPost, linkedinPost});
-    
+    const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;
+    console.log(internshalaData);
+    console.log(jobLocation);
+    console.log(internshipSources.linkedin);
+    res.render("internships", { internshalaPost, linkedinPost });
+
 })
 
 router.get("/certifications", function (req, res) {
@@ -305,7 +327,7 @@ router.get("/jobs", function (req, res) {
     res.status(200).render("jobs");
 });
 
-router.post("/jobs", async function(req,res){
+router.post("/jobs", async function (req, res) {
     console.log(req);
     const jobKeyword = req.body.jobKeyword;
     console.log(jobKeyword);
@@ -330,18 +352,83 @@ app.post("/feedback", function (req, res) {
     })
 });
 
-app.post("/scholarships", function (req, res) {
+router.post("/scholarships", async function (req, res) {
+
+    const scholarshipLocation = req.body.locationForScholarship;
+    const scholarshipQualification = req.body.educationForScholarship;
+
 
     // Scholarship Sources
 
     const scholarshipSources = {
 
-        linkedin: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
-        internshala: `https://internshala.com/internships/keywords-${internshipKeyword}/`,
-        microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
+        scholarshipForme: `https://scholarshipforme.com/scholarships?state=${scholarshipLocation}&qualification=${scholarshipQualification}&category=&origin=&type=&availability=&form_botcheck=`,
+        studyPortals: `https://www.scholarshipportal.com/bachelor/scholarships/india`
+        // microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
+
+    };
+
+    // To store ScholarshipForme Data
+    let sFormeData = [];
+    let sPortalData = [];
+
+    async function scrapScholarshipForme() {
+
+        const response = await axios.get(scholarshipSources.scholarshipForme);
+        const $ = cheerio.load(response.data);
+        const scholarshipContainers = $(".resume-item");
+
+        scholarshipContainers.each(function () {
+
+            title = $(this).find(".right h3").text();
+            // location = $(this).find('.job-search-card__location').text()
+            // listDate = $(this).find(".job-search-card__listdate").text()
+            // company = $(this).find(".base-search-card__subtitle").text()
+            sFormeData.push(title);
+        })
+
+        console.log(sFormeData);
+        console.log(scholarshipSources.scholarshipForme);
+        
+        //        
+        //   const extractedData = scholarshipContainers.map((index, element) => {
+        //     // Process each element and extract the desired information
+        //     // For example:
+        //     const title = $(element).find(".title").text().trim();
+        //     const description = $(element).find(".description").text().trim();
 
     }
 
+    scrapScholarshipForme();
+
+    // 
+
+    async function scrapOtherScholarships(){
+        
+        try{
+
+            const studyPortalsResponse = await axios.get(scholarshipSources.studyPortals);
+            const $ = cheerio.load(studyPortalsResponse.data);
+            const studyPortalContainer = $(flex .flex-col);
+    
+            studyPortalContainer.each(function () {
+    
+                title = $(this).find(".right h3").text();
+                // location = $(this).find('.job-search-card__location').text()
+                // listDate = $(this).find(".job-search-card__listdate").text()
+                // company = $(this).find(".base-search-card__subtitle").text()
+                sPortalData.push(title);
+                res.send(sFormeData + sPortalData);
+                console.log(sPortalData);
+            })
+        }
+
+        catch(error){
+            res.send(error)
+        }   
+    }
+
+    // scrapOtherScholarships();
 });
 
 app.get("/scholarships", function (req, res) {
@@ -365,32 +452,32 @@ app.post("/contactus", async function (req, res) {
     // Sending email through nodemailer
 
 
-        const testAccount = await nodemailer.createTestAccount();
-    
-        // Connection with SMTP Server
-    
-        let transporter = await nodemailer.createTransport({
-    
-            host: "smtp.ethereal.email",
-            port: 587,
-            auth: {
-                user: 'roslyn.mertz@ethereal.email',
-                pass: 'eHY3rpZp1Jx6tKzYm7',
-            },
-        });
-    
-        let info = await transporter.sendMail({
-            from: `${req.body.email}`,
-            to: "prakashbhatia1970@gmail.com",
-            text: `${req.body.message}`,
-            // html: `` Just in case 
-        })
+    const testAccount = await nodemailer.createTestAccount();
 
-        console.group(req.body.username);
+    // Connection with SMTP Server
 
-        const emailResults = ` Email from : ${info.envelope.from}, \n Email to ${info.envelope.to}`
-        res.render("utility/emailsent", {emailResults});
-  
+    let transporter = await nodemailer.createTransport({
+
+        host: "smtp.ethereal.email",
+        port: 587,
+        auth: {
+            user: 'roslyn.mertz@ethereal.email',
+            pass: 'eHY3rpZp1Jx6tKzYm7',
+        },
+    });
+
+    let info = await transporter.sendMail({
+        from: `${req.body.email}`,
+        to: "prakashbhatia1970@gmail.com",
+        text: `${req.body.message}`,
+        // html: `` Just in case 
+    })
+
+    console.group(req.body.username);
+
+    const emailResults = ` Email from : ${info.envelope.from}, \n Email to ${info.envelope.to}`
+    res.render("utility/emailsent", { emailResults });
+
 
 });
 
@@ -433,7 +520,7 @@ app.post('/login', async function (req, res) {
             // secure: true
         });
 
-        
+
         if (passwordIsMatch) {
             res.status(201).render("index");
             console.log(`Cookie for User Login Generated. ${req.cookies.login}`)
@@ -572,18 +659,18 @@ app.get("/login/:id", async function (req, res) {
 
 
 
-router.get("/logout", auth, async function(req,res){
+router.get("/logout", auth, async function (req, res) {
 
     // User logout by deleting database token
 
-    try{
+    try {
 
-        req.user.tokens = req.user.tokens.filter(function(currElement){
+        req.user.tokens = req.user.tokens.filter(function (currElement) {
             return currElement.token !== req.token
         })
 
         // To logout user from every device, Call this function
-        function allDevicesLogout(){
+        function allDevicesLogout() {
 
             req.user.tokens = [];
         }
@@ -597,7 +684,7 @@ router.get("/logout", auth, async function(req,res){
         //  Rendering Login Page
         res.render("loginPage")
     }
-    catch(error){
+    catch (error) {
         res.send(error);
     }
 })
@@ -608,7 +695,7 @@ router.get("/reportproblem", function (req, res) {
 
 // HELP Pages
 
-router.get("/sitemap", function(req,res){
+router.get("/sitemap", function (req, res) {
     console.log("Sitemap Requested")
     res.render("help/sitemap.hbs");
 })
