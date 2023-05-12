@@ -204,7 +204,7 @@ router.post("/internships", async function (req, res) {
 
     let internshipKeyword = req.body.internshipSearch;
     const jobLocation = req.body.location;
-    console.log(internshipKeyword);
+    // console.log(internshipKeyword);
 
     // Array set of Internship Results
 
@@ -232,7 +232,7 @@ router.post("/internships", async function (req, res) {
 
     async function scrapLinkedin() {
         const response = await axios.get(internshipSources.linkedin);
-        console.log(internshipSources.linkedin);
+
         const $ = cheerio.load(response.data);
 
         const linkedinInternships = $(".base-card");
@@ -248,21 +248,25 @@ router.post("/internships", async function (req, res) {
             //     title: linkedinInternships.title,
             // }
 
-            linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
+            // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
 
-
-            // linkedinData.push(title,location,listDate,company);
+            linkedinData.push(title, location, listDate, company);
+            linkedinData.forEach(function (item, index) {
+                linkedinObj[index] = item.trim();
+            })
 
             // const linkedinJSON = JSON.stringify(linkedinData);
 
             // // Converting JSON to Obj for rendering
 
             // linkedinObj = JSON.stringify(linkedinJSON);
-            // console.log(linkedinObj);
+
+
+            console.log(linkedinObj);
 
         })
 
-        console.log(linkedinData);
+
     }
 
     // Internshala Scrapping
@@ -270,7 +274,7 @@ router.post("/internships", async function (req, res) {
     async function scrapInternshala() {
         const response = await axios.get(internshipSources.internshala);
         const $ = cheerio.load(response.data);
-        console.log(internshipSources.internshala);
+        // console.log(internshipSources.internshala);
 
         const internshalaInternships = $(".individual_internship");
         await internshalaInternships.each(function () {
@@ -279,7 +283,7 @@ router.post("/internships", async function (req, res) {
             // listDate = $(this).find(".job-search-card__listdate").text()
             // link = $(this).find(".base-card__full-link").text()
             internshalaData.push(` Title ${title}, Location : ${location}, List Date`);
-            console.log(internshalaData);
+
 
         });
 
@@ -305,10 +309,12 @@ router.post("/internships", async function (req, res) {
 
     const internshalaPost = "<h1> Internshala Data </h1> \n " + internshalaData;
     const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;
-    console.log(internshalaData);
-    console.log(jobLocation);
-    console.log(internshipSources.linkedin);
+    // console.log(internshalaData);
+    // console.log(jobLocation);
+    // console.log(internshipSources.linkedin);
     res.render("internships", { internshalaPost, linkedinPost });
+
+
 
 })
 
@@ -363,7 +369,7 @@ router.post("/scholarships", async function (req, res) {
     const scholarshipSources = {
 
         scholarshipForme: `https://scholarshipforme.com/scholarships?state=${scholarshipLocation}&qualification=${scholarshipQualification}&category=&origin=&type=&availability=&form_botcheck=`,
-        studyPortals: `https://www.scholarshipportal.com/bachelor/scholarships/india`
+        buddyForStudy: `https://www.scholarshipportal.com/bachelor/scholarships/india`
         // microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
 
     };
@@ -389,7 +395,7 @@ router.post("/scholarships", async function (req, res) {
 
         console.log(sFormeData);
         console.log(scholarshipSources.scholarshipForme);
-        
+
         //        
         //   const extractedData = scholarshipContainers.map((index, element) => {
         //     // Process each element and extract the desired information
@@ -397,22 +403,24 @@ router.post("/scholarships", async function (req, res) {
         //     const title = $(element).find(".title").text().trim();
         //     const description = $(element).find(".description").text().trim();
 
+        res.send(sFormeData)
+
     }
 
     scrapScholarshipForme();
 
     // 
 
-    async function scrapOtherScholarships(){
-        
-        try{
+    async function scrapOtherScholarships() {
+
+        try {
 
             const studyPortalsResponse = await axios.get(scholarshipSources.studyPortals);
             const $ = cheerio.load(studyPortalsResponse.data);
-            const studyPortalContainer = $(flex .flex-col);
-    
+            const studyPortalContainer = $(flex.flex - col);
+
             studyPortalContainer.each(function () {
-    
+
                 title = $(this).find(".right h3").text();
                 // location = $(this).find('.job-search-card__location').text()
                 // listDate = $(this).find(".job-search-card__listdate").text()
@@ -423,12 +431,26 @@ router.post("/scholarships", async function (req, res) {
             })
         }
 
-        catch(error){
-            res.send(error)
-        }   
+        catch (error) {
+            console.log(error);
+        }
     }
 
     // scrapOtherScholarships();
+
+    async function scrapBuddyForStudy() {
+
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(scholarshipSources.buddyForStudy);
+        page.$$eval('.scholarshipslistcard_listCard__3oVnA', function cards(){
+            console.log(cards);
+            return cards;
+        })
+
+        cards();
+
+    }
 });
 
 app.get("/scholarships", function (req, res) {
