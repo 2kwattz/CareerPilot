@@ -28,15 +28,20 @@ Technical Specifications
 10. Successfully connected the application with the database for other pages such as feedback form, contact me form etc
 11. Used several APIs for user's account such as city-state-country one for registration dropdown
 12. Using Handelbars (HBS) for dynamic interaction and to prevent code redundency
-13. Google Recapcha added to prevent spam
+13. Google Recapcha added to prevent spam (slight errors)
 14. Domain will be registered (freenom) 
 15. All the pages which are required are created and implemented as routes in server.js
 16. Data scrapping for top MNCs completed (only space issues)
-17. Few static pages 100% done
+17. Few static pages such as careerAdvice 100% done
 18. Internshala and Linkedin job scrapping works individually providing data such as job title, posting date, company and location
 19. Nodemailer Functionality added in ContactUs form to create custom emails (test)
 20. NewsAPI Integrated in Dashboard (Global API Now, Will switch to MNCs, IT Company news ones soon) using Dynamic templating
 i.e The news will keep on updating with news title, description an Read More option
+21. Scholarship Data sources added and can successfully scrap data from one source
+22. Basic front end of scholarship page done with filters such as Education Level and State dropdown
+23. Basic frontend of courses section done with course name and location. Currently one filter added (Online)
+24. Reusable Async function created for scrapping courses data instead of each async function for individual sources (thus saving response time)
+25. UI/UX Designs for pages on the way. Currently home page is being designed
 
  
 
@@ -51,6 +56,9 @@ Work to be done in future
 5. Creating a fully functional dashboard ( Dashboard concept implemented but no functionality implemented in it as of now)
 6. Logout for a single device based on database token deletion yet to be implemented
 7. Logout from all devices yet to be implemented
-8. To add a Sign in with google option
-9. As of now only considerable HTML,CSS and Javascript is used to create a functional frontend, 
+8. To add a Sign in with google and facebook option
+9. Plans to make it an ecommerce website for selling courses as an additional functionality
+10. Settings tab for dashboard with help section containing Dark/Light mode, User profile etc
+11. As of now only considerable HTML,CSS and Javascript is used to create a functional frontend, 
 But it needs refinement like animations, sliding covers etc when backend is fully functional
+

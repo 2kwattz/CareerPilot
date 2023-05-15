@@ -19,7 +19,7 @@ const partialsPath = path.join(__dirname, "../templates/views/partials"); // Use
 const bodyParser = require('body-parser');  // For getting Web Form Data
 const fs = require('fs'); // For managing files
 const ObjectId = mongoose.Types.ObjectId; // Specifically for /login/:api route
-const app = express();
+const app = express(); // Instance of express.js
 
 // Fetching country-state-city for Registration 
 
@@ -36,7 +36,7 @@ const jwt = require('jsonwebtoken'); // Importing JWT Library
 
 // Cookie Parser for JWT Token Authentication
 
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser"); // For JWT Verification
 app.use(cookieParser()); // Initializing CookieParser Middleware
 
 
@@ -194,6 +194,48 @@ router.get("/courses", function (req, res) {
     res.status(200).render("courses")
 })
 
+router.post("/courses", async function(req,res){
+
+    const courseKeyword = req.body.courseKeyword;
+    const courseLocation = req.body.courseLocation;
+
+    const courseSources = {
+        indeed: `https://www.indeed.com/certifications/s?q=${courseKeyword}&gv=&l=${courseLocation}&q_ct=cert&type=program&from=SearchPageSearchBar`,
+        coursera: `https://www.coursera.org/search?query=${courseKeyword}&index=prod_all_launched_products_term_optimization`,
+        w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`
+    }
+
+    
+    async function scrapData(url, containerSelector, title,company,classType,Duration) {
+        const response = await axios.get(url);
+        const $ = cheerio.load(response.data);
+
+        const container = $(`${containerSelector}`);
+        container.each(function () {
+            title = $(this).find(`${title}`).text();
+            classType = $(this).find(`${classType}`).text()
+            company = $(this).find(`${company}`).text()
+            Duration = $(this).find(`${Duration}`).text()
+
+        })
+
+        console.log(container);
+    }
+
+    try{
+
+        // scrapData(courseSources.indeed,`.css-rr5fiy eu4oa1w0`,`.course-card-name`,`.course-card-school-name`,`.course-card-type`,`.course-card-duration`);
+        res.send("Under Construction. Please check back later\n");
+
+        
+    }
+    catch(error){
+
+        console.log(error);
+        
+    }
+})
+
 
 router.get("/internships", function (req, res) {
     console.log(req);
@@ -229,6 +271,22 @@ router.post("/internships", async function (req, res) {
 
     let linkedinSource = `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`;
 
+    async function scrapData(url, containerSelector) {
+        const response = await axios.get(url);
+        const $ = cheerio.load(response.data);
+
+        const container = $(`${containerSelector}`);
+        container.each(function () {
+            title = $(this).find(".base-search-card__title").text();
+            location = $(this).find('.job-search-card__location').text()
+            listDate = $(this).find(".job-search-card__listdate").text()
+            company = $(this).find(".base-search-card__subtitle").text()
+
+
+        })
+
+
+    }
 
     async function scrapLinkedin() {
         const response = await axios.get(internshipSources.linkedin);
@@ -323,6 +381,19 @@ router.get("/certifications", function (req, res) {
     res.status(200).render("certifications");
 });
 
+router.post("/certifications", function(req,res){
+    
+    console.log(req);
+
+    const certificationKeyword = req.body.certificationKeyword; // Getting certification keyword from the user
+
+
+    const certificationSources = {
+        w3schools : `https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=${certificationKeyword}*`,
+        microsoft : `https://learn.microsoft.com/en-us/certifications/browse/?terms=${certificationKeyword}`,
+    }
+
+})
 router.get("/grants", function (req, res) {
     console.log(req);
     res.status(200).render("grants");
@@ -362,6 +433,7 @@ router.post("/scholarships", async function (req, res) {
 
     const scholarshipLocation = req.body.locationForScholarship;
     const scholarshipQualification = req.body.educationForScholarship;
+    const scholarshipKeyword = req.body.scholarshipKeyword;
 
 
     // Scholarship Sources
@@ -369,7 +441,10 @@ router.post("/scholarships", async function (req, res) {
     const scholarshipSources = {
 
         scholarshipForme: `https://scholarshipforme.com/scholarships?state=${scholarshipLocation}&qualification=${scholarshipQualification}&category=&origin=&type=&availability=&form_botcheck=`,
-        buddyForStudy: `https://www.scholarshipportal.com/bachelor/scholarships/india`
+        buddyForStudy: `https://www.scholarshipportal.com/bachelor/scholarships/india`,
+        nationalScholarship: `https://scholarships.gov.in/`,
+        scholarshipsAu: `https://scholarships.uq.edu.au/scholarships?text=${scholarshipKeyword}`
+
         // microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
 
     };
@@ -377,6 +452,7 @@ router.post("/scholarships", async function (req, res) {
     // To store ScholarshipForme Data
     let sFormeData = [];
     let sPortalData = [];
+    let nationalScholarshipData = [];
 
     async function scrapScholarshipForme() {
 
@@ -443,7 +519,7 @@ router.post("/scholarships", async function (req, res) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(scholarshipSources.buddyForStudy);
-        page.$$eval('.scholarshipslistcard_listCard__3oVnA', function cards(){
+        page.$$eval('.scholarshipslistcard_listCard__3oVnA', function cards() {
             console.log(cards);
             return cards;
         })
@@ -451,6 +527,24 @@ router.post("/scholarships", async function (req, res) {
         cards();
 
     }
+
+    async function scrapNSP(){    //Scrapping National Scholarship Portal
+
+        const studyPortalResponse = axios.get(scholarshipSources.nationalScholarship);
+        const $ = cheerio.load(studyPortalResponse.data)
+        const nspContainer = 'test';
+
+
+    }
+
+    async function scholarshipsAU(){
+
+        const scholarshipsAuResponse = axios.get(scholarshipSources.scholarshipsAu);
+        const $ = cheerio.load(scholarshipsAuResponse.data);
+
+    }
+
+
 });
 
 app.get("/scholarships", function (req, res) {
@@ -697,7 +791,7 @@ router.get("/logout", auth, async function (req, res) {
             req.user.tokens = [];
         }
 
-        // User logout by deleting cookie 
+        // User logout by deleting cookie  
 
         res.clearCookie("login");
         console.log("Logout successful");

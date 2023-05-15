@@ -22,24 +22,44 @@
             <h2> India's No. #1 Scholarship Search Engine </h2>
             <br>
             <label for="education"> Your Goal/Education </label>
-            <input type="text" id="educationForScholarship" name="educationForScholarship">
 
-            <label for="location"> Your Location </label>
-            <input type="text" id="locationForScholarship" name="locationForScholarship">
+             <select name="educationForScholarship" id="educationForScholarship">
+                <option value="b-tech-">B-Tech</option>
+                <option value="mca">MCA</option>
+                <option value="mbbs">MBBS</option>
+                <option value="mba">MBA</option>
+                <option value="bba">BBA</option>
+                <option value="dnb">DNB</option>
+                <option value="class_xii">Class XII</option>
+                <option value="class_xii">Class XII</option>
+            </select>
+            {{!-- <input type="text" id="educationForScholarship" name="educationForScholarship"> --}}
+
+            {{!-- <label for="location"> Your Location </label>
+            <input type="text" id="locationForScholarship" name="locationForScholarship"> --}}
 
             <button class="btn" type="submit"> Search </button>
             <label for="cars">Choose a state :</label>
 
             {{!--  Yet to work  --}}
             
-            <select name="locationnForScholarship" id="locationForScholarship">
+            <select name="locationForScholarship" id="locationForScholarship">
                 <option value="gujarat">Gujarat</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
+                <option value="assam">Assam</option>
+                <option value="mercedes"></option>
                 <option value="audi">Audi</option>
             </select>
 
+        <h2> Search by Keyword </h2>
+
+        <input type="text" name="scholarshipKeyword" id="scholarshipKeyword">
+        <button class="btn" type="submit"> Search</button>
+
+        <h4> Filters</h4>
         </form>
+
+
+      
     </div>
 </body>
 
