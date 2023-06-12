@@ -114,7 +114,9 @@ const { response } = require('express');
 
 // Nodemailer Controller Initialization
 
-const sendMail = require("./controllers/sendMail");
+const sendMail = require("./controllers/sendMail");  // Importing Send Mail Controller
+
+// Send Mail Route
 
 app.get("/mail", sendMail);
 
@@ -144,7 +146,52 @@ router.get("/", async function (req, res) {
 
     // Scrapping Top MNC Companies
 
-    const companiesSource = `https://www.glassdoor.co.in/Explore/top-software-developer-companies-india_IO.4,22_IL.33,38_IN115.htm`;
+    const companiesSource = `https://content.techgig.com/technology/top-10-indian-it-companies-and-their-revenue-in-2022/articleshow/96445880.cms`;
+
+    let companiesTitle = [];
+    let companiesLocation = [];
+    let companiesRev = [];
+
+    //  Sending request to scrap the companies data 
+
+    async function scrapCompanies() {
+        const response = await axios.get(companiesSource);
+
+        const $ = cheerio.load(response.data);
+
+        const baseCard = $(".col-md-8");
+        baseCard.each(function () {
+            title = $(this).find(".align-items-center mb-xsm").text();
+            location = $(this).find('[data-test="employer-location"]').text()
+            // listDate = $(this).find(".job-search-card__listdate").text()
+            // company = $(this).find(".base-search-card__subtitle").text()
+
+            companiesTitle.push(title);
+      
+
+            console.log(companiesTitle);
+        })
+
+
+    }
+
+    // try{
+
+    //     const companiesData = await axios.get(companiesSource);  // GET Req using Axios
+    //     const $ = cheerio.load(response.data); // Loading the response data into cheerio
+
+    //     // Array of data
+
+    //     // const companyTitles = 
+
+
+    // }
+    // catch{
+
+    // }
+
+    scrapCompanies();
+
 
     res.render("index");
     app.set('title', 'CareerPilot : Home Page');
@@ -198,34 +245,41 @@ router.post("/courses", async function(req,res){
 
     const courseKeyword = req.body.courseKeyword;
     const courseLocation = req.body.courseLocation;
+    let courseDataArray = [];
 
     const courseSources = {
         indeed: `https://www.indeed.com/certifications/s?q=${courseKeyword}&gv=&l=${courseLocation}&q_ct=cert&type=program&from=SearchPageSearchBar`,
         coursera: `https://www.coursera.org/search?query=${courseKeyword}&index=prod_all_launched_products_term_optimization`,
-        w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`
+        w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`,
+        udemy: ``
     }
 
     
-    async function scrapData(url, containerSelector, title,company,classType,Duration) {
+    async function scrapData(url, containerSelector,title) {
         const response = await axios.get(url);
         const $ = cheerio.load(response.data);
 
         const container = $(`${containerSelector}`);
         container.each(function () {
             title = $(this).find(`${title}`).text();
-            classType = $(this).find(`${classType}`).text()
-            company = $(this).find(`${company}`).text()
-            Duration = $(this).find(`${Duration}`).text()
+         
 
         })
 
-        console.log(container);
+        // Looping for object id
+
+        courseDataArray.push(title);
+        // courseDataArray.forEach(function (item, index) {
+        //     courseDataArray[index] = item.trim();
+        // })
+
+        console.log(courseDataArray);
     }
 
     try{
 
-        // scrapData(courseSources.indeed,`.css-rr5fiy eu4oa1w0`,`.course-card-name`,`.course-card-school-name`,`.course-card-type`,`.course-card-duration`);
-        res.send("Under Construction. Please check back later\n");
+        scrapData(courseSources.w3schools,`.productgrid--item `,`.productitem--title`);
+        // res.send("Under Construction. Please check back later\n");
 
         
     }
@@ -246,7 +300,7 @@ router.post("/internships", async function (req, res) {
 
     let internshipKeyword = req.body.internshipSearch;
     const jobLocation = req.body.location;
-    // console.log(internshipKeyword);
+    console.log(internshipKeyword);
 
     // Array set of Internship Results
 
@@ -282,10 +336,7 @@ router.post("/internships", async function (req, res) {
             listDate = $(this).find(".job-search-card__listdate").text()
             company = $(this).find(".base-search-card__subtitle").text()
 
-
         })
-
-
     }
 
     async function scrapLinkedin() {
@@ -394,6 +445,20 @@ router.post("/certifications", function(req,res){
     }
 
 })
+
+router.get("/test", async function(req,res){
+
+   res.status(200).render("test");
+
+})
+
+router.post("/test", async function(req,res){
+
+    const response = await axios.get(`https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=python*`);
+    console.log(response);
+    res.send(response.data);
+
+})
 router.get("/grants", function (req, res) {
     console.log(req);
     res.status(200).render("grants");
@@ -462,8 +527,8 @@ router.post("/scholarships", async function (req, res) {
 
         scholarshipContainers.each(function () {
 
-            title = $(this).find(".right h3").text();
-            // location = $(this).find('.job-search-card__location').text()
+            title = $(this).find(".right h3").text().trim();
+            // location = $(this).find('.job-search-card__location').text().trim()
             // listDate = $(this).find(".job-search-card__listdate").text()
             // company = $(this).find(".base-search-card__subtitle").text()
             sFormeData.push(title);
@@ -525,7 +590,6 @@ router.post("/scholarships", async function (req, res) {
         })
 
         cards();
-
     }
 
     async function scrapNSP(){    //Scrapping National Scholarship Portal
@@ -593,7 +657,6 @@ app.post("/contactus", async function (req, res) {
 
     const emailResults = ` Email from : ${info.envelope.from}, \n Email to ${info.envelope.to}`
     res.render("utility/emailsent", { emailResults });
-
 
 });
 
