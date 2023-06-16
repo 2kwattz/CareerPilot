@@ -51,18 +51,45 @@
 
         <nav class="sidebar">
 
-           
+
             <ul class="sidebar-nav">
-                <li><a href="/dashboard">Dashboard Home</a></li>
-                <li><a href="#">News Articles</a></li>
-                <li><a href="#">Internships</a></li>
-                <li><a href="#">Scholarships</a></li>
-                <li><a href="#">Jobs</a></li>
-                <li><a href="#">Certifications</a></li>
-                <li><a href="#">Hackathons</a></li>
-                <li><a href="#">Certifications</a></li>
-                <li><a href="#">Certifications</a></li>
+
+                <div class="dropdown">
+
+                    <button class="sidebar-btn"> Resources </button>
+
+                </div>
+
+                <div class="dropdown-content">
+
+                    <li><a href="/dashboard">Dashboard Home</a></li>
+                    <li><a href="#newsContainerDashboard">News Articles</a></li>
+                    <li><a href="#">Internships</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Certifications</a></li>
+                    <li><a href="#">Hackathons</a></li>
+                    <li><a href="#coursesContainerDashboard">Courses</a></li>
+                    <li><a href="#">Certifications</a></li>
+                </div>
                 <li><a href="#">Help</a></li>
+                <div class="dropdown">
+                    <button class="sidebar-btn"> Help </button>
+                </div>
+                <div class="dropdown-content">
+                    <a href="#">Language</a>
+                    <a href="#">Report A Problem</a>
+                    <a href="#">Feedback</a>
+                    <a href="#">Contact Us</a>
+                </div>
+                <div class="dropdown">
+                    <button class="sidebar-btn"> Settings </button>
+                </div>
+                <div class="dropdown-content">
+                    <a href="#">Account Settings</a>
+                    <a href="#">Security</a>
+                    <a href="#">Notification Settings</a>
+                </div>
                 <li><a href="#">Settings</a></li>
             </ul>
         </nav>
@@ -95,11 +122,11 @@
 
                 <div class="dashboardItems" id="newsContainerDashboard"></div>
 
-                    <center>
+                <center>
 
                     <img src="/img/news.jpg" height="30%" width="60%">
 
-                    </center>
+                </center>
 
                 <h2 class="section-titles"> What's hot? </h2>
 
@@ -201,34 +228,30 @@
 
             </div>
 
-            {{!-- Settings Options // For the side navbar --}}
+            {{!-- Certification Section 5 --}}
 
-            <div class="dashboardItems" id="settingsContainerDashboard">
+             <div class="dashboardItems" id="internshipContainerDashboard">
 
-                <h2> User Settings </h2>
-
+                <h1 class="section-titles"> Certifications </h1>
 
 
 
                 <div class="dashboard-subitems">
-                    Switch Dark/Light Mode
+                    Search Internships from various portals
 
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                    <br><button class="btn"> <a href="/internships"> Search Certifications</a></button>
                 </div>
 
                 <div class="dashboard-subitems">
-                    Account Settings
+                    Search internships from top MNCs
 
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
                 </div>
 
             </div>
+
+            {{!-- Settings Options // For the side navbar --}}
+
 
             {{!-- TOP MNCS Locationwise Job Vaccancies --}}
 
@@ -418,6 +441,8 @@
     </div>
     </div>
     </div>
+
+    {{>footer}}
 
 
 </body>

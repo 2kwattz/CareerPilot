@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {{>headerMeta}}
     {{>header}}
     <title>Internships Search : CarrerPilot</title>
 </head>
+
 <body>
 
     <div class="container">
@@ -16,23 +18,64 @@
     </div>
 
     <center>
-    <div class="section-2">
+        <div class="section-2">
 
-        <form method="POST" action="/internships">
+            <form class="form-control" method="POST" action="/internships">
 
-        <input type="text" name="location" placeholder="Enter City" style="margin-top:10px;padding:10px">
-        <input type="text" name="internshipSearch" placeholder="For eg : Web Development" style="margin-top:10px;padding:10px">
-        <button class="btn" id="searchInternshipBtn" type="submit"> Search Internships </button>
+                <input type="text" name="location" placeholder="Enter City">
+                <input type="text" name="internshipSearch" placeholder="For eg : Web Development">
+                <button class="btn" id="searchInternshipBtn" type="submit"> Search Internships </button>
 
-        </form>
-    </div>
+            </form>
+        </div>
 
     </center>
 
-    <div class="internshipData">
+    <div class="resultContainer">
+<div class="filters">
 
-       
+        <h1 class="section-subtitles"> Filters</h1>
 
+        <h4> Sort by </h4>
+
+        <button class="btn" id="ascendingButton" onclick="sortData('asc')">Sort Ascending</button>
+        <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
+
+        <h4> Need to add: Most Relevent/Most recent</h4>
+        <br> <label> Hide/Show Internshala </label> <input type="checkbox" name="internshalaToggle" onchange="toggleInternshala()">
+        <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle" onchange="toggleInternshala()">
+         <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle" onchange="toggleInternshala()">
+          <br> <label> Only Show Work from Home </label> <input type="checkbox" name="internshalaToggle" onchange="toggleInternshala()">
+
+    </div>
+
+    <div class="internshipData" id="filterData">
+
+        <div class="internshalaContainer">
+
+            <h1 class="section-subtitles"> Internshala Internships </h1>
+
+
+            {{#each internshalaData}}
+
+            <div class="internshipContainer">
+                <span> Company Name : {{this.title}}</span><br>
+                <span> Start Date : </span><br>
+                <span> Internship Duration : </span><br>
+                <span> Start Date : </span><br>
+                <span> Internship Location : {{this.location}}</span>
+                <button class="btn"> View </button>
+            </div>
+            {{/each}}
+
+
+
+        </div>
+
+
+        <div class="linkedinContainer">
+            <h1 class="section-subtitles"> Linkedin Internships </h1>
+        </div>
         {{internshalaPost}}
 
 
@@ -41,9 +84,27 @@
 
     </div>
 
-    <div class="testOutput">
- 
+
+
     </div>
     
+
+    <script>
+
+        const dataContainer = document.getElementById('filterData');
+
+        function toggleInternshala(){
+
+           const internshalaContainer = document.getElementsByClassName("internshalaContainer")[0];
+    if (internshalaContainer.style.display !== 'none') {
+        internshalaContainer.style.display = 'none';
+    } else {
+        internshalaContainer.style.display = 'block';
+    }
+}
+
+    </script>
+
 </body>
+
 </html>

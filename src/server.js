@@ -118,7 +118,7 @@ const sendMail = require("./controllers/sendMail");  // Importing Send Mail Cont
 
 // Send Mail Route
 
-app.get("/mail", sendMail);
+app.get("/mail", sendMail)
 
 // Initalize Scrapers
 
@@ -190,7 +190,7 @@ router.get("/", async function (req, res) {
 
     // }
 
-    scrapCompanies();
+    // scrapCompanies();
 
 
     res.render("index");
@@ -220,14 +220,6 @@ router.get("/dashboard", auth, async function (req, res) {
 
     const totalArticles = newsResponse.data.totalResults;
 
-    // const at1 = newsResponse.data.articles[0].title;
-    // const at2 = newsResponse.data.articles[1].title;
-    // const at3 = newsResponse.data.articles[2].title;
-    // const at4 = newsResponse.data.articles[3].title;
-
-    // const articlesTitle = at1 + " \n" + at2 + " \n" + at3 + " \n" + at4;
-
-    // console.log(articlesTitle)
     console.log(newsResponse.data.articles);
 
     res.render("dashboard", { userName, newsResponse });
@@ -250,35 +242,34 @@ router.post("/courses", async function(req,res){
     const courseSources = {
         indeed: `https://www.indeed.com/certifications/s?q=${courseKeyword}&gv=&l=${courseLocation}&q_ct=cert&type=program&from=SearchPageSearchBar`,
         coursera: `https://www.coursera.org/search?query=${courseKeyword}&index=prod_all_launched_products_term_optimization`,
-        w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`,
-        udemy: ``
+        w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`
+        
     }
 
     
-    async function scrapData(url, containerSelector,title) {
-        const response = await axios.get(url);
+    async function scrapW3schools() {
+        const response = await axios.get(courseSources.w3schools);
         const $ = cheerio.load(response.data);
 
-        const container = $(`${containerSelector}`);
+        const container = $(`productgrid--items`);
         container.each(function () {
-            title = $(this).find(`${title}`).text();
-         
+             title = $(`.productitem--title h2`).text().trim();
+             price = $(`.productitem--info`).find('.money').text().trim();
+            console.log(title);
 
+            // Looping for object id
+    
+            courseDataArray.push({title,price});
         })
-
-        // Looping for object id
-
-        courseDataArray.push(title);
-        // courseDataArray.forEach(function (item, index) {
-        //     courseDataArray[index] = item.trim();
-        // })
-
         console.log(courseDataArray);
+
+  
+
     }
 
     try{
 
-        scrapData(courseSources.w3schools,`.productgrid--item `,`.productitem--title`);
+        scrapW3schools();
         // res.send("Under Construction. Please check back later\n");
 
         
@@ -306,20 +297,30 @@ router.post("/internships", async function (req, res) {
 
     const linkedinData = [];
     const internshalaData = [];
+    let internshalaDataExp = [];
 
     // Predefined Internshala and Linkedin Objects for rendering
 
     let linkedinObj = [];
     let internshalaObj = [];
 
+    //  Internship Titles
+    
+    let internshalaTitles = [];
+    let internshalaLocation = [];
+    let internshalaDuration = [];
+    let internshalaCompany = [];
 
+    let extras = [];
+
+    
     // Internship Sources Object 
-
+    
     const internshipSources = {
-
+        
         linkedin: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
         internshala: `https://internshala.com/internships/keywords-${internshipKeyword}/`,
-        microsoft: `https://careers.microsoft.com/students/us/en/search-results?keywords=${internshipKeyword}`,
+        microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${internshipKeyword}&lc=in&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`,
 
     }
 
@@ -335,7 +336,7 @@ router.post("/internships", async function (req, res) {
             location = $(this).find('.job-search-card__location').text()
             listDate = $(this).find(".job-search-card__listdate").text()
             company = $(this).find(".base-search-card__subtitle").text()
-
+            
         })
     }
 
@@ -352,16 +353,11 @@ router.post("/internships", async function (req, res) {
             company = $(this).find(".base-search-card__subtitle").text()
 
             // link = $(this).find(".base-card__full-link").text()
-
-            // const linkedinResultObject = {
-            //     title: linkedinInternships.title,
-            // }
-
             // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
 
             linkedinData.push(title, location, listDate, company);
             linkedinData.forEach(function (item, index) {
-                linkedinObj[index] = item.trim();
+                linkedinObj[index] = item.trim();   
             })
 
             // const linkedinJSON = JSON.stringify(linkedinData);
@@ -369,12 +365,9 @@ router.post("/internships", async function (req, res) {
             // // Converting JSON to Obj for rendering
 
             // linkedinObj = JSON.stringify(linkedinJSON);
-
-
             console.log(linkedinObj);
 
         })
-
 
     }
 
@@ -391,8 +384,10 @@ router.post("/internships", async function (req, res) {
             location = $(this).find('.location_link').text()
             // listDate = $(this).find(".job-search-card__listdate").text()
             // link = $(this).find(".base-card__full-link").text()
-            internshalaData.push(` Title ${title}, Location : ${location}, List Date`);
+            internshalaData.push({title,location});
 
+            internshalaTitles.push(title);
+            internshalaLocation.push(location);
 
         });
 
@@ -420,9 +415,10 @@ router.post("/internships", async function (req, res) {
     const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;
     // console.log(internshalaData);
     // console.log(jobLocation);
-    // console.log(internshipSources.linkedin);
-    res.render("internships", { internshalaPost, linkedinPost });
+    // console.log(internshipSources.linkedin)
 
+    
+    res.render("internships", { internshalaPost, linkedinPost, internshalaTitles, internshalaData});
 
 
 })
@@ -473,6 +469,19 @@ router.post("/jobs", async function (req, res) {
     console.log(req);
     const jobKeyword = req.body.jobKeyword;
     console.log(jobKeyword);
+
+    const jobSources = {
+        zipRecruiter : `https://www.ziprecruiter.com/`,
+        naukriDotCom : `https://www.naukri.com/`
+    }
+
+    const response = await axios.get(jobSources.zipRecruiter);
+    console.log(response.data);
+
+
+    
+
+
 })
 
 router.get("/hackathons", function (req, res) {
@@ -483,6 +492,10 @@ router.get("/hackathons", function (req, res) {
 app.get("/feedbackPage", function (req, res) {
     res.status(200).render("help/feedback");
 });
+
+app.get("/about", function(req,res){
+    res.status(200).render("about.hbs");
+})
 
 app.post("/feedback", function (req, res) {
     const feedback = new feedbackData(req.body);
@@ -835,8 +848,6 @@ app.get("/login/:id", async function (req, res) {
 });
 
 //  Logout 
-
-
 
 router.get("/logout", auth, async function (req, res) {
 
