@@ -233,7 +233,7 @@ router.get("/courses", function (req, res) {
     res.status(200).render("courses");
 })
 
-router.post("/courses", async function (req, res) {
+router.post("/courses",auth, async function (req, res) {
 
     const courseKeyword = req.body.courseKeyword;
     const courseLocation = req.body.courseLocation;
