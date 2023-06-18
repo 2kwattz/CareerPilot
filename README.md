@@ -13,6 +13,7 @@ Features of CareerPilot
 from different sources on a single platform
 3. Get different types of course recommendations and suggestions related to your stream
 4. Implementaion of CareerAdvice AI Chatbot to solve all of your queries
+5. Search for Internships, Jobs, Certification courses, Scholarships from various different sources on a single platform with advanced filters 
 
 
 Technical Specifications
@@ -42,7 +43,13 @@ i.e The news will keep on updating with news title, description an Read More opt
 23. Basic frontend of courses section done with course name and location. Currently one filter added (Online)
 24. Reusable Async function created for scrapping courses data instead of each async function for individual sources (thus saving response time)
 25. UI/UX Designs for pages on the way. Currently home page is being designed
-
+26. Internships Backend Upgraded and Filters added. Data stored in seperate containers and can be filtered
+according to the users choice
+27. Certifications backend upgraded. Data can be scrapped from one source and arranged efficiently
+28. Basic UI Improvised. Enhanced Home Page and Error 404 Page, Also added a static searchbox (need to improvise)
+29. More functionalities added in Dashboard in a newly added custom side navbar
+30. Footer added in all the pages
+31. Authentication functionality added in Certification courses and Internship page (i.e user will only be able to search once it has logged in)
  
 
 
@@ -61,4 +68,5 @@ Work to be done in future
 10. Settings tab for dashboard with help section containing Dark/Light mode, User profile etc
 11. As of now only considerable HTML,CSS and Javascript is used to create a functional frontend, 
 But it needs refinement like animations, sliding covers etc when backend is fully functional
+12. Advanced filters needs to be added such as search by location,stipend and other advanced filters
 
