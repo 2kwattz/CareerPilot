@@ -70,3 +70,20 @@ Work to be done in future
 But it needs refinement like animations, sliding covers etc when backend is fully functional
 12. Advanced filters needs to be added such as search by location,stipend and other advanced filters
 
+Why CareerPilot?
+
+Every year more than 6 crore of Indian graduates from diverse background and with diversity in
+education.Almost similar number of students enter into colleges for taking various education to help them in
+seeking jobs. The aim is to create an integrated platform in order to send National and International Scholarships, Job Alerts, grants,
+Training, Certifications and Course recommendations and similar works based on their preference
+
+In existing system, not all educational resources such as scholarship details, hackathons, job alerts
+are available  on a single portal, and this can have disadvantages for students as well as graduates
+One of the main disadvantages of not keeping all scholarship details on a single portal is that it can
+be time consuming and confusing for students to navigate multiple platforms. Students may have to
+create accounts and profiles on multiple portals, which can be time-consuming and can lead to information overload.
+Additionally, students may miss out on scholarship opportunities if they are not aware of all the available portals
+and databases Another disadvantage is that the information on different portals may not be consistent or up-to-date.
+Students may find conflicting information on different portals, which can be confusing and frustrating.
+Additionally, portals may not always be updated with the latest scholarship opportunities, deadlines, and eligibility
+criteria, which can lead to students missing out on valuable opportunities.
