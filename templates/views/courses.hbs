@@ -1,29 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {{>headerMeta}}
     <title> Courses : CareerPilot</title>
 </head>
+
 <body>
 
     {{>header}}
-    
-    <h1> Courses </h1>
 
-    <form class="form-control" action ="/courses" method="POST">
+    <h1 class="section-titles"> Courses </h1>
 
-    <input type="text" placeholder="Enter training/course" name="courseKeyword">
-    
-             <select name="courseLocation" id="courseLocation">
-                <option value="Online">Online</option>
-            
-            </select>
+    <form class="form-control" method="POST" action="/courses">
 
-    <button class="btn" type="submit"> Search </button>
-    
+        <input type="text" placeholder="Enter training/course" name="courseKeyword">
 
+        <select name="courseLocation" id="courseLocation">
+            <option value="Online">Online</option>
 
-    
+        </select>
+
+        <button class="btn" type="submit"> Search </button>
     </form>
+
+    <div class="resultContainer">
+
+        <div class="filters">
+
+            <h1 class="section-subtitles"> Filters</h1>
+
+            <h4> Sort by </h4>
+
+            <button class="btn" id="ascendingButton" onclick="sortData('asc')">Sort Ascending</button>
+            <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
+
+            <h4> Need to add: Most Relevent/Most recent</h4>
+            <br> <label> Hide/Show W3Schools </label> <input type="checkbox" name="internshalaToggle"
+                onchange="">
+            <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle"
+                onchange="">
+            <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle"
+                onchange="">
+            <br> <label> Only Show Work from Home </label> <input type="checkbox" name="internshalaToggle"
+                onchange="">
+
+        </div>
+
+        <div class="internshipData" id="filterData">
+
+            <div class="internshalaContainer">
+
+                <h1 class="section-subtitles"> W3School Certification Courses </h1>
+
+                {{#each w3Courses}}
+
+                <div class="internshipContainer">
+                    <span> Course Name : {{this.title}}</span><br>
+                    <span> Price : {{this.price}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Location : </span>
+                    <button class="btn"> View </button>
+                </div>
+                {{/each}}
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
 </body>
+
 </html>

@@ -167,7 +167,7 @@ router.get("/", async function (req, res) {
             // company = $(this).find(".base-search-card__subtitle").text()
 
             companiesTitle.push(title);
-      
+
 
             console.log(companiesTitle);
         })
@@ -230,55 +230,44 @@ router.get("/signup", function (req, res) {
 });
 
 router.get("/courses", function (req, res) {
-    res.status(200).render("courses")
+    res.status(200).render("courses");
 })
 
-router.post("/courses", async function(req,res){
+router.post("/courses", async function (req, res) {
 
     const courseKeyword = req.body.courseKeyword;
     const courseLocation = req.body.courseLocation;
-    let courseDataArray = [];
+    const w3Courses = [];
+    let courseTitles = [];
 
     const courseSources = {
         indeed: `https://www.indeed.com/certifications/s?q=${courseKeyword}&gv=&l=${courseLocation}&q_ct=cert&type=program&from=SearchPageSearchBar`,
         coursera: `https://www.coursera.org/search?query=${courseKeyword}&index=prod_all_launched_products_term_optimization`,
         w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`
-        
+
     }
 
-    
+
     async function scrapW3schools() {
         const response = await axios.get(courseSources.w3schools);
         const $ = cheerio.load(response.data);
 
-        const container = $(`productgrid--items`);
-        container.each(function () {
-             title = $(`.productitem--title h2`).text().trim();
-             price = $(`.productitem--info`).find('.money').text().trim();
-            console.log(title);
-
-            // Looping for object id
-    
-            courseDataArray.push({title,price});
+        const w3Internships = $(".productgrid--item");
+        w3Internships.each(function () {
+            title = $(this).find('.productitem--title a').text().trim();
+            price = $(this).find('span[class="money"]').text().trim();
+            image = $(this).find('productitem--image-primary img').attr('src');
+            w3Courses.push({title, price});
+            courseTitles.push(title);
+            console.log(w3Courses);
         })
-        console.log(courseDataArray);
-
-  
 
     }
 
-    try{
+    await scrapW3schools();
 
-        scrapW3schools();
-        // res.send("Under Construction. Please check back later\n");
+    res.render("courses", {w3Courses});
 
-        
-    }
-    catch(error){
-
-        console.log(error);
-        
-    }
 })
 
 
@@ -287,7 +276,7 @@ router.get("/internships", function (req, res) {
     res.status(200).render("internships");
 });
 
-router.post("/internships", async function (req, res) {
+router.post("/internships", auth, async function (req, res) {
 
     let internshipKeyword = req.body.internshipSearch;
     const jobLocation = req.body.location;
@@ -305,7 +294,7 @@ router.post("/internships", async function (req, res) {
     let internshalaObj = [];
 
     //  Internship Titles
-    
+
     let internshalaTitles = [];
     let internshalaLocation = [];
     let internshalaDuration = [];
@@ -313,11 +302,11 @@ router.post("/internships", async function (req, res) {
 
     let extras = [];
 
-    
+
     // Internship Sources Object 
-    
+
     const internshipSources = {
-        
+
         linkedin: `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
         internshala: `https://internshala.com/internships/keywords-${internshipKeyword}/`,
         microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${internshipKeyword}&lc=in&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`,
@@ -326,19 +315,19 @@ router.post("/internships", async function (req, res) {
 
     let linkedinSource = `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`;
 
-    async function scrapData(url, containerSelector) {
-        const response = await axios.get(url);
-        const $ = cheerio.load(response.data);
+    // async function scrapData(url, containerSelector) {
+    //     const response = await axios.get(url);
+    //     const $ = cheerio.load(response.data);
 
-        const container = $(`${containerSelector}`);
-        container.each(function () {
-            title = $(this).find(".base-search-card__title").text();
-            location = $(this).find('.job-search-card__location').text()
-            listDate = $(this).find(".job-search-card__listdate").text()
-            company = $(this).find(".base-search-card__subtitle").text()
-            
-        })
-    }
+    //     const container = $(`${containerSelector}`);
+    //     container.each(function () {
+    //         title = $(this).find(".base-search-card__title").text();
+    //         location = $(this).find('.job-search-card__location').text()
+    //         listDate = $(this).find(".job-search-card__listdate").text()
+    //         company = $(this).find(".base-search-card__subtitle").text()
+
+    //     })
+    // }
 
     async function scrapLinkedin() {
         const response = await axios.get(internshipSources.linkedin);
@@ -355,17 +344,7 @@ router.post("/internships", async function (req, res) {
             // link = $(this).find(".base-card__full-link").text()
             // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
 
-            linkedinData.push(title, location, listDate, company);
-            linkedinData.forEach(function (item, index) {
-                linkedinObj[index] = item.trim();   
-            })
-
-            // const linkedinJSON = JSON.stringify(linkedinData);
-
-            // // Converting JSON to Obj for rendering
-
-            // linkedinObj = JSON.stringify(linkedinJSON);
-            console.log(linkedinObj);
+            linkedinData.push({ title, location, listDate, company });
 
         })
 
@@ -381,13 +360,14 @@ router.post("/internships", async function (req, res) {
         const internshalaInternships = $(".individual_internship");
         await internshalaInternships.each(function () {
             title = $(this).find(".company_and_premium").text();
-            location = $(this).find('.location_link').text()
+            location = $(this).find('.location_link').text();
+            jobTitle = $(this).find('.company h3').text();
             // listDate = $(this).find(".job-search-card__listdate").text()
             // link = $(this).find(".base-card__full-link").text()
-            internshalaData.push({title,location});
-
+            internshalaData.push({ title, location, jobTitle });
             internshalaTitles.push(title);
             internshalaLocation.push(location);
+            console.log(internshalaData);
 
         });
 
@@ -417,8 +397,8 @@ router.post("/internships", async function (req, res) {
     // console.log(jobLocation);
     // console.log(internshipSources.linkedin)
 
-    
-    res.render("internships", { internshalaPost, linkedinPost, internshalaTitles, internshalaData});
+
+    res.render("internships", { internshalaPost, linkedinData, internshalaTitles, internshalaData });
 
 
 })
@@ -428,27 +408,27 @@ router.get("/certifications", function (req, res) {
     res.status(200).render("certifications");
 });
 
-router.post("/certifications", function(req,res){
-    
+router.post("/certifications", function (req, res) {
+
     console.log(req);
 
     const certificationKeyword = req.body.certificationKeyword; // Getting certification keyword from the user
 
 
     const certificationSources = {
-        w3schools : `https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=${certificationKeyword}*`,
-        microsoft : `https://learn.microsoft.com/en-us/certifications/browse/?terms=${certificationKeyword}`,
+        w3schools: `https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=${certificationKeyword}*`,
+        microsoft: `https://learn.microsoft.com/en-us/certifications/browse/?terms=${certificationKeyword}`,
     }
 
 })
 
-router.get("/test", async function(req,res){
+router.get("/test", async function (req, res) {
 
-   res.status(200).render("test");
+    res.status(200).render("test");
 
 })
 
-router.post("/test", async function(req,res){
+router.post("/test", async function (req, res) {
 
     const response = await axios.get(`https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=python*`);
     console.log(response);
@@ -471,16 +451,12 @@ router.post("/jobs", async function (req, res) {
     console.log(jobKeyword);
 
     const jobSources = {
-        zipRecruiter : `https://www.ziprecruiter.com/`,
-        naukriDotCom : `https://www.naukri.com/`
+        zipRecruiter: `https://www.ziprecruiter.com/`,
+        naukriDotCom: `https://www.naukri.com/`
     }
 
     const response = await axios.get(jobSources.zipRecruiter);
     console.log(response.data);
-
-
-    
-
 
 })
 
@@ -493,7 +469,7 @@ app.get("/feedbackPage", function (req, res) {
     res.status(200).render("help/feedback");
 });
 
-app.get("/about", function(req,res){
+app.get("/about", function (req, res) {
     res.status(200).render("about.hbs");
 })
 
@@ -605,7 +581,7 @@ router.post("/scholarships", async function (req, res) {
         cards();
     }
 
-    async function scrapNSP(){    //Scrapping National Scholarship Portal
+    async function scrapNSP() {    //Scrapping National Scholarship Portal
 
         const studyPortalResponse = axios.get(scholarshipSources.nationalScholarship);
         const $ = cheerio.load(studyPortalResponse.data)
@@ -614,7 +590,7 @@ router.post("/scholarships", async function (req, res) {
 
     }
 
-    async function scholarshipsAU(){
+    async function scholarshipsAU() {
 
         const scholarshipsAuResponse = axios.get(scholarshipSources.scholarshipsAu);
         const $ = cheerio.load(scholarshipsAuResponse.data);
