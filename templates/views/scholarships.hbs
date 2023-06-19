@@ -15,62 +15,140 @@
         <h1> Scholarship Search Portal</h1>
     </div>
 
-    <div class="scholarshipPortal">
+    <center>
 
-        <form action="/scholarships" method="POST">
 
-            <h2 class="section-titles"> India's No. #1 Scholarship Search Engine </h2>
-            <br>
-            <label for="education"> Your Goal/Education </label>
 
-             <select name="educationForScholarship" id="educationForScholarship">
-                <option value="b-tech-">B-Tech</option>
-                <option value="mca">MCA</option>
-                <option value="mbbs">MBBS</option>
-                <option value="mba">MBA</option>
-                <option value="bba">BBA</option>
-                <option value="dnb">DNB</option>
-                <option value="class_i_iv">Class I-IV</option>
-                <option value="class_xii">Class XII</option>
-            </select>
-            {{!-- <input type="text" id="educationForScholarship" name="educationForScholarship"> --}}
+        <div class="scholarshipPortal">
 
-            {{!-- <label for="location"> Your Location </label>
-            <input type="text" id="locationForScholarship" name="locationForScholarship"> --}}
+            <form action="/scholarships" method="POST">
 
-            <button class="btn" type="submit"> Search </button>
-            <label for="cars">Choose a state :</label>
+                <h2 class="section-titles"> India's No. #1 Scholarship Search Engine </h2>
+                <br>
+                <label for="education"> Your Goal/Education </label>
 
-            {{!--  Yet to work  --}}
-            
-            <select name="locationForScholarship" id="locationForScholarship">
-                <option value="mercedes">All India</option>
-                <option value="gujarat">Gujarat</option>
-                <option value="assam">Assam</option>
-                <option value="kerala">Kerela</option>
-                <option value="bihar">Bihar</option>
-                <option value="audi">Himachal Pradesh</option>
-                <option value="nagaland">Nagaland</option>
-                <option value="audi">Andaman and Nicobar Islands</option>
-                <option value="odisha">Odisha</option>
-            </select>
+                <select name="educationForScholarship" id="educationForScholarship">
+                    <option value="b-tech-">B-Tech</option>
+                    <option value="mca">MCA</option>
+                    <option value="mbbs">MBBS</option>
+                    <option value="mba">MBA</option>
+                    <option value="bba">BBA</option>
+                    <option value="dnb">DNB</option>
+                    <option value="class_i_iv">Class I-IV</option>
+                    <option value="class_xii">Class XII</option>
+                </select>
+                {{!-- <input type="text" id="educationForScholarship" name="educationForScholarship"> --}}
 
-        <h2> Search by Keyword </h2>
+                {{!-- <label for="location"> Your Location </label>
+                <input type="text" id="locationForScholarship" name="locationForScholarship"> --}}
 
-        <input type="text" name="scholarshipKeyword" id="scholarshipKeyword">
-        <button class="btn" type="submit"> Search</button>
-        <button class="btn"> Clear </button>
+                <button class="btn" type="submit"> Search </button>
+                <label for="cars">Choose a state :</label>
 
-        </form>
+                {{!-- Yet to work --}}
 
-        <div class="result-filters">
+                <select name="locationForScholarship" id="locationForScholarship">
+                    <option value="mercedes">All India</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="assam">Assam</option>
+                    <option value="kerala">Kerela</option>
+                    <option value="bihar">Bihar</option>
+                    <option value="audi">Himachal Pradesh</option>
+                    <option value="nagaland">Nagaland</option>
+                    <option value="audi">Andaman and Nicobar Islands</option>
+                    <option value="odisha">Odisha</option>
+                </select>
 
-        <h4> Filters</h4>
+                <h1 class="index-para section-titles"> Search by Keyword </h2>
+
+                <input type="text" name="scholarshipKeyword" id="scholarshipKeyword">
+                <button class="btn" type="submit"> Search</button>
+                <button class="btn"> Clear </button>
+
+            </form>
+
+    </center>
+
+    <div class="resultContainer">
+        <div class="filters">
+
+            <h1 class="section-subtitles"> Filters</h1>
+
+            <h4> Sort by </h4>
+
+            <button class="btn" id="ascendingButton" onclick="sortData('asc')">Sort Ascending</button>
+            <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
+
+            <h4> Need to add: Most Relevent/Most recent</h4>
+            <br> <label> Hide/Show Internshala </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleInternshala()">
+            <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleLinkedin()">
+            <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleInternshala()">
+            <br> <label> Only Show Work from Home </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleInternshala()">
+
+        </div>
+
+        <div class="internshipData" id="filterData">
+
+            <div class="internshalaContainer">
+
+                <h1 class="section-subtitles"> Scholarship Forme Scholarships </h1>
+
+
+                {{#each internshalaData}}
+
+                <div class="internshipContainer">
+                    <span> Company Name : {{this.title}}</span><br>
+                    <span> Job Title : {{this.jobTitle}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Location : {{this.location}}</span>
+                    <button class="btn"> View </button>
+                </div>
+                {{/each}}
+
+
+
+            </div>
+
+
+            <div class="linkedinContainer">
+                <h1 class="section-subtitles"> Linkedin Internships </h1>
+
+                {{#each linkedinData}}
+
+                <div class="internshipContainer">
+                    <span> Company Name : {{this.company}}</span><br>
+                    <span> Job Title : {{this.title}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : {{this.listDate}}</span><br>
+                    <span> Internship Location : {{this.location}}</span>
+                    <button class="btn"> View </button>
+                </div>
+
+                {{/each}}
+
+               
+            </div>
+
+            <div class="topMNCsContainer">
+                <h1 class="section-subtitles"> Top Companies Internships </h1>
+
+            </div>
 
 
         </div>
 
-      
+
+
+    </div>
+
+
     </div>
 </body>
 

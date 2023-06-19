@@ -362,6 +362,7 @@ router.post("/internships", auth, async function (req, res) {
             title = $(this).find(".company_and_premium").text();
             location = $(this).find('.location_link').text();
             jobTitle = $(this).find('.company h3').text();
+            companyLogo = $(this).find('.internship_logo img')
             // listDate = $(this).find(".job-search-card__listdate").text()
             // link = $(this).find(".base-card__full-link").text()
             internshalaData.push({ title, location, jobTitle });
@@ -400,25 +401,6 @@ router.post("/internships", auth, async function (req, res) {
 
     res.render("internships", { internshalaPost, linkedinData, internshalaTitles, internshalaData });
 
-
-})
-
-router.get("/certifications", function (req, res) {
-    console.log(req);
-    res.status(200).render("certifications");
-});
-
-router.post("/certifications", function (req, res) {
-
-    console.log(req);
-
-    const certificationKeyword = req.body.certificationKeyword; // Getting certification keyword from the user
-
-
-    const certificationSources = {
-        w3schools: `https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=${certificationKeyword}*`,
-        microsoft: `https://learn.microsoft.com/en-us/certifications/browse/?terms=${certificationKeyword}`,
-    }
 
 })
 
@@ -864,7 +846,16 @@ router.get("/reportproblem", function (req, res) {
 router.get("/sitemap", function (req, res) {
     console.log("Sitemap Requested")
     res.render("help/sitemap.hbs");
-})
+});
+
+// User Profile
+
+router.get("/myprofile", auth, async function(req,res){
+    console.log(req);
+    const userName = req.user.fullName.toUpperCase();
+    res.status(200).render("userProfile.hbs", {userName});
+
+});
 
 
 //  404 error page

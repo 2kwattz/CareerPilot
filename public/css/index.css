@@ -266,7 +266,24 @@ blockquote h3:after {
     opacity: 8;
 }
 
+.cert-container {
+
+    background-image: url(/img/cover2.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 80px 10px;
+    opacity: 8;
+}
+
 .container h1,
+h3 {
+    color: black;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.certifications-container h1,
 h3 {
     color: black;
     text-align: center;
@@ -313,6 +330,13 @@ h3 {
 .image-container{
 
     margin: 10px;
+}
+
+/* Portals */
+
+.scholarshipPortal{
+    margin: auto;
+    
 }
 
 /* Dark Section */

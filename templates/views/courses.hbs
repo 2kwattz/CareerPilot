@@ -10,18 +10,24 @@
 
     {{>header}}
 
-    <h1 class="section-titles"> Courses </h1>
+    <div class="cert-container">
+        <h1 class="section-titles"> Certification Courses </h1>
+        <p class="section-para">Certifications play a crucial role in today's competitive job market and can
+            significantly enhance an individual's career prospects.</p>
+    </div>
+
 
     <form class="form-control" method="POST" action="/courses">
 
         <input type="text" placeholder="Enter training/course" name="courseKeyword">
 
-        <select name="courseLocation" id="courseLocation">
+        <select name="courseLocation" style="padding: 10px" id="courseLocation">
             <option value="Online">Online</option>
 
         </select>
 
         <button class="btn" type="submit"> Search </button>
+        <button class="btn" type="submit"> Clear </button>
     </form>
 
     <div class="resultContainer">
@@ -36,14 +42,10 @@
             <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
 
             <h4> Need to add: Most Relevent/Most recent</h4>
-            <br> <label> Hide/Show W3Schools </label> <input type="checkbox" name="internshalaToggle"
-                onchange="">
-            <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle"
-                onchange="">
-            <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle"
-                onchange="">
-            <br> <label> Only Show Work from Home </label> <input type="checkbox" name="internshalaToggle"
-                onchange="">
+            <br> <label> Hide/Show W3Schools </label> <input type="checkbox" name="internshalaToggle" onchange="">
+            <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle" onchange="">
+            <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle" onchange="">
+            <br> <label> Only Show Work from Home </label> <input type="checkbox" name="internshalaToggle" onchange="">
 
         </div>
 
