@@ -102,7 +102,7 @@ const auth = require("./middleware/auth");
 const router = new express.Router();
 
 // Defining the router
-const registrationRouter = require("./routers/signup.js");
+const registrationRouter = require("./routers/signup.js.js");
 // Registering the router
 app.use(router);
 
@@ -889,6 +889,9 @@ app.get('*', function (req, res) {
 
 
 // Server Listen
+
+app.use('/netifly/functions/server.js', router);
+module.exports.handler = serverless(app)
 
 app.listen(port, function () {
     console.log(`The server has started. Listening on port ${port}`);
