@@ -241,6 +241,10 @@ router.post("/courses",auth, async function (req, res) {
     const microsoftCourses = [];
     let courseTitles = [];
 
+    // Error Message incase course is not available
+
+    let cError = "No such courses found";
+
     const courseSources = {
         indeed: `https://www.indeed.com/certifications/s?q=${courseKeyword}&gv=&l=${courseLocation}&q_ct=cert&type=program&from=SearchPageSearchBar`,
         coursera: `https://www.coursera.org/search?query=${courseKeyword}&index=prod_all_launched_products_term_optimization`,
@@ -248,7 +252,6 @@ router.post("/courses",auth, async function (req, res) {
         microsoft: `https://learn.microsoft.com/en-us/certifications/browse/?terms=${courseKeyword}`
 
     }
-
 
     async function scrapW3schools() {
         const response = await axios.get(courseSources.w3schools);
@@ -269,26 +272,29 @@ router.post("/courses",auth, async function (req, res) {
     await scrapW3schools();
 
     async function microsoftScrapper(){
-        const response = await axios.get(courseSources.microsoft);
-        const $ = cheerio.load(response.data);
 
-        const microsoftInternships = $(".card");
-        microsoftInternships.each(function(){
-            title = $(this).find(".card-title").text().trim();
-            image = $(this).find(".card-template-icon a").attr('href');
-            microsoftCourses.push({title,image});
-            console.log(microsoftCourses);
-          
-        });
-        console.log(microsoftCourses);
+        try{
+
+            const response = await axios.get(courseSources.microsoft);
+            const $ = cheerio.load(response.data);
+    
+            const microsoftInternships = $(".card");
+            microsoftInternships.each(function () {
+                title = $(this).find(".card-title").text().trim();
+                image = $(this).find(".card-template-icon a").attr('href');
+                microsoftCourses.push({title,image});
+                console.log(microsoftCourses);
+            });
+
+        }
+        catch(error){
+
+            console.log(error);       
+        }
     }
-
     await microsoftScrapper();
-
     res.render("courses", {w3Courses, microsoftCourses});
-
 })
-
 
 router.get("/internships", function (req, res) {
     console.log(req);
@@ -417,9 +423,7 @@ router.post("/internships", auth, async function (req, res) {
     // console.log(jobLocation);
     // console.log(internshipSources.linkedin)
 
-
     res.render("internships", { internshalaPost, linkedinData, internshalaTitles, internshalaData });
-
 
 })
 
@@ -447,19 +451,49 @@ router.get("/jobs", function (req, res) {
 });
 
 router.post("/jobs", async function (req, res) {
-    console.log(req);
+
+    // Form data taken from User
+
     const jobKeyword = req.body.jobKeyword;
+    const jobLocation = req.body.jobLocation;
     console.log(jobKeyword);
 
+    // Storing Axios Response
+    
+    const naukriDotComJobs = []
+
+    // Job Scraping Sources
+
     const jobSources = {
-        zipRecruiter: `https://www.ziprecruiter.com/`,
-        naukriDotCom: `https://www.naukri.com/`,
+        zipRecruiter: `https://www.ziprecruiter.in/jobs/search?q=${jobKeyword}&l=${jobLocation}&d=`,
+        naukriDotCom: `https://www.naukri.com/web-development-jobs?k=${jobKeyword}`,
         microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${jobKeyword}&lc=India&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`
     }
 
-    const response = await axios.get(jobSources.microsoft);
-    console.log(response.data);
-    const $ = cheerio.load(response.data);
+    // Scrapping NaukriDotCom
+
+    async function naukriDotCom() {
+        const response = await axios.get(`https://www.naukri.com/${jobKeyword}-jobs?k=${jobKeyword}`);
+        console.log(response.data);
+        const $ = cheerio.load(response.data);
+        console.log("check1");
+        const naukriJobs = $(".jobTupleHeader");
+        naukriJobs.each(function () {
+            title = $(this).find('.title ').text().trim();
+            console.log("check2");
+            company = $(this).find('.companyInfo a').text().trim();
+            console.log("check3");
+          
+            naukriDotComJobs.push({title, company});
+            console.log("check4");
+            console.log(naukriDotComJobs);
+        })
+
+    }
+
+    await naukriDotCom();
+
+    // Scrapping ZipRecruiter
 
 })
 

@@ -16,7 +16,6 @@
             significantly enhance an individual's career prospects.</p>
     </div>
 
-
     <form class="form-control" method="POST" action="/courses">
 
         <input type="text" placeholder="Enter training/course" name="courseKeyword">
@@ -68,11 +67,26 @@
                 </div>
                 {{/each}}
 
-
-
-
             </div>
 
+            <div class="internshalaContainer">
+
+                <h1 class="section-subtitles"> Microsoft Certification Courses </h1>
+
+                {{#each microsoftCourses}}
+
+                <div class="internshipContainer">
+                    <span> Course Name : {{this.title}}</span><br>
+                    <span> Price : {{this.image}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Location : </span>
+                    <button class="btn"> View </button>
+                </div>
+                {{/each}}
+
+            </div>
         </div>
 
     </div>
