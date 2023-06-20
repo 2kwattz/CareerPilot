@@ -57,6 +57,10 @@ securePassword("roshanisdashing"); // Just an example to see if its working or n
 
 const nodemailer = require('nodemailer');
 
+// Cloud Deployment
+
+const serverless = require('serverless-http');
+
 // API Based Modules
 
 // const NewsAPI = require('newsapi');
@@ -892,7 +896,3 @@ app.get('*', function (req, res) {
 
 app.use('/netifly/functions/server.js', router);
 module.exports.handler = serverless(app)
-
-app.listen(port, function () {
-    console.log(`The server has started. Listening on port ${port}`);
-})
