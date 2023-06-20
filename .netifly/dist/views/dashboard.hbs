@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {{!-- Header Section --}}
+
+    {{>headerMeta}}
+
+    {{!-- Stylesheet linking
+    --}}
+    <link rel="stylesheet" href="/css/dashboardPage/newsContainer.css">
+    <title>Dashboard : CareerPilot</title>
+
+    <script>
+
+        function loadMore() {
+
+            let button = document.getElementById('loadMore');
+            let articlesToShow = 6;
+            let articles = document.getElementsByClassName("newsContainerDashboard");
+
+            for (let i = 0; i <= articles.length; i++) {
+
+                if (i < articlesToShow) {
+                    articles[i].style.display = "block"
+                }
+                else {
+
+                    articles[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    {{!-- Header Navbar --}}
+
+    {{>header}}
+
+    {{!-- Dashboard Container --}}
+
+
+    <div class="dashboard-group">
+
+        {{!-- Side Navbar --}}
+
+        <nav class="sidebar">
+
+
+            <ul class="sidebar-nav">
+
+                <div class="dropdown">
+
+                    <button class="sidebar-btn"> Resources </button>
+
+                </div>
+
+                <div class="dropdown-content">
+
+                    <li><a href="/dashboard">Dashboard Home</a></li>
+                    <li><a href="#newsContainerDashboard">News Articles</a></li>
+                    <li><a href="#">Internships</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Certifications</a></li>
+                    <li><a href="#">Hackathons</a></li>
+                    <li><a href="#coursesContainerDashboard">Courses</a></li>
+                    <li><a href="#">Certifications</a></li>
+                </div>
+                <li><a href="#">Help</a></li>
+                <div class="dropdown">
+                    <button class="sidebar-btn"> Help </button>
+                </div>
+                <div class="dropdown-content">
+                    <a href="#">Language</a>
+                    <a href="#">Report A Problem</a>
+                    <a href="#">Feedback</a>
+                    <a href="#">Contact Us</a>
+                </div>
+                <div class="dropdown">
+                    <button class="sidebar-btn"> Settings </button>
+                </div>
+                <div class="dropdown-content">
+                    <a href="/myprofile">My Profile</a>
+                    <a href="#">Account Settings</a>
+                    <a href="#">Security</a>
+                    <a href="#">Notification Settings</a>
+                </div>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+
+
+        <div class="dashboard-container">
+
+            <section class="dashboard-section welcome">
+
+                <h1 class="section-titles"> Welcome, {{userName}} </h1>
+
+                <p class="section-para index-para">
+                    Welcome to CareerPilot, We are excited to have you on board and hope that our platform can help you
+                    achieve your
+                    career goals. CareerPilot your ultimate destination for students seeking internships, jobs, and
+                    scholarship opportunities. We understand the challenges of navigating multiple websites to find
+                    the perfect opportunity. That's why we have created a centralized platform that brings together
+                    internship listings, job openings, and comprehensive scholarship details from
+                    various sources, all in one place
+
+                <blockquote>
+                    <h3> "Success is not just about reaching your destination but the resources that propel you forward
+                        on your career journey." ~ ChatGPT3 </h3>
+                </blockquote>
+                </p>
+
+            </section>
+
+            <section class="dashboard-section whatshot">
+
+                <div class="dashboardItems" id="newsContainerDashboard"></div>
+
+                <center>
+
+                    <img src="/img/news.jpg" height="30%" width="60%">
+
+                </center>
+
+                <h2 class="section-titles"> What's hot? </h2>
+
+                <p class="section-para index-para">In today's global economy, multinational corporations (MNCs) play a significant
+                    role in shaping the business
+                    landscape. These companies operate in multiple countries, employ thousands of people, and generate
+                    billions
+                    of dollars in revenue. As a student, it's essential to stay up-to-date with the latest news and
+                    trends in
+                    the MNC world to gain a better understanding of the global business environment. By following the
+                    news
+                    related to top MNCs such as Amazon, Microsoft, Google, and others, you can gain insights into their
+                    strategies, innovations, and challenges.</p>
+
+
+
+                <div class="headlines">
+
+                    {{#each newsResponse.data.articles}}
+
+                    {{!-- <p> Title : {{this.title}}</p> --}}
+                    {{!-- <p> <img src="{{this.urlToImage}}"></p> --}}
+                    {{!-- <button class="btn"> <a href="{{this.url}}"> Read More </a></button> --}}
+
+                    {{>newsContainerDashboard}}
+
+
+                    {{/each}}
+
+
+
+                </div>
+                <br>
+                <button class="btn" id="loadMore" onclick="loadMore()"> Load More </button>
+
+            </section>
+            {{!-- Suggestions / Instructions --}}
+
+            <section class="dashboard-section whatshot">
+
+                <div class="dashboardItems" id="suggestionsContainerDashboard"></div>
+
+                <h1 class="section-titles"> Learn the best Career Roadmaps Now </h1>
+
+                <p class="section-para index-para">
+                    Lorem ipsum dolor sit amet consectetur.
+                </p>
+
+                  <div class="image-gallery">
+
+                <img src="/img/roadmaps/cybersec.jpg">
+                <img src="/img/roadmaps/ai.jpg">
+                <img src="/img/roadmaps/web.jpg">
+            </div>
+
+              <div class="image-gallery">
+
+                <img src="/img/roadmaps/cybersec.jpg">
+                <img src="/img/roadmaps/ai.jpg">
+                <img src="/img/roadmaps/web.jpg">
+            </div>
+
+              <div class="image-gallery">
+
+                <img src="/img/roadmaps/cybersec.jpg">
+                <img src="/img/roadmaps/ai.jpg">
+                <img src="/img/roadmaps/web.jpg">
+            </div>
+
+            </section>
+
+            {{!-- Courses Section 3 --}}
+
+            <div class="dashboardItems" id="coursesContainerDashboard"></div>
+
+            <h1 class="section-titles"> Courses </h1>
+
+            <p class="section-para index-para"> The IT industry is constantly evolving, and staying up-to-date with the latest technologies and trends
+                is
+                essential for anyone looking to build a career in this field. IT industry courses can provide valuable
+                training
+                and knowledge to help you stay ahead of the curve and advance your career.</p>
+
+            <div class="dashboard-subitems">
+                <h3> All available courses</h3>
+            </div>
+
+            <div class="dashboard-subitems">
+                Search Courses from various portals
+
+                <br><button class="btn"> <a href="/courses"> Search Courses</a></button>
+            </div>
+
+            <div class="dashboard-subitems">
+                Purchase Courses
+
+                <br><button class="btn"> <a href="/purchaseCourses"> Purchase Courses </a></button>
+            </div>
+
+
+
+            {{!-- Internships Section 4 --}}
+
+            <div class="dashboardItems" id="internshipContainerDashboard">
+
+                <h1 class="section-titles"> Internships </h1>
+
+
+
+                <div class="dashboard-subitems">
+                    Search Internships from various portals
+
+                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Search internships from top MNCs
+
+                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
+                </div>
+
+            </div>
+
+            {{!-- Certification Section 5 --}}
+
+             <div class="dashboardItems" id="internshipContainerDashboard">
+
+                <h1 class="section-titles"> Certifications </h1>
+
+
+
+                <div class="dashboard-subitems">
+                    Search Internships from various portals
+
+                    <br><button class="btn"> <a href="/internships"> Search Certifications</a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Search internships from top MNCs
+
+                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
+                </div>
+
+            </div>
+
+            {{!-- Settings Options // For the side navbar --}}
+
+
+            {{!-- TOP MNCS Locationwise Job Vaccancies --}}
+
+
+            <div class="dashboardItems" id="TopMNCsContainerDashboard">
+
+                <h2> TOP MNCs </h2>
+
+
+
+
+                <div class="dashboard-subitems">
+                    Vaccancies - Work from home
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+            </div>
+
+            <div class="dashboardItems" id="internshipContainerDashboard">
+
+                <h2> Internships </h2>
+
+
+
+                <div class="dashboard-subitems">
+                    Search Internships from various portals
+
+                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Search internships from top MNCs
+
+                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
+                </div>
+
+            </div>
+
+            {{!-- Settings Options // For the side navbar --}}
+
+            <div class="dashboardItems" id="settingsContainerDashboard">
+
+                <h2> User Settings </h2>
+
+
+
+
+                <div class="dashboard-subitems">
+                    Switch Dark/Light Mode
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+            </div>
+
+
+            <div class="dashboardItems" id="internshipContainerDashboard">
+
+                <h2> Internships </h2>
+
+
+
+                <div class="dashboard-subitems">
+                    Search Internships from various portals
+
+                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Search internships from top MNCs
+
+                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
+                </div>
+
+            </div>
+
+            {{!-- Settings Options // For the side navbar --}}
+
+            <div class="dashboardItems" id="settingsContainerDashboard">
+
+                <h2> User Settings </h2>
+
+
+
+
+                <div class="dashboard-subitems">
+                    Switch Dark/Light Mode
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+            </div>
+
+
+            <div class="dashboardItems" id="internshipContainerDashboard">
+
+                <h2> Internships </h2>
+
+
+
+                <div class="dashboard-subitems">
+                    Search Internships from various portals
+
+                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Search internships from top MNCs
+
+                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
+                </div>
+
+            </div>
+
+            {{!-- Settings Options // For the side navbar --}}
+
+            <div class="dashboardItems" id="settingsContainerDashboard">
+
+                <h2> User Settings </h2>
+
+
+
+
+                <div class="dashboard-subitems">
+                    Switch Dark/Light Mode
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+                <div class="dashboard-subitems">
+                    Account Settings
+
+                    <br><button class="btn"> <a href="/internships"> Go </a></button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    </div>
+    </div>
+    </div>
+
+    {{>footer}}
+
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerMeta}}
+    <title>Jobs : CareerPilot </title>
+</head>
+<body>
+    {{>header}}
+
+    <div class="jobContainer">
+
+    <h1 class="section-titles"> Job Search </h1>
+
+    </div>
+
+
+    <form class="form-control" action="/jobs" method="POST">
+
+    <label for="jobKeyword"> Job Keyword </label>
+    <input type="text" placeholder="Enter Job Keyword" name="jobKeyword" id="jobKeyword">
+    <button class="btn" type="submit"> Search Jobs </button>
+    
+    <div class="jobFilters">
+
+        <p> Work Mode </p>
+
+        Work from office <input type="checkbox"> <br>
+        Hybrid <input type="checkbox"> <br>
+        Remote/WFH <input type="checkbox"> <br>
+    </div>
+    </form>
+</body>
+</html>

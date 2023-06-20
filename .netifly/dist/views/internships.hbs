@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>headerMeta}}
+    {{>header}}
+    <title>Internships Search : CarrerPilot</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <p class="summary">
+            Search for any internships of your choice based on your skillsets. Use filters accordingly whenever required
+        </p>
+
+    </div>
+
+    <center>
+        <div class="section-2">
+
+            <form class="form-control" method="POST" action="/internships">
+
+                <input type="text" name="location" placeholder="Enter City">
+                <input type="text" name="internshipSearch" placeholder="For eg : Web Development">
+                <button class="btn" id="searchInternshipBtn" type="submit"> Search Internships </button>
+                <button class="btn"> Clear </button>
+
+            </form>
+        </div>
+
+    </center>
+
+    <div class="resultContainer">
+        <div class="filters">
+
+            <h1 class="section-subtitles"> Filters</h1>
+
+            <h4> Sort by </h4>
+
+            <button class="btn" id="ascendingButton" onclick="sortData('asc')">Sort Ascending</button>
+            <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
+
+            <h4> Need to add: Most Relevent/Most recent</h4>
+            <br> <label> Hide/Show Internshala </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleInternshala()">
+            <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleLinkedin()">
+            <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleInternshala()">
+            <br> <label> Only Show Work from Home </label> <input type="checkbox" name="internshalaToggle"
+                onchange="toggleInternshala()">
+
+        </div>
+
+        <div class="internshipData" id="filterData">
+
+            <div class="internshalaContainer">
+
+                <h1 class="section-subtitles"> Internshala Internships </h1>
+
+
+                {{#each internshalaData}}
+
+                <div class="internshipContainer">
+                    <span> Company Name : {{this.title}}</span><br>
+                    <span> Job Title : {{this.jobTitle}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Location : {{this.location}}</span>
+                    <button class="btn"> View </button>
+                </div>
+                {{/each}}
+
+
+
+            </div>
+
+
+            <div class="linkedinContainer">
+                <h1 class="section-subtitles"> Linkedin Internships </h1>
+
+                {{#each linkedinData}}
+
+                <div class="internshipContainer">
+                    <span> Company Name : {{this.company}}</span><br>
+                    <span> Job Title : {{this.title}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : {{this.listDate}}</span><br>
+                    <span> Internship Location : {{this.location}}</span>
+                    <button class="btn"> View </button>
+                </div>
+
+                {{/each}}
+
+            {{internshalaPost}}
+
+
+            {{linkedinPost}}
+            </div>
+
+              <div class="topMNCsContainer">
+                <h1 class="section-subtitles"> Top Companies Internships </h1>
+          
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+    <script>
+
+        const dataContainer = document.getElementById('filterData');
+
+        function toggleInternshala() {
+
+            const internshalaContainer = document.getElementsByClassName("internshalaContainer")[0];
+            if (internshalaContainer.style.display !== 'none') {
+                internshalaContainer.style.display = 'none';
+            } else {
+                internshalaContainer.style.display = 'block';
+            }
+        }
+
+        function toggleLinkedin(){
+
+            const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
+               if (linkedinContainer.style.display !== 'none') {
+                linkedinContainer.style.display = 'none';
+            } else {
+                linkedinContainer.style.display = 'block';
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

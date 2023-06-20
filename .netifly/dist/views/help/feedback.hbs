@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>headerMeta}}
+    <title>Feedback Form : CarrerPilot </title>
+</head>
+
+<body>
+    {{>header}}
+
+    <h1> Feedback Form </h1>
+
+    <div>
+
+        <form action="/feedback" method="POST">
+            <input type="email" name="email" id="email" placeholder="Enter your email">
+            <input type="fullName" name="fullName" id="fullName" placeholder="Enter your full name">
+            <textarea id="feedbackForm" name="feedbackForm" rows="4" cols="50"></textarea>
+
+            <button class="btn" name="submitFeedback" type="submit" onclick="feedbackResponse();"> Submit </button>
+        </form>
+    </div>
+
+    {{feedbackResponseText}}
+</body>
+
+<script>
+
+    function feedbackResponse() {
+        alert("Thank you so much for your valuable feedback!");
+    }
+</script>
+
+</html>
