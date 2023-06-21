@@ -297,7 +297,7 @@ h3 {
     height: 30px;
     display: flex;
     justify-content: last baseline;
-    padding: 10px;
+    padding: 30px;
 }
 
 /* INDEX PAGE */
@@ -427,6 +427,18 @@ h3 {
     text-align: center;
     margin: 20px 0px;
 
+}
+
+.form-reg-control{
+
+    display: inline-block;
+    width: 40%;
+    text-align: center;
+    margin: 30px;
+}
+
+.form-reg-control input{
+padding: 5px;
 }
 
 .form-control input{

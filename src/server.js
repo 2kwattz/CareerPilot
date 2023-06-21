@@ -39,6 +39,10 @@ const jwt = require('jsonwebtoken'); // Importing JWT Library
 const cookieParser = require("cookie-parser"); // For JWT Verification
 app.use(cookieParser()); // Initializing CookieParser Middleware
 
+// Proxy Agent for using proxies in Axios Web Scrapping 
+
+// const ProxyAgent = require('axios-proxy-agent');
+
 
 // Hashing Password
 
@@ -138,6 +142,15 @@ const scholarshipWebsites = [
 console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${process.env.SECRET_KEY}\n`);
 
 
+// HEADERS for Mimicing a Real User in Web Scraping
+
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Referer': 'https://www.google.com/',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Cookie': 'cookie_name1=cookie_value1; cookie_name2=cookie_value2'
+};
 // Routes
 
 // Index Home Page
@@ -233,7 +246,7 @@ router.get("/courses", function (req, res) {
     res.status(200).render("courses");
 })
 
-router.post("/courses",auth, async function (req, res) {
+router.post("/courses", auth, async function (req, res) {
 
     const courseKeyword = req.body.courseKeyword;
     const courseLocation = req.body.courseLocation;
@@ -262,7 +275,7 @@ router.post("/courses",auth, async function (req, res) {
             title = $(this).find('.productitem--title a').text().trim();
             price = $(this).find('span[class="money"]').text().trim();
             image = $(this).find('productitem--image-primary img').attr('src');
-            w3Courses.push({title, price});
+            w3Courses.push({ title, price });
             courseTitles.push(title);
             // console.log(w3Courses);
         })
@@ -271,29 +284,29 @@ router.post("/courses",auth, async function (req, res) {
 
     await scrapW3schools();
 
-    async function microsoftScrapper(){
+    async function microsoftScrapper() {
 
-        try{
+        try {
 
             const response = await axios.get(courseSources.microsoft);
             const $ = cheerio.load(response.data);
-    
+
             const microsoftInternships = $(".card");
             microsoftInternships.each(function () {
                 title = $(this).find(".card-title").text().trim();
                 image = $(this).find(".card-template-icon a").attr('href');
-                microsoftCourses.push({title,image});
+                microsoftCourses.push({ title, image });
                 console.log(microsoftCourses);
             });
 
         }
-        catch(error){
+        catch (error) {
 
-            console.log(error);       
+            console.log(error);
         }
     }
     await microsoftScrapper();
-    res.render("courses", {w3Courses, microsoftCourses});
+    res.render("courses", { w3Courses, microsoftCourses });
 })
 
 router.get("/internships", function (req, res) {
@@ -417,13 +430,11 @@ router.post("/internships", auth, async function (req, res) {
 
     await scrapLinkedin();
 
-    const internshalaPost = "<h1> Internshala Data </h1> \n " + internshalaData;
-    const linkedinPost = " <h1> Linkedin Data </h1> \n" + linkedinData;
     // console.log(internshalaData);
     // console.log(jobLocation);
     // console.log(internshipSources.linkedin)
 
-    res.render("internships", { internshalaPost, linkedinData, internshalaTitles, internshalaData });
+    res.render("internships", { linkedinData, internshalaData });
 
 })
 
@@ -450,7 +461,7 @@ router.get("/jobs", function (req, res) {
     res.status(200).render("jobs");
 });
 
-router.post("/jobs", async function (req, res) {
+router.post("/jobs", auth, async function (req, res) {
 
     // Form data taken from User
 
@@ -459,34 +470,73 @@ router.post("/jobs", async function (req, res) {
     console.log(jobKeyword);
 
     // Storing Axios Response
-    
-    const naukriDotComJobs = []
+
+    const naukriDotComJobs = []  // Storing NaukriDotCom Data
+
+    const zrJobsData = [];  // Storing ZipRecruiter Data
+
+    const linkedinData = []; // Storing Linkedin Data
+
+    const microsoftData = []; // Scrapping Microsoft
+
+    const jobRapidoData = []; // Scrapping Job Rapido
+
+
 
     // Job Scraping Sources
 
     const jobSources = {
-        zipRecruiter: `https://www.ziprecruiter.in/jobs/search?q=${jobKeyword}&l=${jobLocation}&d=`,
+        zipRecruiter: `https://www.ziprecruiter.in/jobs/search?q=${jobKeyword}&l=Vadodara%2C+India&lat=22.3&long=73.2&d=`,
         naukriDotCom: `https://www.naukri.com/web-development-jobs?k=${jobKeyword}`,
-        microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${jobKeyword}&lc=India&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`
+        microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${jobKeyword}&lc=India&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`,
+        linkedin: `https://www.linkedin.com/jobs/search?keywords=${jobKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
+        jobRapido: `https://in.jobrapido.com/?w=${jobKeyword}&l=india&r=auto&shm=all`
     }
+
+    // Scrapping LinkedIn
+
+    async function scrapLinkedin() {
+        const response = await axios.get(jobSources.linkedin, { headers });
+
+        const $ = cheerio.load(response.data);
+
+        const linkedinInternships = $(".base-card");
+        linkedinInternships.each(function () {
+            title = $(this).find(".base-search-card__title").text();
+            location = $(this).find('.job-search-card__location').text().trim()
+            listDate = $(this).find(".job-search-card__listdate").text().trim()
+            company = $(this).find(".base-search-card__subtitle").text().trim();
+            image = $(this).find("")
+
+            // link = $(this).find(".base-card__full-link").text()
+            // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
+
+            linkedinData.push({ title, location, listDate, company });
+            // console.log(linkedinData)
+
+        })
+
+    }
+
+    await scrapLinkedin()
 
     // Scrapping NaukriDotCom
 
     async function naukriDotCom() {
-        const response = await axios.get(`https://www.naukri.com/${jobKeyword}-jobs?k=${jobKeyword}`);
-        console.log(response.data);
+        const response = await axios.get(jobSources.naukriDotCom, { headers });
+        // console.log(response.data);
         const $ = cheerio.load(response.data);
         console.log("check1");
         const naukriJobs = $(".jobTupleHeader");
         naukriJobs.each(function () {
-            title = $(this).find('.title ').text().trim();
+            title = $(this).find('.title').text().trim();
             console.log("check2");
             company = $(this).find('.companyInfo a').text().trim();
             console.log("check3");
-          
-            naukriDotComJobs.push({title, company});
+
+            naukriDotComJobs.push({ title, company });
             console.log("check4");
-            console.log(naukriDotComJobs);
+            // console.log(naukriDotComJobs);
         })
 
     }
@@ -495,7 +545,80 @@ router.post("/jobs", async function (req, res) {
 
     // Scrapping ZipRecruiter
 
-})
+    async function scrapZR() {
+
+        // Sending Axios request
+
+        try{
+            
+            const response = await axios.get(jobSources.zipRecruiter, { headers });
+            // console.log(response.data);
+            const $ = cheerio.load(response.data);
+            console.log("check1");
+            const zrJobs = $(".jobList");
+            zrJobs.each(function () {
+                title = $(this).find('.jobList-title strong').text().trim();
+                console.log("check2");
+                company = $(this).find('.jobList-introMeta li').text().trim();
+                console.log("check3");
+    
+                zrJobsData.push({ title, company });
+                console.log(zrJobsData);
+                // console.log(zrJobsData);
+            })
+        }
+
+        catch(error){
+            console.log(error);
+        }
+
+
+    }
+
+     await scrapZR();
+
+    async function scrapMicrosoft() {
+
+        const response = await axios.get(jobSources.microsoft, { headers });
+     
+        const $ = cheerio.load(response.data);
+        console.log("check1");
+        const naukriJobs = $(".jobTupleHeader");
+        naukriJobs.each(function () {
+            title = $(this).find('.title').text().trim();
+            console.log("check2");
+            company = $(this).find('.companyInfo a').text().trim();
+            console.log("check3");
+
+            naukriDotComJobs.push({ title, company });
+            console.log("check4");
+            // console.log(naukriDotComJobs);
+        })
+    }
+
+    // JobRapido Scrapper
+
+    async function scrapJobRapido() {
+
+        const response = await axios.get(jobSources.jobRapido, { headers });
+        // console.log(response.data);
+        const $ = cheerio.load(response.data);
+        console.log("check1");
+        const jrJobs = $(".result-item");
+        jrJobs.each(function () {
+            title = $(this).find('.result-item__title').text().trim();
+            company = $(this).find('.result-item__company').text().trim();
+
+            jobRapidoData.push({ title, company });
+          
+            // console.log(jobRapidoData);
+        });
+
+        res.status(200).render("jobs", { linkedinData, jobRapidoData });
+    }
+
+    scrapJobRapido()
+});
 
 router.get("/hackathons", function (req, res) {
     console.log(req);
@@ -905,10 +1028,10 @@ router.get("/sitemap", function (req, res) {
 
 // User Profile
 
-router.get("/myprofile", auth, async function(req,res){
+router.get("/myprofile", auth, async function (req, res) {
     console.log(req);
     const userName = req.user.fullName.toUpperCase();
-    res.status(200).render("userProfile.hbs", {userName});
+    res.status(200).render("userProfile.hbs", { userName });
 
 });
 
