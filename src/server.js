@@ -122,10 +122,6 @@ const verificationData = require('./models/userVerification');
 // Unique String for email verification
 
 const {v4 : uuidv4} = require("uuid"); // Fetching UUID's sub model named 'Version 4'
-
-
-
-
 const { response } = require('express');
 
 // Nodemailer Controller Initialization
@@ -135,6 +131,30 @@ const sendMail = require("./controllers/sendMail");  // Importing Send Mail Cont
 // Send Mail Route
 
 app.get("/mail", sendMail);
+
+// Nodemailer Transporter for User Email Verification
+
+let transporter = nodemailer.createTransport({
+
+    service: "gmail",
+        auth: {
+            user: process.env.AUTH_EMAIL,
+            pass: process.env.AUTH_PASS,
+        }
+})
+
+// Testing NodeMailer Transporter
+
+transporter.verify(function(error, success){
+    if(error){
+        console.log(error);
+    }
+
+    else{
+
+        console.log("Nodemailer is Ready for Messages! ")
+    }
+})
 
 
 // Initalize Scrapers
@@ -798,7 +818,7 @@ app.post("/contactus", async function (req, res) {
 
     // Connection with SMTP Server
 
-    let transporter = await nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
 
         host: "smtp.ethereal.email",
         port: 587,
