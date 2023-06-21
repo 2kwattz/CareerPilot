@@ -114,6 +114,18 @@ app.use(router);
 const loginData = require('./models/login')
 const feedbackData = require('./models/feedback')
 const registrationData = require('./models/registration');
+
+// User Verification Schema (For User's email verification)
+
+const verificationData = require('./models/userVerification');
+
+// Unique String for email verification
+
+const {v4 : uuidv4} = require("uuid"); // Fetching UUID's sub model named 'Version 4'
+
+
+
+
 const { response } = require('express');
 
 // Nodemailer Controller Initialization
@@ -122,7 +134,8 @@ const sendMail = require("./controllers/sendMail");  // Importing Send Mail Cont
 
 // Send Mail Route
 
-app.get("/mail", sendMail)
+app.get("/mail", sendMail);
+
 
 // Initalize Scrapers
 
