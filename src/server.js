@@ -115,13 +115,23 @@ const loginData = require('./models/login')
 const feedbackData = require('./models/feedback')
 const registrationData = require('./models/registration');
 
+// HEADERS declared for Mimicing Real User while Web Scraping
+
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Referer': 'https://www.google.com/',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Cookie': 'cookie_name1=cookie_value1; cookie_name2=cookie_value2'
+};
+
 // User Verification Schema (For User's email verification)
 
-const verificationData = require('./models/userVerification');
+const userVerification = require('./models/userVerification');
 
 // Unique String for email verification
 
-const {v4 : uuidv4} = require("uuid"); // Fetching UUID's sub model named 'Version 4'
+const { v4: uuidv4 } = require("uuid"); // Fetching UUID's sub model named 'Version 4'
 const { response } = require('express');
 
 // Nodemailer Controller Initialization
@@ -137,25 +147,32 @@ app.get("/mail", sendMail);
 let transporter = nodemailer.createTransport({
 
     service: "gmail",
-        auth: {
-            user: process.env.AUTH_EMAIL,
-            pass: process.env.AUTH_PASS,
-        }
+    auth: {
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASSWORD,
+    }
 })
 
 // Testing NodeMailer Transporter
 
-transporter.verify(function(error, success){
-    if(error){
-        console.log(error);
+transporter.verify(function (error, success) {
+
+    if (error) {
+
+        // Error Messages
+
+        console.log("\nHouston!! We Have a problem!!\n Sergie Arkhpov, Fetch me the error!!\n");
+        console.log(`Roger Houston! \n ErrorCode : ${error.code}, \n ErrorResponse: ${error.response} \n Error Command ${error.command} \n`);
+        console.log("Roger Sergie Arkhpov Over\n ");
     }
 
-    else{
+    else {
+
+        // Nodemailer Test Message
 
         console.log("Nodemailer is Ready for Messages! ")
     }
 })
-
 
 // Initalize Scrapers
 
@@ -175,15 +192,7 @@ const scholarshipWebsites = [
 console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${process.env.SECRET_KEY}\n`);
 
 
-// HEADERS for Mimicing a Real User in Web Scraping
 
-const headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Referer': 'https://www.google.com/',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-    'Cookie': 'cookie_name1=cookie_value1; cookie_name2=cookie_value2'
-};
 // Routes
 
 // Index Home Page
@@ -194,9 +203,9 @@ router.get("/", async function (req, res) {
 
     const companiesSource = `https://content.techgig.com/technology/top-10-indian-it-companies-and-their-revenue-in-2022/articleshow/96445880.cms`;
 
-    let companiesTitle = [];
-    let companiesLocation = [];
-    let companiesRev = [];
+
+    let companiesData = [];
+    
 
     //  Sending request to scrap the companies data 
 
@@ -212,12 +221,13 @@ router.get("/", async function (req, res) {
             // listDate = $(this).find(".job-search-card__listdate").text()
             // company = $(this).find(".base-search-card__subtitle").text()
 
-            companiesTitle.push(title);
+            // Pushing Scrapped Title and Location into an Array
 
+            companiesData.push({title,location});
 
-            console.log(companiesTitle);
+            // Consoling companiesData for testing
+            console.log(companiesData);
         })
-
 
     }
 
@@ -229,17 +239,12 @@ router.get("/", async function (req, res) {
     //     // Array of data
 
     //     // const companyTitles = 
-
-
     // }
     // catch{
-
     // }
-
     // scrapCompanies();
 
-
-    res.render("index");
+    res.status(200).render("index");
     app.set('title', 'CareerPilot : Home Page');
 });
 
@@ -268,7 +273,7 @@ router.get("/dashboard", auth, async function (req, res) {
 
     console.log(newsResponse.data.articles);
 
-    res.render("dashboard", { userName, newsResponse });
+    res.status(200).render("dashboard", { userName, newsResponse });
 })
 
 router.get("/signup", function (req, res) {
@@ -281,8 +286,12 @@ router.get("/courses", function (req, res) {
 
 router.post("/courses", auth, async function (req, res) {
 
+    // Fetching Course Details from the user
     const courseKeyword = req.body.courseKeyword;
     const courseLocation = req.body.courseLocation;
+
+    // Arrays to store the fetched data
+
     const w3Courses = [];
     const microsoftCourses = [];
     let courseTitles = [];
@@ -291,13 +300,16 @@ router.post("/courses", auth, async function (req, res) {
 
     let cError = "No such courses found";
 
+    // URLs of the Course Sources
+
     const courseSources = {
         indeed: `https://www.indeed.com/certifications/s?q=${courseKeyword}&gv=&l=${courseLocation}&q_ct=cert&type=program&from=SearchPageSearchBar`,
         coursera: `https://www.coursera.org/search?query=${courseKeyword}&index=prod_all_launched_products_term_optimization`,
         w3schools: `https://campus.w3schools.com/search?type=article%2Cpage%2Cproduct&q=${courseKeyword}*+product_type%3ACourse`,
         microsoft: `https://learn.microsoft.com/en-us/certifications/browse/?terms=${courseKeyword}`
-
     }
+
+    // Scrapping W3Schools Certifications
 
     async function scrapW3schools() {
         const response = await axios.get(courseSources.w3schools);
@@ -312,10 +324,11 @@ router.post("/courses", auth, async function (req, res) {
             courseTitles.push(title);
             // console.log(w3Courses);
         })
-
     }
 
     await scrapW3schools();
+
+    // Scrapping Microsoft Certifications
 
     async function microsoftScrapper() {
 
@@ -338,8 +351,10 @@ router.post("/courses", auth, async function (req, res) {
             console.log(error);
         }
     }
+
     await microsoftScrapper();
-    res.render("courses", { w3Courses, microsoftCourses });
+
+    res.status(200).render("courses", { w3Courses, microsoftCourses });
 })
 
 router.get("/internships", function (req, res) {
@@ -386,19 +401,8 @@ router.post("/internships", auth, async function (req, res) {
 
     let linkedinSource = `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`;
 
-    // async function scrapData(url, containerSelector) {
-    //     const response = await axios.get(url);
-    //     const $ = cheerio.load(response.data);
 
-    //     const container = $(`${containerSelector}`);
-    //     container.each(function () {
-    //         title = $(this).find(".base-search-card__title").text();
-    //         location = $(this).find('.job-search-card__location').text()
-    //         listDate = $(this).find(".job-search-card__listdate").text()
-    //         company = $(this).find(".base-search-card__subtitle").text()
-
-    //     })
-    // }
+    // Scrapping Linkedin
 
     async function scrapLinkedin() {
         const response = await axios.get(internshipSources.linkedin);
@@ -415,10 +419,10 @@ router.post("/internships", auth, async function (req, res) {
             // link = $(this).find(".base-card__full-link").text()
             // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
 
+            // Pushing LinkedinData in an Array
+
             linkedinData.push({ title, location, listDate, company });
-
         })
-
     }
 
     // Internshala Scrapping
@@ -467,7 +471,7 @@ router.post("/internships", auth, async function (req, res) {
     // console.log(jobLocation);
     // console.log(internshipSources.linkedin)
 
-    res.render("internships", { linkedinData, internshalaData });
+    res.status(200).render("internships", { linkedinData, internshalaData });
 
 })
 
@@ -582,8 +586,8 @@ router.post("/jobs", auth, async function (req, res) {
 
         // Sending Axios request
 
-        try{
-            
+        try {
+
             const response = await axios.get(jobSources.zipRecruiter, { headers });
             // console.log(response.data);
             const $ = cheerio.load(response.data);
@@ -594,26 +598,26 @@ router.post("/jobs", auth, async function (req, res) {
                 console.log("check2");
                 company = $(this).find('.jobList-introMeta li').text().trim();
                 console.log("check3");
-    
+
                 zrJobsData.push({ title, company });
                 console.log(zrJobsData);
                 // console.log(zrJobsData);
             })
         }
 
-        catch(error){
+        catch (error) {
             console.log(error);
         }
 
 
     }
 
-     await scrapZR();
+    await scrapZR();
 
     async function scrapMicrosoft() {
 
         const response = await axios.get(jobSources.microsoft, { headers });
-     
+
         const $ = cheerio.load(response.data);
         console.log("check1");
         const naukriJobs = $(".jobTupleHeader");
@@ -643,7 +647,7 @@ router.post("/jobs", auth, async function (req, res) {
             company = $(this).find('.result-item__company').text().trim();
 
             jobRapidoData.push({ title, company });
-          
+
             // console.log(jobRapidoData);
         });
 
@@ -779,17 +783,13 @@ router.post("/scholarships", async function (req, res) {
         const studyPortalResponse = axios.get(scholarshipSources.nationalScholarship);
         const $ = cheerio.load(studyPortalResponse.data)
         const nspContainer = 'test';
-
-
     }
 
     async function scholarshipsAU() {
 
         const scholarshipsAuResponse = axios.get(scholarshipSources.scholarshipsAu);
         const $ = cheerio.load(scholarshipsAuResponse.data);
-
     }
-
 
 });
 
@@ -810,9 +810,7 @@ app.get("/contactus", function (req, res) {
 
 app.post("/contactus", async function (req, res) {
 
-
     // Sending email through nodemailer
-
 
     const testAccount = await nodemailer.createTestAccount();
 
@@ -936,6 +934,7 @@ app.post('/registration', async function (req, res) {
                 collegeCourse: req.body.collegeCourse,
                 collegeName: req.body.collegeName,
                 collegeBranch: req.body.collegeBranch,
+                verified: false  // Added recently for UV
             });
 
             console.log(registerUser)
@@ -957,6 +956,12 @@ app.post('/registration', async function (req, res) {
             // Password Hash Middleware
 
             const registered = await registerUser.save();
+
+            // if(registered){
+            //     res.status(201).render("index");
+            // }
+
+
             res.status(201).render("index");
         }
 
@@ -1048,6 +1053,28 @@ router.get("/logout", auth, async function (req, res) {
     }
 })
 
+router.get("/logoutAll", auth, async function(req,res){
+ 
+    try {
+
+        
+            // To logout user from every device, Call this function
+            function allDevicesLogout() {
+                req.user.tokens = [];
+            }
+            allDevicesLogout()
+
+            const logoutMessage = ` You have been Logged Out from all devices`;
+            //  Rendering Login Page
+            res.render("loginPage",{logoutMessage})
+
+    }
+    catch (error) {
+        res.send(error);
+    }
+
+})
+
 router.get("/reportproblem", function (req, res) {
     res.render("help/reportproblem");
 })
@@ -1069,6 +1096,36 @@ router.get("/myprofile", auth, async function (req, res) {
 });
 
 
+//  Error Handling Middleware
+
+app.use(function(err,req,res,next){
+
+    // Default 500 Internal Server Error
+
+    let statusCode = 500;
+
+    // Check if error has a specific status code
+
+    if(err.statusCode){
+        statusCode = err.statusCode;
+    }
+
+    // Rendering a custom error page based on the status code
+
+    res.status(statusCode);
+
+    switch (statusCode){
+
+        case 403:
+            res.render("customError.hbs",{statusCode});
+            break;
+
+        default:
+            res.render("customError.hbs",{statusCode});
+
+    }
+});
+
 //  404 error page
 
 app.get('*', function (req, res) {
@@ -1076,7 +1133,6 @@ app.get('*', function (req, res) {
         errorComment: "Not found"
     });
 })
-
 
 // Server Listen
 

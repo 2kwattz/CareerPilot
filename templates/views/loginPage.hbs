@@ -3,6 +3,9 @@
 
 <main class="container">
 
+    {{!-- Incase User logs out from all devices and gets redirected to login --}}
+    {{logoutMessage}}
+
     <h1> Login </h1>
 
     <p id="isLoginError"> {{loginErrorIfAny}} </p>

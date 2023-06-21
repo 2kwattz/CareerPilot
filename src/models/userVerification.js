@@ -22,7 +22,7 @@ const verificationSchema = new mongoose.Schema({
 
 })
 
-const userVerification = new mongoose.model("verificationData",UserVerificationSchema);
+const userVerification = new mongoose.model("verificationData",verificationSchema);
 
 // Exporting Module
-module.exports = verificationData;
+module.exports = userVerification;
