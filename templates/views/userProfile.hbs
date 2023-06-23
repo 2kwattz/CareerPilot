@@ -8,8 +8,28 @@
 
     {{>header}}
 
-    <h1 class="section-titles index-para"> {{userName}}</h1>
+    <h1 class="section-titles index-para"> {{userProfile.username}}</h1>
 
+    <div class="internshipContainer" style="width=90% !importnant">
+
+        <h1 class="section-subtitles"> About Information </h1>
+
+        <br> Gender : {{userProfile.userGender}} 
+        <br> City : {{userProfile.userCity}} , {{userProfile.userState}}
+        <br> Status : {{userProfile.userStatus}}
+        <br> Interests : {{userProfile.interests}}
+       
+
+        <br> <button class="btn" onclick="editProfile()"> Edit Profile </button>
+    </div>
+
+    <script>
+
+        function editProfile(){
+
+            alert("Still in development!!!");
+        }
+    </script>
     {{footer}}
     
 </body>

@@ -50,7 +50,17 @@ according to the users choice
 29. More functionalities added in Dashboard in a newly added custom side navbar
 30. Footer added in all the pages
 31. Authentication functionality added in Certification courses and Internship page (i.e user will only be able to search once it has logged in)
- 
+32. 50% Optimized for cloud. Required Directiories and code adjustments added
+33. Logout from all devices added. (just like u see an option on netflix for same)
+34. Job Search Portal Functional . 2 Scrapping Sources added
+35. UserVerification schema created. More work later for user's email verification
+36. About section added in UserProfile, Can show user's name, city, state, gender and interests & linked to Dashboard
+37. Error Middlewares added for different error codes, corrisponding pages will show
+38. Transporter for Email Verification created, initialized and verified
+39. New google account with appropriate settings created for the same 
+40. Custom headers object created to simulate user behavior while web scrapping
+
+
 
 
 
@@ -61,8 +71,8 @@ Work to be done in future
 3. Adding password recovery options
 4. Refining Login and Registration system schemas ( already done but slight upgrades) 
 5. Creating a fully functional dashboard ( Dashboard concept implemented but no functionality implemented in it as of now)
-6. Logout for a single device based on database token deletion yet to be implemented
-7. Logout from all devices yet to be implemented
+6. Logout for a single device based on database token deletion yet to be implemented // Done
+7. Logout from all devices yet to be implemented // Done
 8. To add a Sign in with google and facebook option
 9. Plans to make it an ecommerce website for selling courses as an additional functionality
 10. Settings tab for dashboard with help section containing Dark/Light mode, User profile etc

@@ -11,6 +11,8 @@
 
     <div class="container">
 
+        <h1 class="section-titles index-para"> Internship Search </h1>
+
         <p class="summary">
             Search for any internships of your choice based on your skillsets. Use filters accordingly whenever required
         </p>
@@ -37,7 +39,7 @@
 
             <h1 class="section-subtitles"> Filters</h1>
 
-            <h4> Sort by </h4>
+            <h1 class="section-subtitles"> Sort by </h1>
 
             <button class="btn" id="ascendingButton" onclick="sortData('asc')">Sort Ascending</button>
             <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
@@ -55,6 +57,12 @@
         </div>
 
         <div class="internshipData" id="filterData">
+
+            <div class="errorNotifications">
+
+            {{errorMsg}}
+            </div>
+
 
             <div class="internshalaContainer">
 
@@ -113,6 +121,10 @@
 
 
     <script>
+
+        const errorBox = document.querySelector('.errorNotifications');
+
+        errorBox.style.display = none;
 
         const dataContainer = document.getElementById('filterData');
 
