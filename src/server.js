@@ -883,6 +883,8 @@ app.post('/login', async function (req, res) {
 
         const passwordIsMatch = await bcrypt.compare(password, emailIsMatch.password); // Verifying Password from Databases
 
+        const errorMsg = "Invalid Login Details!";
+
         // Generating tokens via middleware
 
         const token = await emailIsMatch.generateAuthToken();
@@ -904,7 +906,7 @@ app.post('/login', async function (req, res) {
         }
 
         else {
-            res.send("Invalid Login Details");
+            res.status(201).render("loginPage", {errorMsg});
         }
     }
 
@@ -921,11 +923,11 @@ app.post('/login', async function (req, res) {
     // console.log(user);
 });
 
-app.get('/registration', function (req, res) {
-    res.render("registration");
+router.get('/registration', function (req, res) {
+    res.status(200).render("registration");
 });
 
-app.post('/registration', async function (req, res) {
+router.post('/registration', async function (req, res) {
 
     // Create a new user in our database
 
@@ -935,13 +937,13 @@ app.post('/registration', async function (req, res) {
 
         if (password === confirmPassword) {
 
-            const registerUser = new registrationData({
+                const registerUser = new registrationData({
                 fullName: req.body.fullName,
                 email: req.body.email,
                 gender: req.body.gender,
                 age: req.body.age,
-                password: password,
-                confirmPassword: confirmPassword,
+                password: req.body.password,
+                confirmPassword: req.body.confirmPassword,
                 city: req.body.city,
                 state: req.body.state,
                 country: req.body.country,
@@ -952,10 +954,10 @@ app.post('/registration', async function (req, res) {
                 collegeCourse: req.body.collegeCourse,
                 collegeName: req.body.collegeName,
                 collegeBranch: req.body.collegeBranch,
-                verified: false  // Added recently for UV
+                // verified: false  // Added recently for UV
             });
 
-            console.log(registerUser)
+            console.log(registerUser);
 
             // JWT Token middleware
 
@@ -966,7 +968,7 @@ app.post('/registration', async function (req, res) {
 
             res.cookie("jwt_registration", token, {
 
-                expires: new Date(Date.now() + 90000),  //  Test Cookie expires in sometime
+                expires: new Date(Date.now() + 15 * 60 * 1000),  //  Test Cookie expires in 15 minutes
                 httpOnly: true
                 // secure: true
             });
@@ -979,8 +981,10 @@ app.post('/registration', async function (req, res) {
             //     res.status(201).render("index");
             // }
 
+            const userName = await req.user.fullName.toUpperCase();
 
-            res.status(201).render("index");
+
+            res.status(201).render("accountcreation");
         }
 
         else {
@@ -1154,6 +1158,11 @@ router.get("/myprofile", auth, async function (req, res) {
     res.status(200).render("userProfile.hbs", { userProfile });
 
 });
+
+router.get("/success", async function(req,res){
+    const userName = await req.user.fullName.toUpperCase();
+    res.status(200).render("accountcreation", {userName})
+})
 
 
 //  Error Handling Middleware

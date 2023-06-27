@@ -173,7 +173,6 @@ blockquote h3:after {
     width:100%;
     display: inline-block;
     background-color: white !important;
-    border: 2px solid black;;
     display: flex;
 
 
@@ -196,6 +195,10 @@ blockquote h3:after {
 
 .section-grey{
 
+    width: 80%;
+    display: inline-block;
+    background-color: #F6F8FA;
+    padding: 20px;
 }
 
 
