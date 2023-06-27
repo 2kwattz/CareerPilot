@@ -362,7 +362,7 @@ router.get("/internships", function (req, res) {
     res.status(200).render("internships");
 });
 
-router.post("/internships", async function (req, res) {
+router.post("/internships",auth, async function (req, res) {
 
     let internshipKeyword = req.body.internshipSearch;
     const jobLocation = req.body.location;
