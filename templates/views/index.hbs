@@ -129,29 +129,25 @@
 
                 <div class="image-gallery-2">
                     <div class="image-container">
-                        <img src="/img/companyLogos/naukri.png" height="150px" width="150px"
-                            alt="Naukri.com Logo Image Unavailable">
+                        <img src="/img/companyLogos/naukri.png" alt="Naukri.com Logo Image Unavailable">
                         <h6> Naukri.com </h6> <br>
                         <button class="btn"> <a href="https://www.naukri.com/" target="_blank"> Visit Page</a></button>
                     </div>
 
                     <div class="image-container">
-                        <img src="/img/companyLogos/internshala.png" height="150px" width="150px"
-                            alt="Internshala Logo Image Unavailable">
+                        <img src="/img/companyLogos/internshala.png" alt="Internshala Logo Image Unavailable">
                         <h6> Internshala </h6> <br>
                         <button class="btn"> Visit Page </button>
                     </div>
 
                     <div class="image-container">
-                        <img src="/img/companyLogos/linkedin.jpg" height="150px" width="150px"
-                            alt="LinkedIn Logo Image Unavailable">
+                        <img src="/img/companyLogos/linkedin.jpg" alt="LinkedIn Logo Image Unavailable">
                         <h6> LinkedIn </h6> <br>
                         <button class="btn"> Visit Page </button>
                     </div>
 
                     <div class="image-container">
-                        <img src="/img/companyLogos/w3schools.jpg" height="150px" width="150px"
-                            alt="W3Schools Logo Image Unavailable">
+                        <img src="/img/companyLogos/w3schools.jpg" alt="W3Schools Logo Image Unavailable">
                         <h6> W3Schools </h6> <br>
                         <button class="btn"> Visit Page </button>
                     </div>
@@ -207,34 +203,34 @@
 
         {{>footer}}
 
-<script>
-var slideIndex = 1;
-showDivs(slideIndex);
+        <script>
+            var slideIndex = 1;
+            showDivs(slideIndex);
 
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
 
-function currentDiv(n) {
-  showDivs(slideIndex = n);
-}
+            function currentDiv(n) {
+                showDivs(slideIndex = n);
+            }
 
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" w3-white", "");
-  }
-  x[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " w3-white";
-}
-</script>
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("demo");
+                if (n > x.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = x.length }
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" w3-white", "");
+                }
+                x[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " w3-white";
+            }
+        </script>
 
 </body>
 
