@@ -500,6 +500,10 @@ router.post("/internships", auth, async function (req, res) {
 
 })
 
+router.get("/login2", async function(req,res){
+    res.status(200).render("login2");
+})
+
 router.get("/test", async function (req, res) {
 
     res.status(200).render("test");
