@@ -2,7 +2,7 @@
 const mongoose = require('mongoose'); //Importing Mongoose 
 
 
-mongoose.connect("mongodb://localhost:27017/carrierpilot", { useNewUrlParser: true, useUnifiedTopology: true}) //Default Address of Database
+mongoose.connect(`${process.env.LOCAL_CONN}`, { useNewUrlParser: true, useUnifiedTopology: true}) //Default Address of Database
 .then(function(){
     console.log("Database connected successfully...\n")
 })
