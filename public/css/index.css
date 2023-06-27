@@ -320,6 +320,12 @@ align-items: center;
 
 }
 
+/* Hamburger Icon for Mobile website */
+
+.icon{
+   
+}
+
 /* Navbar Search */
 
 .small_navbar input {
@@ -594,8 +600,64 @@ h3 {
 /*  MEDIA QUERIES AND RESPONSIVENESS STUFF*/
 
 
-.mobile-container {}
+.mobile-container {
+
+}
 
 /* #myLinks {
     display: none;
   } */
+
+  /* Media query for screens with a maximum width of 600px */
+@media only screen and (max-width: 600px) {
+
+    /* Home Page */
+    
+    .img-containers-center img{
+        height:70%;
+        width:60%;
+    }
+
+    .image-gallery{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        /* width: 70%; */
+        justify-content: center;
+        align-items: center;
+        margin:0px;
+    }
+
+    .image-gallery img{
+        height: 80%;
+        width:70%;
+    }
+
+  }
+
+  /* Filters Class */
+
+  .filters{
+
+    width:90%;
+  }
+
+  .form-control{
+    display: inline-block;
+  }
+
+  .internshipData{
+    width:90%;
+  }
+  
+  /* Example media query for screens with a minimum width of 601px */
+  @media only screen and (min-width: 601px) {
+    /* CSS rules to apply for screens with a minimum width of 601px */
+    /* Add your styles here */
+  }
+  
+  /* Example media query for screens with a width between 601px and 900px */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    /* CSS rules to apply for screens with a width between 601px and 900px */
+    /* Add your styles here */
+  }

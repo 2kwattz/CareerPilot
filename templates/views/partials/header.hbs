@@ -5,7 +5,7 @@
     </div>
 
     <!-- Simulate a smartphone / tablet -->
-    {{!-- <div class="mobile-container"> --}}
+    {{!-- <div class="mobile-container">  --}}
 
         <nav class="header_navbar">
             <ul id="myLinks">
@@ -26,19 +26,18 @@
         </div>
 
 
-        {{!-- Hamburger Icon --}}
 
-        {{!-- <a href="javascript:void(0);" class="icon" onclick="toggleNav()">
+         {{!-- <a href="javascript:void(0);" class="icon" onclick="toggleNav()">
             <i class="fa fa-bars"></i>
-        </a> --}}
+        </a>  --}}
 
-        {{!-- End Mobile Container Simulation --}}
-
-    </div>
+       
+{{!-- 
+    </div> --}}
 </header>
 
 <nav class="small_navbar">
-    <ul>
+    <ul id="myLinks">
         <li> <a href="/sitemap"> Sitemap</a></li>
         <li> Language </li>
         <li><a href="/services"> Services </a></li>
@@ -55,12 +54,13 @@
 </nav>
 
 {{!-- <script>
-//function toggleNav() {
- // var x = document.getElementById("myLinks");
+
+ function toggleNav() {
+  var x = document.getElementById("myLinks");
   if (x.style.display === "block") {
     x.style.display = "none";
   } else {
     x.style.display = "block";
   }
-}
+
 </script> --}}
