@@ -737,10 +737,11 @@ router.post("/scholarships", async function (req, res) {
         scholarshipContainers.each(function () {
 
             title = $(this).find(".right h3").text().trim();
-            // location = $(this).find('.job-search-card__location').text().trim()
-            // listDate = $(this).find(".job-search-card__listdate").text()
+            location = $(this).find('.skills').children().first().text().trim();
+            validity = $(this).find('small').text().trim();
+            description = $(this).find(".right p").children().eq(3).text().trim();
             // company = $(this).find(".base-search-card__subtitle").text()
-            sFormeData.push(title);
+            sFormeData.push({title,location,description,validity});
         })
 
         console.log(sFormeData);
