@@ -673,11 +673,11 @@ router.post("/jobs", auth, async function (req, res) {
 
             // console.log(jobRapidoData);
         });
-
-        res.status(200).render("jobs", { linkedinData, jobRapidoData });
     }
-
-    scrapJobRapido()
+    
+    
+    await scrapJobRapido()
+    res.status(200).render("jobs", { linkedinData, jobRapidoData });
 });
 
 router.get("/hackathons", function (req, res) {
@@ -701,6 +701,12 @@ app.post("/feedback", function (req, res) {
     }).catch(function (error) {
         res.status(400).send(error);
     })
+});
+
+
+router.get("/scholarships", async function (req, res) {
+    console.log(req);
+    res.status(200).render("scholarships");
 });
 
 router.post("/scholarships", async function (req, res) {
@@ -733,7 +739,7 @@ router.post("/scholarships", async function (req, res) {
         const response = await axios.get(scholarshipSources.scholarshipForme);
         const $ = cheerio.load(response.data);
         const scholarshipContainers = $(".resume-item");
-
+        
         scholarshipContainers.each(function () {
 
             title = $(this).find(".right h3").text().trim();
@@ -744,22 +750,15 @@ router.post("/scholarships", async function (req, res) {
             sFormeData.push({title,location,description,validity});
         })
 
-        console.log(sFormeData);
+        // console.log(sFormeData);
         console.log(scholarshipSources.scholarshipForme);
-
-        //        
-        //   const extractedData = scholarshipContainers.map((index, element) => {
-        //     // Process each element and extract the desired information
-        //     // For example:
-        //     const title = $(element).find(".title").text().trim();
-        //     const description = $(element).find(".description").text().trim();
-
-        res.send(sFormeData)
+        res.status(200).render("scholarships", { sFormeData });
 
     }
+    
+        scrapScholarshipForme();
 
-    scrapScholarshipForme();
-
+    
     // 
 
     async function scrapOtherScholarships() {
@@ -777,7 +776,6 @@ router.post("/scholarships", async function (req, res) {
                 // listDate = $(this).find(".job-search-card__listdate").text()
                 // company = $(this).find(".base-search-card__subtitle").text()
                 sPortalData.push(title);
-                res.send(sFormeData + sPortalData);
                 console.log(sPortalData);
             })
         }
@@ -788,7 +786,7 @@ router.post("/scholarships", async function (req, res) {
     }
 
     // scrapOtherScholarships();
-
+    
     async function scrapBuddyForStudy() {
 
         const browser = await puppeteer.launch();
@@ -801,7 +799,7 @@ router.post("/scholarships", async function (req, res) {
 
         cards();
     }
-
+    
     async function scrapNSP() {    //Scrapping National Scholarship Portal
 
         const studyPortalResponse = axios.get(scholarshipSources.nationalScholarship);
@@ -815,12 +813,11 @@ router.post("/scholarships", async function (req, res) {
         const $ = cheerio.load(scholarshipsAuResponse.data);
     }
 
+
+    console.log(sFormeData);
+    
 });
 
-app.get("/scholarships", function (req, res) {
-    console.log(req);
-    res.status(200).render("scholarships");
-});
 
 app.get("/faq", function (req, res) {
     console.log(req);

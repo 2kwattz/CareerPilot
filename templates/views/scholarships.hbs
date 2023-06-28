@@ -19,7 +19,7 @@
 
         <div class="scholarshipPortal">
 
-            <form action="/scholarships" method="POST">
+            <form method="POST" action="/scholarships">
 
                 <h2 class="section-titles"> India's No. #1 Scholarship Search Engine </h2>
                 <br>
@@ -35,12 +35,7 @@
                     <option value="class_i_iv">Class I-IV</option>
                     <option value="class_xii">Class XII</option>
                 </select>
-                {{!-- <input type="text" id="educationForScholarship" name="educationForScholarship"> --}}
 
-                {{!-- <label for="location"> Your Location </label>
-                <input type="text" id="locationForScholarship" name="locationForScholarship"> --}}
-
-                <button class="btn" type="submit"> Search </button>
                 <label for="cars">Choose a state :</label>
 
                 {{!-- Yet to work --}}
@@ -57,10 +52,11 @@
                     <option value="odisha">Odisha</option>
                 </select>
 
+                <button class="btn" type="submit"> Search </button>
                 <h1 class="index-para section-titles"> Search by Keyword </h2>
 
                 <input type="text" name="scholarshipKeyword" id="scholarshipKeyword">
-                <button class="btn" type="submit"> Search</button>
+                <button class="btn"> Search</button>
                 <button class="btn"> Clear </button>
 
             </form>
@@ -96,16 +92,16 @@
                 <h1 class="section-subtitles"> Scholarship Forme Scholarships </h1>
 
 
-                {{#each internshalaData}}
+                {{#each sFormeData}}
 
                 <div class="internshipContainer">
-                    <span> Company Name : {{this.title}}</span><br>
-                    <span> Job Title : {{this.jobTitle}} </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Internship Duration : </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Internship Location : {{this.location}}</span>
-                    <button class="btn"> View </button>
+                    <span> Scholarship Name : {{this.title}}</span><br>
+                    <span> Location : {{this.location}} </span><br>
+                    <span> Validity : {{this.validity}} </span><br>
+                    <span> Description : {{this.description}} </span><br>
+                    {{!-- <span> Start Date : </span><br>
+                    <span> Internship Location : {{this.location}}</span> --}}
+                    <button class="btn"> View Scholarship </button> 
                 </div>
                 {{/each}}
 
@@ -117,7 +113,7 @@
             <div class="linkedinContainer">
                 <h1 class="section-subtitles"> Linkedin Internships </h1>
 
-                {{#each linkedinData}}
+                {{!-- {{#each linkedinData}}
 
                 <div class="internshipContainer">
                     <span> Company Name : {{this.company}}</span><br>
@@ -129,7 +125,7 @@
                     <button class="btn"> View </button>
                 </div>
 
-                {{/each}}
+                {{/each}} --}}
 
                
             </div>
