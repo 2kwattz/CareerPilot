@@ -103,7 +103,31 @@
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+
+    .reg-img-left::before{
+
+        width:100%;
+    };
+    
+    .reg-img-left{
+        width:100%;
+        height: 90%;
+    }
+    
+    .gradient-overlay{
+    
+        position: absolute;
+        left: 0;
+        width:100%;
+    }
+    
+    .reg-img-right{
+        width: 100%; 
+        margin-top: 10%;
+    
+    }
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {}
