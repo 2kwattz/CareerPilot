@@ -3,6 +3,9 @@
     height: 100vh;
 }
 
+.reg-img-left{
+    width:40%;
+}
 .reg-img-left::before{
 
     content: "";
@@ -33,26 +36,81 @@
     z-index: 2;
 }
 
-.reg-img-left{
-    
-}
 
 .reg-img-left h1{
 
     color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    font-family: 'karla', Geneva, Tahoma, sans-serif; 
     font-size: 2.1rem;
     font-weight: 800;
     text-align: center;
-    
+    width:70%;
 
 }
 
 .reg-img-left h2{
     color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'karla', Geneva, Tahoma, sans-serif;
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: 400;
     text-align: center;
+    width:70%;
+
+}
+
+.logo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.reg-img-right{
+    width: 55%;
+    float:right;  
+    margin-top: 10%;
+
+}
+
+/* Media Queries For Responsive Web Design */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+.reg-img-left::before{
+
+    width:100%;
+};
+
+.reg-img-left{
+    width:100%;
+}
+
+.gradient-overlay{
+
+    position: absolute;
+    left: 0;
+    width:100%;
+}
+
+.reg-img-right{
+    width: 100%; 
+    margin-top: 10%;
+
+}
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 
 }
