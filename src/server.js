@@ -926,6 +926,10 @@ app.post('/login', async function (req, res) {
     // console.log(user);
 });
 
+router.get('/accountcreation', async function(req,res){
+res.status(201).render("accountcreation");
+})
+
 router.get('/registration', function (req, res) {
     res.status(200).render("registration");
 });
@@ -987,7 +991,7 @@ router.post('/registration', async function (req, res) {
             const userName = await req.user.fullName.toUpperCase();
 
 
-            res.status(201).render("accountcreation");
+            res.status(201).render("accountcreation",{userName});
         }
 
         else {

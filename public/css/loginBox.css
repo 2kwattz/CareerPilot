@@ -72,6 +72,15 @@
 
 }
 
+.form-control{
+
+    margin-top: 10px;
+  }
+  
+  .form-control input{
+    margin: 10px 10px !important;
+  }
+
 /* Media Queries For Responsive Web Design */
 
 /* Extra small devices (phones, 600px and down) */
@@ -98,6 +107,8 @@
     margin-top: 10%;
 
 }
+
+
 
 
 }
