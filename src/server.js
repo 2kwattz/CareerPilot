@@ -500,8 +500,14 @@ router.post("/internships",auth, async function (req, res) {
 
 })
 
+// New UI Pages. Will be replaced later on
+
 router.get("/reg2", async function(req,res){
     res.status(200).render("reg2");
+});
+
+router.get("/login2", async function(req,res){
+    res.status(200).render("login2");
 })
 
 router.get("/test", async function (req, res) {
