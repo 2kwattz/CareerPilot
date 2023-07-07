@@ -989,8 +989,6 @@ router.post('/registration', async function (req, res) {
             // }
 
             const userName = await req.user.fullName.toUpperCase();
-
-
             res.status(201).render("accountcreation",{userName});
         }
 
@@ -1188,16 +1186,42 @@ app.use(function(err,req,res,next){
 
     // Rendering a custom error page based on the status code
 
-    res.status(statusCode);
+    // res.status(statusCode);
+
+    // res.render("customError",{statusCode})
+    let errorTitle;
+    let errorDesc;
 
     switch (statusCode){
 
         case 403:
-            res.render("customError.hbs",{statusCode});
+             errorTitle = "Forbidden";
+             errorDesc="There is no way you can access the requested data. A 403 error announces that the data is off limits."
+             res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+
             break;
 
+        case 417:
+            errorTitle = "Expectations Failed";
+            errorDesc = "Expectation given in the request's Expect header could not be met."
+            res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+
+
+        case 503:
+            errorTitle = "Service Unavailable";
+            errorDesc = "Server is temporarily unable to handle the request";
+            res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+
+        case 505:
+            errorTitle = "HTTP Version not supported";
+            errorDesc = "The server can't communicate with the client ";
+            res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+
         default:
-            res.render("customError.hbs",{statusCode});
+             errorTitle = "Internal Server Error";
+             errorDesc = "The server encountered an error trying to process the request";
+             res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+            break;
 
     }
 });

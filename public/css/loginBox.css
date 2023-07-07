@@ -99,12 +99,16 @@
 
     position: absolute;
     left: 0;
+    top: 20;
     width:100%;
 }
 
 .reg-img-right{
     width: 100%; 
     margin-top: 10%;
+    /* position: relative; */
+    /* bottom: 0; */
+    /* right:0; */
 
 }
 

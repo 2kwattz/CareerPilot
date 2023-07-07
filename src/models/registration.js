@@ -154,7 +154,6 @@ const registrationSchema = new mongoose.Schema({
 
 })
 
-
 // Generating tokens
 
 registrationSchema.methods.generateAuthToken = async function(){

@@ -6,9 +6,15 @@
 </head>
 <body>
 
-    {{header}}
+    {{>header}}
 
+    <center>
     <h1 class="section-titles index-para"> ERROR {{statusCode}}</h1>
+
+
+    <p class="index-para section-subtitles"> {{errorDesc}} </p><br>
+    <button class="btn"> <a href="/"> Go Back to Home Page </a></button>
+    </center>
 
     
 </body>
