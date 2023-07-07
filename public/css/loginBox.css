@@ -79,6 +79,7 @@
   
   .form-control input{
     margin: 10px 10px !important;
+    padding: 5px !important;
   }
 
 /* Media Queries For Responsive Web Design */

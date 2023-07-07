@@ -413,9 +413,8 @@ router.post("/internships",auth, async function (req, res) {
         try{
 
             const response = await axios.get(internshipSources.linkedin);
-    
             const $ = cheerio.load(response.data);
-    
+
             const linkedinInternships = $(".base-card");
             linkedinInternships.each(function () {
                 title = $(this).find(".base-search-card__title").text();
@@ -516,14 +515,6 @@ router.get("/test", async function (req, res) {
 
 })
 
-
-router.post("/test", async function (req, res) {
-
-    const response = await axios.get(`https://campus.w3schools.com/en-in/search?type=article%2Cpage%2Cproduct&q=python*`);
-    console.log(response);
-    res.send(response.data);
-
-})
 router.get("/grants", function (req, res) {
     console.log(req);
     res.status(200).render("grants");
