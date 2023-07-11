@@ -72,6 +72,23 @@
 
                 {{/each}}
 
+                <div class="linkedinContainer">
+                <h1 class="section-subtitles"> Naukri.com Jobs </h1>
+
+                {{#each naukriDotComJobs}}
+
+                <div class="internshipContainer">
+                    <span> Company Name : {{this.company}}</span><br>
+                    <span> Job Title : {{this.title}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Job Duration : </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Job Location : </span>
+                    <button class="btn"> View </button>
+                </div>
+
+                {{/each}}
+
         
             </div>
 

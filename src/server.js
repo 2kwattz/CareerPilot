@@ -501,9 +501,20 @@ router.post("/internships",auth, async function (req, res) {
 
 // New UI Pages. Will be replaced later on
 
+// Registration Page 2
+
 router.get("/reg2", async function(req,res){
     res.status(200).render("reg2");
 });
+
+// Job Page 2
+
+router.get("/jobs2", async function(req,res){
+    console.log(req);
+    res.render("/jobs2");
+});
+
+// Login Page 2
 
 router.get("/login2", async function(req,res){
     res.status(200).render("login2");
@@ -519,6 +530,8 @@ router.get("/grants", function (req, res) {
     console.log(req);
     res.status(200).render("grants");
 });
+
+// Current Jobs Page
 
 router.get("/jobs", function (req, res) {
     console.log(req);
@@ -674,7 +687,7 @@ router.post("/jobs", auth, async function (req, res) {
     
     
     await scrapJobRapido()
-    res.status(200).render("jobs", { linkedinData, jobRapidoData });
+    res.status(200).render("jobs", { linkedinData, jobRapidoData, naukriDotComJobs });
 });
 
 router.get("/hackathons", function (req, res) {
