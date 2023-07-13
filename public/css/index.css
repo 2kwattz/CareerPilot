@@ -346,6 +346,37 @@ align-items: center;
     opacity: 8;
 }
 
+.container-jobs {
+
+    background-image: url(/img/jobs2-cover.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 80px 10px;
+    opacity: 8;
+    /* z-index: 1; */
+}
+
+.jobs-gradient{
+    position: relative;
+    /* z-index: 2; */
+}
+
+.jobs-gradient::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; 
+    height: 100%;
+    background: linear-gradient(rgba(177, 105, 28, 0.7),rgba(206, 166, 21, 0.874));
+  }
+
+  .jobs-gradient h1,h3{
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* z-index: 3; */
+  }
+
 .cert-container {
 
     background-image: url(/img/cover2.jpg);

@@ -205,7 +205,7 @@ router.get("/", async function (req, res) {
 
 
     let companiesData = [];
-    
+
 
     //  Sending request to scrap the companies data 
 
@@ -223,7 +223,7 @@ router.get("/", async function (req, res) {
 
             // Pushing Scrapped Title and Location into an Array
 
-            companiesData.push({title,location});
+            companiesData.push({ title, location });
 
             // Consoling companiesData for testing
             console.log(companiesData);
@@ -336,8 +336,9 @@ router.post("/courses", auth, async function (req, res) {
 
             const response = await axios.get(courseSources.microsoft);
             const $ = cheerio.load(response.data);
+            console.log(response.data)
 
-            const microsoftInternships = $(".card");
+            const microsoftInternships = $(".card-template");
             microsoftInternships.each(function () {
                 title = $(this).find(".card-title").text().trim();
                 image = $(this).find(".card-template-icon a").attr('href');
@@ -362,7 +363,7 @@ router.get("/internships", function (req, res) {
     res.status(200).render("internships");
 });
 
-router.post("/internships",auth, async function (req, res) {
+router.post("/internships", auth, async function (req, res) {
 
     let internshipKeyword = req.body.internshipSearch;
     const jobLocation = req.body.location;
@@ -410,7 +411,7 @@ router.post("/internships",auth, async function (req, res) {
 
     async function scrapLinkedin() {
 
-        try{
+        try {
 
             const response = await axios.get(internshipSources.linkedin);
             const $ = cheerio.load(response.data);
@@ -421,17 +422,17 @@ router.post("/internships",auth, async function (req, res) {
                 location = $(this).find('.job-search-card__location').text()
                 listDate = $(this).find(".job-search-card__listdate").text()
                 company = $(this).find(".base-search-card__subtitle").text()
-    
+
                 // link = $(this).find(".base-card__full-link").text()
                 // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
-    
+
                 // Pushing LinkedinData in an Array
-    
+
                 linkedinData.push({ title, location, listDate, company });
             })
         }
 
-        catch(error){
+        catch (error) {
             errorMsg = error;
             console.log(error);
         }
@@ -441,12 +442,12 @@ router.post("/internships",auth, async function (req, res) {
 
     async function scrapInternshala() {
 
-        try{
+        try {
 
             const response = await axios.get(internshipSources.internshala);
             const $ = cheerio.load(response.data);
             // console.log(internshipSources.internshala);
-    
+
             const internshalaInternships = $(".individual_internship");
             await internshalaInternships.each(function () {
                 title = $(this).find(".company_and_premium").text();
@@ -459,16 +460,16 @@ router.post("/internships",auth, async function (req, res) {
                 internshalaTitles.push(title);
                 internshalaLocation.push(location);
                 console.log(internshalaData);
-    
+
             });
         }
 
-        catch(error){
+        catch (error) {
 
             errorMsg = error;
             console.log(error);
             // res.render("internships",{errorMsg})
-            
+
         }
 
         // res.send(internshalaData);
@@ -503,20 +504,20 @@ router.post("/internships",auth, async function (req, res) {
 
 // Registration Page 2
 
-router.get("/reg2", async function(req,res){
+router.get("/reg2", async function (req, res) {
     res.status(200).render("reg2");
 });
 
 // Job Page 2
 
-router.get("/jobs2", async function(req,res){
+router.get("/jobs2", async function (req, res) {
     console.log(req);
-    res.render("/jobs2");
+    res.render("jobs2");
 });
 
 // Login Page 2
 
-router.get("/login2", async function(req,res){
+router.get("/login2", async function (req, res) {
     res.status(200).render("login2");
 })
 
@@ -554,7 +555,9 @@ router.post("/jobs", auth, async function (req, res) {
     const microsoftData = []; // Scrapping Microsoft
     const jobRapidoData = []; // Scrapping Job Rapido
 
+    // Error Responses
 
+    let errorRender;
 
     // Job Scraping Sources
 
@@ -625,18 +628,39 @@ router.post("/jobs", auth, async function (req, res) {
             const response = await axios.get(jobSources.zipRecruiter, { headers });
             // console.log(response.data);
             const $ = cheerio.load(response.data);
-            console.log("check1");
-            const zrJobs = $(".jobList");
-            zrJobs.each(function () {
-                title = $(this).find('.jobList-title strong').text().trim();
-                console.log("check2");
-                company = $(this).find('.jobList-introMeta li').text().trim();
-                console.log("check3");
 
-                zrJobsData.push({ title, company });
-                console.log(zrJobsData);
-                // console.log(zrJobsData);
-            })
+            console.log("check1");
+
+            if (response.statusCode = 200) {
+
+                const zrJobs = $(".jobList");
+                zrJobs.each(function () {
+                    title = $(this).find('.jobList-title strong').text().trim();
+                    console.log("check2");
+                    company = $(this).find('.jobList-introMeta li').text().trim();
+                    console.log("check3");
+
+                    zrJobsData.push({ title, company });
+                    console.log(zrJobsData);
+                    // console.log(zrJobsData);
+                })
+            }
+
+            else {
+
+                //  Error in rednering scrapped jobs data 
+
+                global.errorRender = {
+                    statusCode: response.status,
+                    statusText: response.statusText,
+                    errorCode: response.code,
+                    respStatusCode : response.request.response.status,
+                    resStatus : response.res.statusCode,
+                    resMessage : response.res.statusMessage
+
+                }
+
+            }
         }
 
         catch (error) {
@@ -684,10 +708,10 @@ router.post("/jobs", auth, async function (req, res) {
             // console.log(jobRapidoData);
         });
     }
-    
-    
+
+
     await scrapJobRapido()
-    res.status(200).render("jobs", { linkedinData, jobRapidoData, naukriDotComJobs });
+    res.status(200).render("jobs", { linkedinData, jobRapidoData, naukriDotComJobs, errorRender });
 });
 
 router.get("/hackathons", function (req, res) {
@@ -749,7 +773,7 @@ router.post("/scholarships", async function (req, res) {
         const response = await axios.get(scholarshipSources.scholarshipForme);
         const $ = cheerio.load(response.data);
         const scholarshipContainers = $(".resume-item");
-        
+
         scholarshipContainers.each(function () {
 
             title = $(this).find(".right h3").text().trim();
@@ -757,7 +781,7 @@ router.post("/scholarships", async function (req, res) {
             validity = $(this).find('small').text().trim();
             description = $(this).find(".right p").children().eq(3).text().trim();
             // company = $(this).find(".base-search-card__subtitle").text()
-            sFormeData.push({title,location,description,validity});
+            sFormeData.push({ title, location, description, validity });
         })
 
         // console.log(sFormeData);
@@ -765,10 +789,10 @@ router.post("/scholarships", async function (req, res) {
         res.status(200).render("scholarships", { sFormeData });
 
     }
-    
-        scrapScholarshipForme();
 
-    
+    scrapScholarshipForme();
+
+
     // 
 
     async function scrapOtherScholarships() {
@@ -796,7 +820,7 @@ router.post("/scholarships", async function (req, res) {
     }
 
     // scrapOtherScholarships();
-    
+
     async function scrapBuddyForStudy() {
 
         const browser = await puppeteer.launch();
@@ -809,7 +833,7 @@ router.post("/scholarships", async function (req, res) {
 
         cards();
     }
-    
+
     async function scrapNSP() {    //Scrapping National Scholarship Portal
 
         const studyPortalResponse = axios.get(scholarshipSources.nationalScholarship);
@@ -825,7 +849,7 @@ router.post("/scholarships", async function (req, res) {
 
 
     console.log(sFormeData);
-    
+
 });
 
 
@@ -919,7 +943,7 @@ app.post('/login', async function (req, res) {
         }
 
         else {
-            res.status(201).render("loginPage", {errorMsg});
+            res.status(201).render("loginPage", { errorMsg });
         }
     }
 
@@ -936,8 +960,8 @@ app.post('/login', async function (req, res) {
     // console.log(user);
 });
 
-router.get('/accountcreation', async function(req,res){
-res.status(201).render("accountcreation");
+router.get('/accountcreation', async function (req, res) {
+    res.status(201).render("accountcreation");
 })
 
 router.get('/registration', function (req, res) {
@@ -954,7 +978,7 @@ router.post('/registration', async function (req, res) {
 
         if (password === confirmPassword) {
 
-                const registerUser = new registrationData({
+            const registerUser = new registrationData({
                 fullName: req.body.fullName,
                 email: req.body.email,
                 gender: req.body.gender,
@@ -999,7 +1023,7 @@ router.post('/registration', async function (req, res) {
             // }
 
             const userName = await req.user.fullName.toUpperCase();
-            res.status(201).render("accountcreation",{userName});
+            res.status(201).render("accountcreation", { userName });
         }
 
         else {
@@ -1090,20 +1114,20 @@ router.get("/logout", auth, async function (req, res) {
     }
 })
 
-router.get("/logoutAll", auth, async function(req,res){
- 
+router.get("/logoutAll", auth, async function (req, res) {
+
     try {
 
-        
-            // To logout user from every device, Call this function
-            function allDevicesLogout() {
-                req.user.tokens = [];
-            }
-            allDevicesLogout()
 
-            const logoutMessage = ` You have been Logged Out from all devices`;
-            //  Rendering Login Page
-            res.render("loginPage",{logoutMessage});
+        // To logout user from every device, Call this function
+        function allDevicesLogout() {
+            req.user.tokens = [];
+        }
+        allDevicesLogout()
+
+        const logoutMessage = ` You have been Logged Out from all devices`;
+        //  Rendering Login Page
+        res.render("loginPage", { logoutMessage });
 
     }
     catch (error) {
@@ -1116,12 +1140,12 @@ router.get("/reportproblem", function (req, res) {
     res.render("help/reportproblem");
 });
 
-router.get("/forgotpassword", async function(req,res){
+router.get("/forgotpassword", async function (req, res) {
     console.log(req);
     res.render("forgotPassword");
 });
 
-router.post("/forgotpassword", async function(req,res){
+router.post("/forgotpassword", async function (req, res) {
     console.log(req);
 
     // Getting Email Address from the user 
@@ -1130,19 +1154,19 @@ router.post("/forgotpassword", async function(req,res){
 
     // Verifying Email Address
 
-    try{
+    try {
 
         const emailIsMatch = await registrationData.findOne({ userEmail });
 
         const userFound = "User has been found\n";
-        if(emailIsMatch){
+        if (emailIsMatch) {
 
             res.status(200).send(userFound);
         }
 
     }
 
-    catch(error){
+    catch (error) {
         res.send(error);
     }
 
@@ -1162,27 +1186,49 @@ router.get("/myprofile", auth, async function (req, res) {
     console.log(req);
 
     const userProfile = {
-        username : req.user.fullName,
-        userCity : req.user.city,
-        userState : req.user.state,
-        userGender : req.user.gender,
-        userStatus : req.user.currentStatus,
-        userInterests : req.user.interests
+        username: req.user.fullName,
+        userCity: req.user.city,
+        userState: req.user.state,
+        userGender: req.user.gender,
+        userStatus: req.user.currentStatus,
+        userInterests: req.user.interests
     }
     const userName = req.user.fullName.toUpperCase();
+
+    // Scrap City Information for User Profile
+
+    // Temp Display based on user's city
+
+
+    async function cityTemp() {
+
+        // Converting User's city to Lat Lon 
+        
+        let lat;
+        let lon;
+        const latLongApi = `https://api.api-ninjas.com/v1/geocoding?city=${req.user.city}&country=${req.user.country}`
+
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`;
+        const apikey = env.TEMP_API_KEY;
+
+        const userCity = req.user.city;
+        const response = axios.get(apiUrl);
+
+    }
+
     res.status(200).render("userProfile.hbs", { userProfile });
 
 });
 
-router.get("/success", async function(req,res){
+router.get("/success", async function (req, res) {
     const userName = await req.user.fullName.toUpperCase();
-    res.status(200).render("accountcreation", {userName})
+    res.status(200).render("accountcreation", { userName })
 })
 
 
 //  Error Handling Middleware
 
-app.use(function(err,req,res,next){
+app.use(function (err, req, res, next) {
 
     // Default 500 Internal Server Error
 
@@ -1190,7 +1236,7 @@ app.use(function(err,req,res,next){
 
     // Check if error has a specific status code
 
-    if(err.statusCode){
+    if (err.statusCode) {
         statusCode = err.statusCode;
     }
 
@@ -1202,35 +1248,35 @@ app.use(function(err,req,res,next){
     let errorTitle;
     let errorDesc;
 
-    switch (statusCode){
+    switch (statusCode) {
 
         case 403:
-             errorTitle = "Forbidden";
-             errorDesc="There is no way you can access the requested data. A 403 error announces that the data is off limits."
-             res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+            errorTitle = "Forbidden";
+            errorDesc = "There is no way you can access the requested data. A 403 error announces that the data is off limits."
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
 
             break;
 
         case 417:
             errorTitle = "Expectations Failed";
             errorDesc = "Expectation given in the request's Expect header could not be met."
-            res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
 
 
         case 503:
             errorTitle = "Service Unavailable";
             errorDesc = "Server is temporarily unable to handle the request";
-            res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
 
         case 505:
             errorTitle = "HTTP Version not supported";
             errorDesc = "The server can't communicate with the client ";
-            res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
 
         default:
-             errorTitle = "Internal Server Error";
-             errorDesc = "The server encountered an error trying to process the request";
-             res.status(statusCode).render("customError.hbs", {statusCode, errorTitle, errorDesc});
+            errorTitle = "Internal Server Error";
+            errorDesc = "The server encountered an error trying to process the request";
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
             break;
 
     }
