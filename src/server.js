@@ -86,6 +86,10 @@ const port = process.env.PORT || 80; // Server Port Number
 
 // Database Code stored in /src/conn.js
 
+// ScrappingAnt for Restricted websites
+
+const ScrapingAntClient = require('@scrapingant/scrapingant-client');
+
 // Initializing Middlewares
 
 app.use(express.static(staticPath)); // Defining path for static HTML,CSS and Javascript files

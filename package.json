@@ -9,6 +9,7 @@
   "author": "Roshan Bhatia, Yash Patel, Shruti, Vidhi",
   "license": "ISC",
   "dependencies": {
+    "@scrapingant/scrapingant-client": "^0.2.1",
     "axios": "^1.3.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
