@@ -89,6 +89,7 @@ const port = process.env.PORT || 80; // Server Port Number
 // ScrappingAnt for Restricted websites
 
 const ScrapingAntClient = require('@scrapingant/scrapingant-client');
+const client = new ScrapingAntClient({ apiKey: '<YOUR-SCRAPINGANT-API-KEY>' });
 
 // Initializing Middlewares
 
