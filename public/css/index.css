@@ -628,6 +628,14 @@ h3 {
     display: none;
 }
 
+/* NEW UI CSS */
+
+.heading h1{
+    font-size: 1.8rem !important;
+    font-family: 'Karla', sans-serif;
+    padding: 10px 10px;
+}
+
 /*  MEDIA QUERIES AND RESPONSIVENESS STUFF*/
 
 
