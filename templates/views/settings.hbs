@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerMeta}}
+
+</head>
+<body>
+
+    {{>header}}
+
+    <div class="container">
+        <h1 class="title"> Settings </h1>
+    </div>
+
+    <ul>
+        <h1> Account Settings </h1>
+        <li href="/myprofile"> View Profile </li>
+        <li href="/myprofile"> Update Name </li>
+        <li href="/myprofile"> Update Email Address </li>
+        <li href="/myprofile"> Update Password </li>
+        <li href="/myprofile"> Update Interests </li>
+        <li href="/myprofile"> Update Gender </li>
+
+    </ul>
+
+    <ul>
+        <h1> Notification Settings </h1>
+    
+        <li href="/myprofile"> Show/Disable notifications </li>
+
+        <button class="btn" id="notificationButton">Show Notification</button>
+
+    </ul>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+  const notificationButton = document.getElementById('notificationButton');
+
+  notificationButton.addEventListener('click', () => {
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    } else {
+      showNotification();
+    }
+  });
+
+  function showNotification() {
+    const notification = new Notification('Title', {
+      body: 'This is the notification message.',
+      icon: 'path/to/icon.png' // URL to the notification icon
+    });
+
+    notification.onclick = function() {
+      // Handle click event
+      console.log('Notification clicked.');
+    };
+  }
+});
+
+    </script>
+    
+</body>
+
+
+</html>

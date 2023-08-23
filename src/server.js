@@ -27,6 +27,19 @@ const country = require('country-state-city').Country;
 const state = require('country-state-city').State;
 const city = require('country-state-city').City;
 
+// Google Oauth for Nodemailer
+
+const { google } = require('googleapis');
+
+// MailGun for Nodemailer
+
+const mailgun = require('mailgun-js')({
+    apiKey: 'pubkey-a4227a65e466841ab540c1b02d362f6d',
+    domain: 'sandboxb60c058465804065bb1c4c58d505e807.mailgun.org',
+});
+
+
+
 // BCrypt Hashing Algorithm for Security
 
 const bcrypt = require('bcryptjs');
@@ -42,6 +55,10 @@ app.use(cookieParser()); // Initializing CookieParser Middleware
 // Proxy Agent for using proxies in Axios Web Scrapping 
 
 // const ProxyAgent = require('axios-proxy-agent');
+
+// Cross Origin
+
+const cors = require('cors');
 
 
 // Hashing Password
@@ -120,6 +137,10 @@ const loginData = require('./models/login')
 const feedbackData = require('./models/feedback')
 const registrationData = require('./models/registration');
 
+// Disabling Cross Origin for password reset (atleast for testing purpose)
+
+app.use(cors());
+
 // HEADERS declared for Mimicing Real User while Web Scraping
 
 const headers = {
@@ -157,6 +178,16 @@ let transporter = nodemailer.createTransport({
         pass: process.env.AUTH_PASSWORD,
     }
 })
+
+// Forgot password reset auth
+
+
+// OAuth2 credentials (create these from Google Developer Console)
+// const credentials = {
+//     client_id: 'YOUR_CLIENT_ID',
+//     client_secret: 'YOUR_CLIENT_SECRET',
+//     redirect_uri: 'YOUR_REDIRECT_URI',
+//   };
 
 // Testing NodeMailer Transporter
 
@@ -1155,29 +1186,57 @@ router.post("/forgotpassword", async function (req, res) {
 
     // Getting Email Address from the user 
 
-    const userEmail = req.body.email;
+    const userEmail = req.body.email.trim();
 
     // Verifying Email Address
 
     try {
-
-        const emailIsMatch = await registrationData.findOne({ userEmail });
-
-        const userFound = "User has been found\n";
-        if (emailIsMatch) {
-
-            res.status(200).send(userFound);
+        const { email } = req.body;
+        const user = await registrationData.findOne({ email });
+    
+        if (!user) {
+          // User not found, display error message
+          return res.send('User not found');
         }
+    
+        // Generate password reset token and send reset email
+        await user.generatePasswordReset();
+    
+        // Display success message or redirect to a page
+        res.send('Password reset email sent');
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred');
+      }
+    
+    
 
+
+});
+
+// Forgot Password Redirects
+
+// Add this to your Express app
+
+app.post("/resetpassword/:token", async function(req, res) {
+    try {
+      const token = req.params.token;
+      const user = await registrationData.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() },
+      });
+  
+      if (!user) {
+        return res.status(400).send("Invalid or expired token");
+      }
+  
+      // Display a password reset form here
+      res.render("resetpassword", { token });
+    } catch (error) {
+      res.status(500).send("An error occurred while processing the reset token.");
     }
-
-    catch (error) {
-        res.send(error);
-    }
-
-
-})
-
+  });
+  
 // HELP Pages
 
 router.get("/sitemap", function (req, res) {
@@ -1230,6 +1289,10 @@ router.get("/success", async function (req, res) {
     res.status(200).render("accountcreation", { userName })
 })
 
+router.get("/settings", auth, async function(req,res){
+
+    res.status(200).render("settings");
+})
 
 //  Error Handling Middleware
 

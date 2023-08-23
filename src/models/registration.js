@@ -3,6 +3,14 @@ const validator = require('validator'); // For validating login & registration
 const bcrypt = require('bcryptjs'); // For Hashing passwords
 const jwt = require('jsonwebtoken'); // Importing JWT
 
+// Mailgun for Forgot Password Mail
+
+const mailgun = require('mailgun-js')({
+    apiKey: 'pubkey-a4227a65e466841ab540c1b02d362f6d',
+    domain: 'sandboxb60c058465804065bb1c4c58d505e807.mailgun.org',
+});
+
+
 // Registration Schemas
 
 const registrationSchema = new mongoose.Schema({
@@ -150,7 +158,10 @@ const registrationSchema = new mongoose.Schema({
         required: true
     }
 
-}]
+}],
+
+resetPasswordToken: String,
+resetPasswordExpires: Date,
 
 })
 
@@ -192,6 +203,41 @@ registrationSchema.pre("save", async function (next){
         next();
     }
 })
+
+// Password Reset
+
+registrationSchema.methods.generatePasswordReset = async function() {
+    const resetToken = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY, {
+      expiresIn: "1h", // Set the token to expire in 1 hour
+    });
+  
+    this.resetPasswordToken = resetToken;
+    this.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+    await this.save();
+  
+
+    //  nodemailer code:
+    
+    const nodemailer = require('nodemailer');
+
+    const resetLink = `http://localhost/forgotPassword/kllkklklkl klkll ${resetToken}`; // Update with your actual URL
+    const data = {
+        from: '', // Replace with your sender email
+        to: this.email,
+        subject: 'Password Reset',
+        html: `<p>To reset your password, click the following link:</p><a href="${resetLink}">${resetLink}</a>`,
+    };
+
+    mailgun.messages().send(data, function(error, body) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Password Reset Email sent:', body);
+        }
+    });
+    
+  };
+  
 
 const registrationData = new mongoose.model("registrationData",registrationSchema);
 
