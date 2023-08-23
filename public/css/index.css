@@ -470,7 +470,7 @@ h3 {
     /* position: fixed; */
 
     height: 100vh;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 
 }
 
@@ -479,6 +479,19 @@ h3 {
     color: rgb(0, 0, 0);
     text-align: center;
    
+}
+
+.dropdown{
+    width:100%;
+}
+
+.sidebar-btn{
+
+    background-color: #5844d8;
+    border: 0px transparent;
+    width:100%;
+    color: white;
+
 }
 
 /* Dashboard Sidebar Dropdowns */
@@ -502,7 +515,7 @@ h3 {
     width: 60%;
     display: inline;
 
-    border: 2px solid black;
+    /* border: 2px solid black; */
     /* position: relative; */
 
 }

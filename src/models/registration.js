@@ -220,7 +220,7 @@ registrationSchema.methods.generatePasswordReset = async function() {
     
     const nodemailer = require('nodemailer');
 
-    const resetLink = `http://localhost/forgotPassword/kllkklklkl klkll ${resetToken}`; // Update with your actual URL
+    const resetLink = `http://localhost/forgotPassword/${resetToken}`; // Need to update with actual URL
     const data = {
         from: '', // Replace with your sender email
         to: this.email,
