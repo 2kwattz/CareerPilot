@@ -1213,8 +1213,6 @@ router.post("/forgotpassword", async function (req, res) {
 
 // Forgot Password Redirects
 
-// Add this to your Express app
-
 app.post("/resetpassword/:token", async function(req, res) {
     try {
       const token = req.params.token;
@@ -1227,7 +1225,7 @@ app.post("/resetpassword/:token", async function(req, res) {
         return res.status(400).send("Invalid or expired token");
       }
   
-      // Display a password reset form here
+      // password reset form here
       res.render("resetpassword", { token });
     } catch (error) {
       res.status(500).send("An error occurred while processing the reset token.");
@@ -1298,7 +1296,7 @@ router.get("/settings", auth, async function(req,res){
 router.post('/updateName', auth, async function(req,res){
     const fullName = req.user.fullName;
     const newName = req.body.newName;
-    
+
 
 })
 
