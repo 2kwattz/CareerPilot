@@ -1,68 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    {{>headerMeta}}
-    <title> Settings : CareerPilot </title>
+  {{>headerMeta}}
+  <title> Settings : CareerPilot </title>
 
 </head>
+
 <body>
 
-    {{>header}}
+  {{>header}}
 
-    <div class="container dropdown sidebar-nav">
-        <h1 class="title"> Settings </h1>
-    </div>
- <div class="dropdown-content">
+  <div class="container">
+   
 
-                    <li><a href="#"> Account Settings </a></li>
-                    <li><a href="/myprofile">View Profile</a></li>
-                    <li><a href="#">Update Name</a></li>
-                    <li><a href="#">Update Email Address</a></li>
-                    <li><a href="#">Update Password</a></li>
-                    <li><a href="#">Update Interests</a></li>
-                    <li><a href="#">Update Gender :/ </a></li>
-                    <li><a href="#coursesContainerDashboard">Courses</a></li>
-                    <li><a href="#">Certifications</a></li>
-                </div>
-  
+    <h1 class="title"> Settings </h1>
+  </div>
+  <div class="sidebar">
 
-    <ul>
-        <h1> Notification Settings </h1>
-    
-        <li href="/myprofile"> Show/Disable notifications </li>
+  <div class="dropdown-content">
 
-        <button class="btn" id="notificationButton">Show Notification</button>
+    <button class="sidebar-btn"> Account Settings </button>
+    <li><a href="/myprofile">View Profile</a></li>
+    <li><a href="/changeName">Update Name</a></li>
+    <li><a href="#">Update Email Address</a></li>
+    <li><a href="#">Update Password</a></li>
+    <li><a href="#">Update Interests</a></li>
+    <li><a href="#">Update Gender :/ </a></li>
+    <li><a href="#coursesContainerDashboard">Courses</a></li>
+    <li><a href="#">Certifications</a></li>
+      <button class="sidebar-btn"> Notification Settings </button>
+  </div>
+  <ul>
+   
 
-    </ul>
+    <li> </li> <a href="/myprofile"> Show/Disable notifications </li>
 
-    <script>
+    <button class="btn" id="notificationButton">Show Notification</button>
 
-        document.addEventListener('DOMContentLoaded', () => {
-  const notificationButton = document.getElementById('notificationButton');
+  </ul>
+  </div>
 
-  notificationButton.addEventListener('click', () => {
-    if (Notification.permission !== 'granted') {
-      Notification.requestPermission();
-    } else {
-      showNotification();
-    }
-  });
 
-  function showNotification() {
-    const notification = new Notification('Title', {
-      body: 'This is the notification message.',
-      icon: 'path/to/icon.png' // URL to the notification icon
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const notificationButton = document.getElementById('notificationButton');
+
+      notificationButton.addEventListener('click', () => {
+        if (Notification.permission !== 'granted') {
+          Notification.requestPermission();
+        } else {
+          showNotification();
+        }
+      });
+
+      function showNotification() {
+        const notification = new Notification('Title', {
+          body: 'This is the notification message.',
+          icon: 'path/to/icon.png' // URL to the notification icon
+        });
+
+        notification.onclick = function () {
+          // Handle click event
+          console.log('Notification clicked.');
+        };
+      }
     });
 
-    notification.onclick = function() {
-      // Handle click event
-      console.log('Notification clicked.');
-    };
-  }
-});
+  </script>
 
-    </script>
-    
 </body>
 
 

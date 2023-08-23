@@ -1291,6 +1291,17 @@ router.get("/settings", auth, async function(req,res){
     res.status(200).render("settings");
 })
 
+// Updating Account Settings 
+
+// Updating Name
+
+router.post('/updateName', auth, async function(req,res){
+    const fullName = req.user.fullName;
+    const newName = req.body.newName;
+    
+
+})
+
 //  Error Handling Middleware
 
 app.use(function (err, req, res, next) {
