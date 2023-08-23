@@ -1176,19 +1176,30 @@ router.get("/reportproblem", function (req, res) {
     res.render("help/reportproblem");
 });
 
-router.get("/forgotpassword", async function (req, res) {
+router.get("/forgotpassword",auth, async function (req, res) {
     console.log(req);
-    res.render("forgotPassword");
+
+    const securityQuestion = await req.user.secQuestion;
+
+    // Test for secQuestion in db
+    console.log(securityQuestion);
+   
+    res.render("forgotPassword", {securityQuestion});
 });
 
-router.post("/forgotpassword", async function (req, res) {
+router.get("/resetpassword",auth, async function(req,res){
+
+    res.render("resetpassword")
+})
+
+router.post("/forgotpassword",auth, async function (req, res) {
     console.log(req);
 
-    // Getting Email Address from the user 
+    //Getting Email Address from the user 
 
     const userEmail = req.body.email.trim();
 
-    // Verifying Email Address
+    //Verifying Email Address
 
     try {
         const { email } = req.body;
@@ -1209,7 +1220,37 @@ router.post("/forgotpassword", async function (req, res) {
         res.status(500).send('An error occurred');
       }
 
+    
 });
+
+router.get("/securityQuestion", auth, async function(req,res){
+
+    const securityQuestion = await req.user.secQuestion;
+
+    // Test for secQuestion in db
+    console.log(securityQuestion);
+
+    res.render("securityQuestion",{securityQuestion});
+});
+
+
+router.post("/securityQuestion", auth, async function(req,res){
+    
+    const securityAnswer = await req.user.secQuestionAnswer;
+    const userResponse = await req.body.secAnswer;
+    console.log(userResponse);
+    
+    if(userResponse !== securityAnswer){
+         const message = "The answer to the security question does not match \n";
+         res.render("securityQuestion", {message});
+    }
+    
+    else{
+      const message = "The answer to the question is correct. Very good. Please go and click reset password button now"
+      res.render("resetpassword");
+    }
+
+})
 
 // Forgot Password Redirects
 

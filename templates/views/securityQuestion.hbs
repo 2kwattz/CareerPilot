@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerMeta}}
+    <title> Answer Security Question : CareerPilot </title>
+</head>
+<body>
+    {{>header}}
+
+    <div class="section1">
+
+        <form class="form-control" action="/securityQuestion" method="POST">
+
+      
+        <p class="section-subtitles index-para"> Enter the answer to your security question </p><br>
+        <p id="securityQuestion"> {{securityQuestion}}</p>
+        
+        <input type="text" name="secAnswer" placeholder="Your Answer ">
+        
+        <button class="btn" type="submit"> Reset Password </button>
+
+        <div class="resultBox">
+
+            <p id="message"> {{message}}</p>
+        </div>
+        </form>
+    </div>
+    
+</body>
+</html>
