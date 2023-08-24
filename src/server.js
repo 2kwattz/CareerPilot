@@ -1359,11 +1359,9 @@ router.post("/namechange", auth, async function(req,res){
         //     res.redirect('/myprofile'); // Redirect to the user's profile page
         // }
         );
-        
                 const message = "Name Changed successfully\n";
                 console.log('Name updated successfully');
                 res.render('myprofile', {message}); // Redirect to the user's profile page
-
     
     // else {
     //     console.log('No matching user found to update');
