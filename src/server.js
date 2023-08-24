@@ -1369,10 +1369,6 @@ router.post("/namechange", auth, async function(req,res){
     //     console.log('No matching user found to update');
     //     res.status(404).send('User not found');
     // }
-
-    
-
-
 })
 
 router.post('/updateName', auth, async function(req,res){
