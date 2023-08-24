@@ -38,6 +38,9 @@ const mailgun = require('mailgun-js')({
     domain: 'sandboxb60c058465804065bb1c4c58d505e807.mailgun.org',
 });
 
+// DB Client Connect
+
+// const db = client.db('careerpilot'); // For Updating Collections 
 
 
 // BCrypt Hashing Algorithm for Security
@@ -1176,15 +1179,15 @@ router.get("/reportproblem", function (req, res) {
     res.render("help/reportproblem");
 });
 
-router.get("/forgotpassword",auth, async function (req, res) {
+router.get("/forgotpassword", async function (req, res) {
     console.log(req);
 
-    const securityQuestion = await req.user.secQuestion;
+    // const securityQuestion = await req.user.secQuestion;
 
     // Test for secQuestion in db
-    console.log(securityQuestion);
+    // console.log(securityQuestion);
    
-    res.render("forgotPassword", {securityQuestion});
+    res.render("forgotPassword");
 });
 
 router.get("/resetpassword",auth, async function(req,res){
@@ -1192,7 +1195,7 @@ router.get("/resetpassword",auth, async function(req,res){
     res.render("resetpassword")
 })
 
-router.post("/forgotpassword",auth, async function (req, res) {
+router.post("/forgotpassword", async function (req, res) {
     console.log(req);
 
     //Getting Email Address from the user 
@@ -1334,9 +1337,48 @@ router.get("/settings", auth, async function(req,res){
 
 // Updating Name
 
+router.get("/namechange", auth, async function(req,res){
+    
+    const currentName = req.user.fullName;
+    
+    res.status(200).render("namechange", {currentName});
+});
+
+router.post("/namechange", auth, async function(req,res){
+    
+    const currentName = req.user.fullName;
+    const updatedName = req.body.updatedName;
+    
+    // Update the user's name in the database
+    await registrationData.updateOne(
+        { fullName : currentName },
+        { $set: { fullName : updatedName } }
+        // (err, result) => {
+        //     if (err) return console.log(err);
+        //     console.log('Name updated successfully');
+        //     res.redirect('/myprofile'); // Redirect to the user's profile page
+        // }
+        );
+        
+                const message = "Name Changed successfully\n";
+                console.log('Name updated successfully');
+                res.render('myprofile', {message}); // Redirect to the user's profile page
+
+    
+    // else {
+    //     console.log('No matching user found to update');
+    //     res.status(404).send('User not found');
+    // }
+
+    
+
+
+})
+
 router.post('/updateName', auth, async function(req,res){
     const fullName = req.user.fullName;
     const newName = req.body.newName;
+
 
 
 })
