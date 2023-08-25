@@ -60,32 +60,30 @@
 
                 </div>
 
-                <div class="dropdown-content">
+                <div class="dropdown-content" style="text-align: center">
 
                     <li><a href="/dashboard">Dashboard Home</a></li>
                     <li><a href="#newsContainerDashboard">News Articles</a></li>
-                    <li><a href="#">Internships</a></li>
+                    <li><a href="/internships">Internships</a></li>
                     <li><a href="/scholarships">Scholarships</a></li>
                     <li><a href="/jobs">Jobs</a></li>
                     <li><a href="#">Certifications</a></li>
-                    <li><a href="#">Hackathons</a></li>
-                    <li><a href="#coursesContainerDashboard">Courses</a></li>
-                    <li><a href="#">Certifications</a></li>
+                    <li><a href="/courses">Certifications</a></li>
                 </div>
             
                 <div class="dropdown">
                     <button class="sidebar-btn"> Help </button>
                 </div>
-                <div class="dropdown-content">
+                <div class="dropdown-content" style="text-align: center">
                     <a href="#">Language</a><br>
-                    <a href="#">Report A Problem</a><br>
-                    <a href="#">Feedback</a><br>
-                    <a href="#">Contact Us</a><br>
+                    <a href="/reportproblem">Report A Problem</a><br>
+                    <a href="/feedbackPage">Feedback</a><br>
+                    <a href="/contactus">Contact Us</a><br>
                 </div>
                 <div class="dropdown">
                     <button class="sidebar-btn"> Account Settings </button>
                 </div>
-                <div class="dropdown-content">
+                <div class="dropdown-content" style="text-align: center">
                     <a href="/myprofile">My Profile</a><br>
                     <a href="/settings">Account Settings</a><br>
                     <a href="#">Security Settings</a><br>
@@ -114,7 +112,7 @@
 
                 <blockquote>
                     <h3> "Success is not just about reaching your destination but the resources that propel you forward
-                        on your career journey." ~ ChatGPT3 </h3>
+                        on your career journey." </h3>
                 </blockquote>
                 </p>
 
@@ -172,9 +170,9 @@
                     notifications.
                 </p><br>
 
-                <h1 class="section-subtitles">
+                {{!-- <h1 class="section-subtitles">
                     Vaccancies in Top Companies
-                </h1>
+                </h1> --}}
 
                 <br>
                 <h1 class="section-subtitles">
@@ -188,7 +186,7 @@
             </section>
             {{!-- Suggestions / Instructions --}}
 
-            <section class="dashboard-section whatshot">
+            {{!-- <section class="dashboard-section whatshot">
 
                 <div class="dashboardItems" id="suggestionsContainerDashboard"></div>
 
@@ -219,7 +217,7 @@
                     <img src="/img/roadmaps/web.jpg">
                 </div>
 
-            </section>
+            </section> --}}
 
             {{!-- Courses Section 3 --}}
 
@@ -242,11 +240,11 @@
                 <br><button class="btn"> <a href="/courses"> Search Certification Courses</a></button>
             </div>
 
-            <div class="dashboard-subitems index-para">
+            {{!-- <div class="dashboard-subitems index-para">
                 Purchase Courses
 
                 <br><button class="btn"> <a href="/purchaseCourses"> Purchase Courses </a></button>
-            </div>
+            </div> --}}
 
             {{!-- Internships Section 4 --}}
 
@@ -286,11 +284,11 @@
                 <div class="dashboard-subitems section-titles index-para">
                     Search Internships from various portals
 
-                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
+                    {{!-- <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
                 </div>
 
                 <div class="dashboard-subitems section-titles index-para">
-                    Search internships from top MNCs
+                    Search internships from top MNCs --}}
 
                     <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
                 </div>
@@ -315,166 +313,6 @@
                     Search internships from top MNCs
 
                     <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
-                </div>
-
-            </div>
-            {{!-- Settings Options // For the side navbar --}}
-
-            {{!-- TOP MNCS Locationwise Job Vaccancies --}}
-
-            <div class="dashboardItems" id="TopMNCsContainerDashboard">
-
-                <h2> TOP MNCs </h2>
-
-                <div class="dashboard-subitems">
-                    Vaccancies - Work from home
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-            </div>
-
-
-
-            {{!-- Settings Options // For the side navbar --}}
-
-            <div class="dashboardItems" id="settingsContainerDashboard">
-
-                <h2> User Settings </h2>
-
-
-
-
-                <div class="dashboard-subitems">
-                    Switch Dark/Light Mode
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-            </div>
-
-
-            <div class="dashboardItems" id="internshipContainerDashboard">
-
-                <h2> Internships </h2>
-
-
-
-                <div class="dashboard-subitems">
-                    Search Internships from various portals
-
-                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Search internships from top MNCs
-
-                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
-                </div>
-
-            </div>
-
-            {{!-- Settings Options // For the side navbar --}}
-
-            <div class="dashboardItems" id="settingsContainerDashboard">
-
-                <h2> User Settings </h2>
-
-
-
-
-                <div class="dashboard-subitems">
-                    Switch Dark/Light Mode
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-            </div>
-
-
-            <div class="dashboardItems" id="internshipContainerDashboard">
-
-                <h2> Internships </h2>
-
-
-
-                <div class="dashboard-subitems">
-                    Search Internships from various portals
-
-                    <br><button class="btn"> <a href="/internships"> Search Courses</a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Search internships from top MNCs
-
-                    <br><button class="btn"> <a href="/internships"> Search Internships </a></button>
-                </div>
-
-            </div>
-
-            {{!-- Settings Options // For the side navbar --}}
-
-            <div class="dashboardItems" id="settingsContainerDashboard">
-
-                <h2> User Settings </h2>
-
-
-
-
-                <div class="dashboard-subitems">
-                    Switch Dark/Light Mode
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/internships"> Go </a></button>
-                </div>
-
-                <div class="dashboard-subitems">
-                    Account Settings
-
-                    <br><button class="btn"> <a href="/myprofile"> View Profile </a></button>
-                    <br><button class="btn"> <a href="/logout"> Logout </a></button>
-                    <br><button class="btn"> <a href="/logoutAll"> Logout from all devices </a></button>
                 </div>
 
             </div>

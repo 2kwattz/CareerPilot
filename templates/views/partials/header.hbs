@@ -4,9 +4,6 @@
         <h1 id="title"> CareerPilot </h1>
     </div>
 
-    <!-- Simulate a smartphone / tablet -->
-    {{!-- <div class="mobile-container">  --}}
-
         <nav class="header_navbar">
             <ul id="myLinks">
                 <li><a href="/"> HOME </a> </li>
@@ -18,8 +15,27 @@
 
         </nav>
         <div class="login_box">
+
+           
+
+            {{#if req.user}}
+
+            <li class="dropdown">
+                <a href="#" class="profile-icon">
+                    <img src="/path-to-your-profile-icon.png" alt="Profile">
+                </a>
+                <div class="dropdown-content">
+                    <a href="/myprofile">View Profile</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </li>
+
+            {{else}}
+
             <button class="btn" id="loginbtn"> <a href="/loginPage"> LOGIN </a> </button>
             <button class="btn" id="signupbtn"> <a href="/registration"> SIGN UP </a></button>
+
+            {{/if}}
 
             <!-- Or User Profile Icon  -->
 
@@ -27,13 +43,7 @@
 
 
 
-         {{!-- <a href="javascript:void(0);" class="icon" onclick="toggleNav()">
-            <i class="fa fa-bars"></i>
-        </a>  --}}
-
-       
-{{!-- 
-    </div> --}}
+         
 </header>
 
 <nav class="small_navbar">
@@ -52,15 +62,3 @@
         <li> <div id="searchbox"> <input type="text" placeholder="Search anything"> <a href="#"><img src="img/vectors/search.png" height="15px" width="15px"></a></div></li>
     </ul>
 </nav>
-
-{{!-- <script>
-
- function toggleNav() {
-  var x = document.getElementById("myLinks");
-  if (x.style.display === "block") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
-  }
-
-</script> --}}

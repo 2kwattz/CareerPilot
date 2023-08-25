@@ -154,6 +154,15 @@ const headers = {
     'Cookie': 'cookie_name1=cookie_value1; cookie_name2=cookie_value2'
 };
 
+// User Login Verification Middleware (Not Working so Commented)
+
+// app.use((req, res, next) => {
+//     const userLoggedIn = req.user ? true : false;
+  
+//     res.locals.userLoggedIn = userLoggedIn;
+//     next();
+// });
+
 // User Verification Schema (For User's email verification)
 
 const userVerification = require('./models/userVerification');
@@ -229,6 +238,7 @@ const scholarshipWebsites = [
 ]
 
 console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${process.env.SECRET_KEY}\n`);
+
 
 
 
@@ -423,9 +433,6 @@ router.post("/internships", auth, async function (req, res) {
 
     }
 
-    let linkedinSource = `https://www.linkedin.com/jobs/search?keywords=${internshipKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`;
-
-
     // Scrapping Linkedin
 
     async function scrapLinkedin() {
@@ -441,9 +448,6 @@ router.post("/internships", auth, async function (req, res) {
                 location = $(this).find('.job-search-card__location').text()
                 listDate = $(this).find(".job-search-card__listdate").text()
                 company = $(this).find(".base-search-card__subtitle").text()
-
-                // link = $(this).find(".base-card__full-link").text()
-                // linkedinData.push(` Title ${title}, Location : ${location}, List Date ${listDate},Posted By ${company}`);
 
                 // Pushing LinkedinData in an Array
 
