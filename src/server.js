@@ -492,10 +492,15 @@ router.post("/internships", auth, async function (req, res) {
                 title = $(this).find(".company_and_premium").text();
                 location = $(this).find('.location_link').text();
                 jobTitle = $(this).find('.company h3').text();
+                // duration = $(this).find('.internship_other_details_container .other_detail_item').text();
+                stripend = $(this).find('.stipend_container .item_body span').text();
+                viewDetailsLink = $(this).find('.cta_container a').attr('href');
                 companyLogo = $(this).find('.internship_logo img')
                 // listDate = $(this).find(".job-search-card__listdate").text()
                 // link = $(this).find(".base-card__full-link").text()
-                internshalaData.push({ title, location, jobTitle });
+
+                const redirectLink = `https://www.internshala.com${viewDetailsLink}`;
+                internshalaData.push({ title, location, jobTitle, redirectLink, stripend, companyLogo });
                 internshalaTitles.push(title);
                 internshalaLocation.push(location);
                 console.log(internshalaData);
@@ -538,6 +543,15 @@ router.post("/internships", auth, async function (req, res) {
     res.status(200).render("internships", { linkedinData, internshalaData, errorMsg });
 
 })
+
+// Internship Redirects
+
+router.get("intredirect", auth, async function(req,res){
+    console.log(req);
+   
+
+})
+
 
 // New UI Pages. Will be replaced later on
 
@@ -1348,7 +1362,11 @@ router.get("/myprofile", auth, async function (req, res) {
         userState: req.user.state,
         userGender: req.user.gender,
         userStatus: req.user.currentStatus,
-        userInterests: req.user.interests
+        userInterests: req.user.interests,
+        userClg: req.user.collegeName,
+        userAge: req.user.age,
+        userBranch: req.user.collegeBranch,
+        userCourse : req.user.collegeCourse
     }
     const userName = req.user.fullName.toUpperCase();
 

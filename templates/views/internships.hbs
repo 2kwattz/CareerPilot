@@ -6,12 +6,13 @@
 
     {{!-- Importing CSS for the Modal (Popup) box --}}
     <link rel="stylesheet" href="/css/internshipsPage/modalbox.css">
-    
+
     <title>Internships Search : CarrerPilot</title>
 </head>
 
 <body>
     {{>header}}
+    
 
     <div class="container">
 
@@ -31,7 +32,7 @@
                 <input type="text" name="location" placeholder="Enter City">
                 <input type="text" name="internshipSearch" placeholder="For eg : Web Development">
                 <button class="btn" id="searchInternshipBtn" type="submit"> Search Internships </button>
-                <button class="btn open-modal-btn" onfocus = "this.value='' "> Clear </button>
+                <button class="btn open-modal-btn" onfocus="this.value='' "> Clear </button>
 
             </form>
         </div>
@@ -64,7 +65,7 @@
 
             <div class="errorNotifications">
 
-            {{errorMsg}}
+                {{errorMsg}}
             </div>
 
 
@@ -78,11 +79,13 @@
                 <div class="internshipContainer">
                     <span> Company Name : {{this.title}}</span><br>
                     <span> Job Title : {{this.jobTitle}} </span><br>
+                    <span> Stripend : {{this.stripend}} </span><br>
                     <span> Start Date : </span><br>
                     <span> Internship Duration : </span><br>
                     <span> Start Date : </span><br>
                     <span> Internship Location : {{this.location}}</span>
-                    <button class="btn" onclick="popupOpen()"> View </button>
+                    <button class="btn open-modal-btn"> View Details </button>
+                    <a class="btn" href="{{this.redirectLink}}" target="_blank"> Apply </a>
                 </div>
                 {{/each}}
 
@@ -103,17 +106,18 @@
                     <span> Internship Duration : </span><br>
                     <span> Job Posted : {{this.listDate}}</span><br>
                     <span> Internship Location : {{this.location}}</span>
-                    <button class="btn" onclick="popupOpen()"> View </button>
+                    <button class="btn open-modal-btn"> View </button>
+                    <a class="btn" href="{{this.redirectLink}}"> Apply </a>
                 </div>
 
                 {{/each}}
 
-        
+
             </div>
 
-              <div class="topMNCsContainer">
+            <div class="topMNCsContainer">
                 <h1 class="section-subtitles"> Top Companies Internships </h1>
-          
+
             </div>
 
 
@@ -123,17 +127,31 @@
 
     </div>
 
+    {{!-- Box Modal --}}
+
+    <div id="modal" class="modal">
+    <div class="modal-content">
+
+        <h3> Internship details </h3>
+
+        <a class="btn external-link-btn" href="{{this.redirectLink}}" target="_blank"> View Details </a> 
+        <div id="modal-data">
+            <!-- Dynamic data will be injected here -->
+        </div>
+    </div>
+</div>
+
+
+    <script src="/js/modals.js"></script>
 
     <script>
 
-        {{!-- Popup Modals for Buttons --}}
-
-        function popupOpen(){
+        function popupOpen() {
 
             alert("Still Under development!!");
         }
 
-
+     
 
         const errorBox = document.querySelector('.errorNotifications');
         errorBox.style.display = none;
@@ -149,10 +167,10 @@
             }
         }
 
-        function toggleLinkedin(){
+        function toggleLinkedin() {
 
             const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
-               if (linkedinContainer.style.display !== 'none') {
+            if (linkedinContainer.style.display !== 'none') {
                 linkedinContainer.style.display = 'none';
             } else {
                 linkedinContainer.style.display = 'block';

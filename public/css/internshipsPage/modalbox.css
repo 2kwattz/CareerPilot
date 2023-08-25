@@ -1,6 +1,6 @@
  /* CSS Modal Box for each internships,scholarships,jobs etc */
 
- .modalbox{
+ .modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stays in place */
     z-index: 1; /* Sits on the top */

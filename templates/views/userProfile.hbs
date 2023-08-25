@@ -19,10 +19,22 @@
         <br> Gender : {{userProfile.userGender}} 
         <br> City : {{userProfile.userCity}} , {{userProfile.userState}}
         <br> Status : {{userProfile.userStatus}}
+        <br> Age : {{userProfile.userAge}}
+       
+        <br> <button class="btn" onclick="editProfile()"> Edit Info </button>
+    </div>
+
+    <div class="internshipContainer" style="width=90% !important">
+
+        <h1 class="section-subtitles"> Educational Information </h1>
+
+        <br> College : {{userProfile.userClg}} 
+        <br> Branch : {{userProfile.userBranch}} 
+        <br> Course : {{userProfile.userCourse}}
         <br> Interests : {{userProfile.interests}}
        
 
-        <br> <button class="btn" onclick="editProfile()"> Edit Profile </button>
+        <br> <button class="btn" onclick="editProfile()"> Edit Info </button>
     </div>
 
     <script>
