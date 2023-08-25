@@ -20,10 +20,13 @@
     <div id="loader"><img src="/img/other/loadingAirplane.gif" height: "40px" width="40px"></div>
 
     <form class="form-reg-control" action="/registration" method="POST">
-        <input type="text" class="form-control" placeholder="Enter Full Name" required name="fullName">
-        <input type="text" class="form-control" placeholder="Enter Email Address" required name="email">
-        <input type="password" class="form-control" placeholder="Choose Password" required name="password">
-        <input type="password" class="form-control" placeholder="Confirm Password" required name="confirmPassword">
+        <input type="text" class="form-control" placeholder="Enter Full Name" required name="fullName" id="name">
+        <input type="text" class="form-control" placeholder="Enter Email Address" required name="email" id="email">
+         <div class="error-message" id="emailError"></div>
+         
+        <input type="password" class="form-control" placeholder="Choose Password" required name="password" id="password">
+        <input type="password" class="form-control" placeholder="Confirm Password" required name="confirmPassword" id="password">
+        <div class="error-message" id="passwordError"></div>
 
         <label class="radio gender">
             <input type="radio" name="gender" value="male" checked>
@@ -49,7 +52,8 @@
         <input type="text" placeholder="Enter your course" required name="collegeCourse">
 
         <select>
-            <option value="Current Status" disabled="disabled" selected="selected" name="currentStatus" required>Please select your current status </option>
+            <option value="Current Status" disabled="disabled" selected="selected" name="currentStatus" required>Please
+                select your current status </option>
             <option value="Student">Student</option>
             <option value="Graduated">Graduated</option>
         </select>
@@ -64,6 +68,18 @@
         <label class="check-box"> Remember Me? <input type="checkbox"> </label>
 
     </form>
+
+    <script>
+
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+
+    </script>
 
     {{>footer}}
 

@@ -1481,6 +1481,13 @@ router.post('/updateName', auth, async function (req, res) {
 
 })
 
+// Lockedout Page for validaton attempt count
+
+router.get("/lockedout", async function(req,res){
+    res.render("lockedout");
+    
+})
+
 //  Error Handling Middleware
 
 app.use(function (err, req, res, next) {
