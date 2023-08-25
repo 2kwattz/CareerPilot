@@ -59,6 +59,19 @@ according to the users choice
 38. Transporter for Email Verification created, initialized and verified
 39. New google account with appropriate settings created for the same 
 40. Custom headers object created to simulate user behavior while web scrapping
+41. User Profile section created with About Information and Education Information
+42. Sidebar panel added in Dashboard section 
+43. Settings page created
+44. Password changing functionality using Security question added successfully,
+Password changing through email added 70%. 
+45. Name changing functional added 
+46. Email changing functionality added 50pr.
+47. Added notification settings option to allow/disallow notifications 
+48. Apply now button added to redirect user to the individual apply page of the internship
+49. Added a popup box for View details section. Yet to fill
+50. Error Middlewares added. for eg a custom error page for specific errors
+51. Logout system for Single Session and All devices functionality added
+
 
 
 
@@ -66,19 +79,17 @@ according to the users choice
 
 Work to be done in future
 
-1. Email confirmation system to verify user
+1. Advanced filters needs to be added such as search by location,stipend and other advanced filters
 2. Data scrapping of various datasets for a single category for eg: internships // Done!
-3. Adding password recovery options
+3. Plans to make it an ecommerce website for selling courses as an additional functionality
 4. Refining Login and Registration system schemas ( already done but slight upgrades) 
 5. Creating a fully functional dashboard ( Dashboard concept implemented but no functionality implemented in it as of now)
 6. Logout for a single device based on database token deletion yet to be implemented // Done
-7. Logout from all devices yet to be implemented // Done
+7. Dark/Light mode option in settings tab
 8. To add a Sign in with google and facebook option
-9. Plans to make it an ecommerce website for selling courses as an additional functionality
-10. Settings tab for dashboard with help section containing Dark/Light mode, User profile etc
-11. As of now only considerable HTML,CSS and Javascript is used to create a functional frontend, 
-But it needs refinement like animations, sliding covers etc when backend is fully functional
-12. Advanced filters needs to be added such as search by location,stipend and other advanced filters
+
+
+
 
 Why CareerPilot?
 
