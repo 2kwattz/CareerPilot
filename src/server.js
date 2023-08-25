@@ -270,19 +270,6 @@ router.get("/", async function (req, res) {
 
     }
 
-    // try{
-
-    //     const companiesData = await axios.get(companiesSource);  // GET Req using Axios
-    //     const $ = cheerio.load(response.data); // Loading the response data into cheerio
-
-    //     // Array of data
-
-    //     // const companyTitles = 
-    // }
-    // catch{
-    // }
-    // scrapCompanies();
-
     res.status(200).render("index");
     app.set('title', 'CareerPilot : Home Page');
 });
@@ -419,13 +406,6 @@ router.post("/internships", auth, async function (req, res) {
     let linkedinObj = [];
     let internshalaObj = [];
 
-    //  Internship Titles
-
-    let internshalaTitles = [];
-    let internshalaLocation = [];
-    let internshalaDuration = [];
-    let internshalaCompany = [];
-
     let extras = [];
 
     // Error Message
@@ -488,23 +468,43 @@ router.post("/internships", auth, async function (req, res) {
             // console.log(internshipSources.internshala);
 
             const internshalaInternships = $(".individual_internship");
-            await internshalaInternships.each(function () {
+            internshalaInternships.each(function () {
                 title = $(this).find(".company_and_premium").text();
                 location = $(this).find('.location_link').text();
                 jobTitle = $(this).find('.company h3').text();
                 // duration = $(this).find('.internship_other_details_container .other_detail_item').text();
                 stripend = $(this).find('.stipend_container .item_body span').text();
                 viewDetailsLink = $(this).find('.cta_container a').attr('href');
-                companyLogo = $(this).find('.internship_logo img')
+                companyLogo = $(this).find('.internship_logo img').attr('src');
+                postStatus = $(this).find('.status-container .ic-16-reschedule').text()
                 // listDate = $(this).find(".job-search-card__listdate").text()
                 // link = $(this).find(".base-card__full-link").text()
 
-                const redirectLink = `https://www.internshala.com${viewDetailsLink}`;
-                internshalaData.push({ title, location, jobTitle, redirectLink, stripend, companyLogo });
-                internshalaTitles.push(title);
-                internshalaLocation.push(location);
-                console.log(internshalaData);
+                // View Internship Details
 
+                const redirectLink = `https://www.internshala.com${viewDetailsLink}`;
+                // Getting Company's Logo
+
+                const imgSources = `https://www.internshala.com/${companyLogo}`;
+                console.log(imgSources)
+
+                // Company Logo Rendering
+
+                // axios.get(imgSources, { responseType: 'arraybuffer' })
+                // .then(response => {
+                //     const imageBuffer = Buffer.from(response.data, 'binary');
+
+                    // Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
+                    // const base64Image = imageBuffer.toString('base64');
+                    // image.set('Content-Type', 'image/jpeg'); // Content Type as JPEG
+                // })
+                // .catch(error => {
+                //     console.error('Failed to fetch image:', error);
+                // });
+                
+                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend,postStatus });
+                
+                console.log(internshalaData);
             });
         }
 
@@ -546,9 +546,9 @@ router.post("/internships", auth, async function (req, res) {
 
 // Internship Redirects
 
-router.get("intredirect", auth, async function(req,res){
+router.get("intredirect", auth, async function (req, res) {
     console.log(req);
-   
+
 
 })
 
@@ -607,6 +607,7 @@ router.post("/jobs", auth, async function (req, res) {
     const linkedinData = []; // Storing Linkedin Data
     const microsoftData = []; // Scrapping Microsoft
     const jobRapidoData = []; // Scrapping Job Rapido
+    const bjoData = []; // Scrapping BestJobsOnline Portal
 
     // Error Responses
 
@@ -619,7 +620,8 @@ router.post("/jobs", auth, async function (req, res) {
         naukriDotCom: `https://www.naukri.com/web-development-jobs?k=${jobKeyword}`,
         microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${jobKeyword}&lc=India&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`,
         linkedin: `https://www.linkedin.com/jobs/search?keywords=${jobKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
-        jobRapido: `https://in.jobrapido.com/?w=${jobKeyword}&l=india&r=auto&shm=all`
+        jobRapido: `https://in.jobrapido.com/?w=${jobKeyword}&l=india&r=auto&shm=all`,
+        bestJobsOnline: `https://in.best-jobs-online.com/serp/1/?position=${jobKeyword}&location=${jobLocation}`
     }
 
     // Scrapping LinkedIn
@@ -707,9 +709,9 @@ router.post("/jobs", auth, async function (req, res) {
                     statusCode: response.status,
                     statusText: response.statusText,
                     errorCode: response.code,
-                    respStatusCode : response.request.response.status,
-                    resStatus : response.res.statusCode,
-                    resMessage : response.res.statusMessage
+                    respStatusCode: response.request.response.status,
+                    resStatus: response.res.statusCode,
+                    resMessage: response.res.statusMessage
 
                 }
 
@@ -764,6 +766,30 @@ router.post("/jobs", auth, async function (req, res) {
 
 
     await scrapJobRapido()
+
+    // Scrapping BestJobsOnline Portal
+
+    async function scrapBJO() {
+
+        const response = await axios.get(jobSources.bestJobsOnline, { headers });
+        console.log(response.data);
+        const $ = cheerio.load(response.data);
+        console.log("check1");
+        const bjoJobs = $(".my-8");
+        bjoJobs.each(function () {
+            title = $(this).find('.sm:flex sm:shrink sm:grow-0 sm:flex-col h3').text().trim();
+            // company = $(this).find('.result-item__company').text().trim();
+
+            bjoData.push({ title });
+
+            console.log(bjoJobs);
+        });
+    }
+
+
+    await scrapBJO()
+
+
     res.status(200).render("jobs", { linkedinData, jobRapidoData, naukriDotComJobs, errorRender });
 });
 
@@ -1200,16 +1226,16 @@ router.get("/forgotpassword", async function (req, res) {
 
     // Test for secQuestion in db
     // console.log(securityQuestion);
-   
+
     res.render("forgotPassword");
 });
 
-router.get("/resetpassword",auth, async function(req,res){
+router.get("/resetpassword", auth, async function (req, res) {
 
     res.render("resetpassword")
 })
 
-router.post("/resetpassword", auth, async function(req,res){
+router.post("/resetpassword", auth, async function (req, res) {
     // Individual Userid for each account
     const userId = req.user._id;
 
@@ -1226,30 +1252,30 @@ router.post("/resetpassword", auth, async function(req,res){
     // Updating user's password in the database
 
     const updateResult = await registrationData.updateOne(
-        {_id: userId},
-        {$set: {password: hashedPassword}}
+        { _id: userId },
+        { $set: { password: hashedPassword } }
     );
 
     // Redirects according to the results 
 
-    try{
+    try {
 
         if (updateResult.nModified > 0) {
             console.log('Password reset successful');
             res.redirect('/loginPage'); // Redirect to the login page or any other appropriate page
-        } 
+        }
         else {
             const message = "Password has been changed successfully!!";
             console.log('User not found');
             // res.status(404).send('User not found');
-            res.render("loginPage", {message});
+            res.render("loginPage", { message });
         }
     }
-    
+
     catch (err) {
-    console.error(err);
-    res.status(500).send('Error resetting password'); // Handle the error gracefully
-}
+        console.error(err);
+        res.status(500).send('Error resetting password'); // Handle the error gracefully
+    }
 
 })
 
@@ -1265,85 +1291,85 @@ router.post("/forgotpassword", async function (req, res) {
     try {
         const { email } = req.body;
         const user = await registrationData.findOne({ email });
-    
+
         if (!user) {
-          // User not found, display error message
-          return res.send('User not found');
+            // User not found, display error message
+            return res.send('User not found');
         }
-    
+
         // Generate password reset token and send reset email
         await user.generatePasswordReset();
-    
+
         // Display success message or redirect to a page
         res.send('Password reset email sent');
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred');
-      }
+    }
 
-    
+
 });
 
-router.get("/securityQuestion", auth, async function(req,res){
+router.get("/securityQuestion", auth, async function (req, res) {
 
     const securityQuestion = await req.user.secQuestion;
 
     // Test for secQuestion in db
     console.log(securityQuestion);
 
-    res.render("securityQuestion",{securityQuestion});
+    res.render("securityQuestion", { securityQuestion });
 });
 
 
-router.post("/securityQuestion", auth, async function(req,res){
-    
+router.post("/securityQuestion", auth, async function (req, res) {
+
     const securityAnswer = await req.user.secQuestionAnswer;
     const userResponse = await req.body.secAnswer;
     console.log(userResponse);
-    
-    if(userResponse !== securityAnswer){
-         const message = "The answer to the security question does not match \n";
-         res.render("securityQuestion", {message});
+
+    if (userResponse !== securityAnswer) {
+        const message = "The answer to the security question does not match \n";
+        res.render("securityQuestion", { message });
     }
-    
-    else{
-      const message = "The answer to the question is correct. Very good. Please go and click reset password button now"
-      res.render("resetpassword");
+
+    else {
+        const message = "The answer to the question is correct. Very good. Please go and click reset password button now"
+        res.render("resetpassword");
     }
 
 })
 
 // Forgot Password Redirects
 
-app.post("/resetpassword/:token", async function(req, res) {
+app.post("/resetpassword/:token", async function (req, res) {
     try {
-      const token = req.params.token;
-      const user = await registrationData.findOne({
-        resetPasswordToken: token,
-        resetPasswordExpires: { $gt: Date.now() },
-      });
-  
-      if (!user) {
-        return res.status(400).send("Invalid or expired token");
-      }
-  
-      // password reset form here
-      res.render("resetpassword", { token });
+        const token = req.params.token;
+        const user = await registrationData.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            return res.status(400).send("Invalid or expired token");
+        }
+
+        // password reset form here
+        res.render("resetpassword", { token });
     } catch (error) {
-      res.status(500).send("An error occurred while processing the reset token.");
+        res.status(500).send("An error occurred while processing the reset token.");
     }
-  });
+});
 
 //   Update Email Address Routes
 
-router.get("/updateEmail",auth, async function(req,res){
+router.get("/updateEmail", auth, async function (req, res) {
     console.log(req);
 
     const currentEmail = req.user.email;
-    res.render("updateEmail", {currentEmail})
+    res.render("updateEmail", { currentEmail })
 
 })
-  
+
 // HELP Pages
 
 router.get("/sitemap", function (req, res) {
@@ -1366,7 +1392,7 @@ router.get("/myprofile", auth, async function (req, res) {
         userClg: req.user.collegeName,
         userAge: req.user.age,
         userBranch: req.user.collegeBranch,
-        userCourse : req.user.collegeCourse
+        userCourse: req.user.collegeCourse
     }
     const userName = req.user.fullName.toUpperCase();
 
@@ -1378,7 +1404,7 @@ router.get("/myprofile", auth, async function (req, res) {
     async function cityTemp() {
 
         // Converting User's city to Lat Lon 
-        
+
         let lat;
         let lon;
         const latLongApi = `https://api.api-ninjas.com/v1/geocoding?city=${req.user.city}&country=${req.user.country}`
@@ -1400,7 +1426,7 @@ router.get("/success", async function (req, res) {
     res.status(200).render("accountcreation", { userName })
 })
 
-router.get("/settings", auth, async function(req,res){
+router.get("/settings", auth, async function (req, res) {
 
     res.status(200).render("settings");
 })
@@ -1409,32 +1435,32 @@ router.get("/settings", auth, async function(req,res){
 
 // Updating Name
 
-router.get("/namechange", auth, async function(req,res){
-    
+router.get("/namechange", auth, async function (req, res) {
+
     const currentName = req.user.fullName;
-    
-    res.status(200).render("namechange", {currentName});
+
+    res.status(200).render("namechange", { currentName });
 });
 
-router.post("/namechange", auth, async function(req,res){
-    
+router.post("/namechange", auth, async function (req, res) {
+
     const currentName = req.user.fullName;
     const updatedName = req.body.updatedName;
-    
+
     // Update the user's name in the database
     await registrationData.updateOne(
-        { fullName : currentName },
-        { $set: { fullName : updatedName } }
+        { fullName: currentName },
+        { $set: { fullName: updatedName } }
         // (err, result) => {
         //     if (err) return console.log(err);
         //     console.log('Name updated successfully');
         //     res.redirect('/myprofile'); // Redirect to the user's profile page
         // }
-        );
-                const message = "Name Changed successfully\n";
-                console.log('Name updated successfully');
-                res.render("myprofile", {message}); // Redirect to the user's profile page
-    
+    );
+    const message = "Name Changed successfully\n";
+    console.log('Name updated successfully');
+    res.render("myprofile", { message }); // Redirect to the user's profile page
+
     // else {
     //     console.log('No matching user found to update');
     //     res.status(404).send('User not found');
@@ -1443,7 +1469,7 @@ router.post("/namechange", auth, async function(req,res){
 
 
 
-router.post('/updateName', auth, async function(req,res){
+router.post('/updateName', auth, async function (req, res) {
     const fullName = req.user.fullName;
     const newName = req.body.newName;
 
@@ -1475,9 +1501,20 @@ app.use(function (err, req, res, next) {
 
     switch (statusCode) {
 
+        case 400:
+            errorTitle = "Bad Request";
+            errorDesc = "The request could not be understood or was missing required parameters.";
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
+
+        case 401:
+            errorTitle = "Unauthorized";
+            errorDesc = "Authentication is required, and the provided credentials are missing or invalid.";
+            res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
+
+
         case 403:
             errorTitle = "Forbidden";
-            errorDesc = "There is no way you can access the requested data. A 403 error announces that the data is off limits."
+            errorDesc = "There is no way you can access the requested data. A 403 error announces that the data is off limits.";
             res.status(statusCode).render("customError.hbs", { statusCode, errorTitle, errorDesc });
 
             break;
