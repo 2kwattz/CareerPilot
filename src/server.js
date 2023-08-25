@@ -1195,6 +1195,50 @@ router.get("/resetpassword",auth, async function(req,res){
     res.render("resetpassword")
 })
 
+router.post("/resetpassword", auth, async function(req,res){
+    // Individual Userid for each account
+    const userId = req.user._id;
+
+    // Fetching new password from the user in Reset Password Form
+    const newPassword = req.body.updatedPassword;
+
+    // Number of salt rounds for Password Hashing
+    const salts = 10;
+
+    // Hashing the password using bycrypt encryption
+
+    const hashedPassword = await bcrypt.hash(newPassword, salts);
+
+    // Updating user's password in the database
+
+    const updateResult = await registrationData.updateOne(
+        {_id: userId},
+        {$set: {password: hashedPassword}}
+    );
+
+    // Redirects according to the results 
+
+    try{
+
+        if (updateResult.nModified > 0) {
+            console.log('Password reset successful');
+            res.redirect('/loginPage'); // Redirect to the login page or any other appropriate page
+        } 
+        else {
+            const message = "Password has been changed successfully!!";
+            console.log('User not found');
+            // res.status(404).send('User not found');
+            res.render("loginPage", {message});
+        }
+    }
+    
+    catch (err) {
+    console.error(err);
+    res.status(500).send('Error resetting password'); // Handle the error gracefully
+}
+
+})
+
 router.post("/forgotpassword", async function (req, res) {
     console.log(req);
 
@@ -1275,6 +1319,16 @@ app.post("/resetpassword/:token", async function(req, res) {
       res.status(500).send("An error occurred while processing the reset token.");
     }
   });
+
+//   Update Email Address Routes
+
+router.get("/updateEmail",auth, async function(req,res){
+    console.log(req);
+
+    const currentEmail = req.user.email;
+    res.render("updateEmail", {currentEmail})
+
+})
   
 // HELP Pages
 
@@ -1361,13 +1415,15 @@ router.post("/namechange", auth, async function(req,res){
         );
                 const message = "Name Changed successfully\n";
                 console.log('Name updated successfully');
-                res.render('myprofile', {message}); // Redirect to the user's profile page
+                res.render("myprofile", {message}); // Redirect to the user's profile page
     
     // else {
     //     console.log('No matching user found to update');
     //     res.status(404).send('User not found');
     // }
 })
+
+
 
 router.post('/updateName', auth, async function(req,res){
     const fullName = req.user.fullName;

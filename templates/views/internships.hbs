@@ -3,11 +3,15 @@
 
 <head>
     {{>headerMeta}}
-    {{>header}}
+
+    {{!-- Importing CSS for the Modal (Popup) box --}}
+    <link rel="stylesheet" href="/css/internshipsPage/modalbox.css">
+    
     <title>Internships Search : CarrerPilot</title>
 </head>
 
 <body>
+    {{>header}}
 
     <div class="container">
 
@@ -27,7 +31,7 @@
                 <input type="text" name="location" placeholder="Enter City">
                 <input type="text" name="internshipSearch" placeholder="For eg : Web Development">
                 <button class="btn" id="searchInternshipBtn" type="submit"> Search Internships </button>
-                <button class="btn" onfocus = "this.value='' "> Clear </button>
+                <button class="btn open-modal-btn" onfocus = "this.value='' "> Clear </button>
 
             </form>
         </div>
@@ -78,7 +82,7 @@
                     <span> Internship Duration : </span><br>
                     <span> Start Date : </span><br>
                     <span> Internship Location : {{this.location}}</span>
-                    <button class="btn"> View </button>
+                    <button class="btn" onclick="popupOpen()"> View </button>
                 </div>
                 {{/each}}
 
@@ -97,9 +101,9 @@
                     <span> Job Title : {{this.title}} </span><br>
                     <span> Start Date : </span><br>
                     <span> Internship Duration : </span><br>
-                    <span> Start Date : {{this.listDate}}</span><br>
+                    <span> Job Posted : {{this.listDate}}</span><br>
                     <span> Internship Location : {{this.location}}</span>
-                    <button class="btn"> View </button>
+                    <button class="btn" onclick="popupOpen()"> View </button>
                 </div>
 
                 {{/each}}
@@ -122,10 +126,17 @@
 
     <script>
 
+        {{!-- Popup Modals for Buttons --}}
+
+        function popupOpen(){
+
+            alert("Still Under development!!");
+        }
+
+
+
         const errorBox = document.querySelector('.errorNotifications');
-
         errorBox.style.display = none;
-
         const dataContainer = document.getElementById('filterData');
 
         function toggleInternshala() {

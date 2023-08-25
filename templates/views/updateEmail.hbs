@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerMeta}}
+    <title> Update Email Address : CareerPilot </title>
+</head>
+<body>
+    {{>header}}
+
+    <div class="container">
+        <h1> Update Email Address </h1>
+    </div>
+
+    <form action="/updateEmail" class="internshipContainer" style="" method="POST">
+    
+    <p> Your current email address is : {{currentEmail}}</p><br>
+    <input type="email" placeholder="Enter new email address" name="updatedEmail"><br><br>
+    <input type="email" placeholder="Confirm new email address"><br><br>
+    <button class="btn" type="submit"> Update Email </button>
+    
+    </form>
+    
+</body>
+</html>
