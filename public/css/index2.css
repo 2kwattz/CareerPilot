@@ -1,0 +1,54 @@
+/* CSS RESET */
+
+*{
+    box-sizing: border-box;
+    margin:0px;
+    padding: 0px;
+}
+
+/* Header */
+
+.header{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid black;
+    align-items: center;
+    justify-content:space-around;
+
+    font-weight: 100;
+
+}
+
+.header-left{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar{
+}
+
+#site-title{
+
+    color: rgba(8, 127, 206, 0.8);
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.navbar-links{
+    display: flex;
+}
+.navbar-links li{
+    list-style-type: none;
+}
+
+.navbar-links li a{
+    text-decoration: none;
+    padding: 1.5rem;
+}
+
+.header-right a{
+    text-decoration: none;
+}
+

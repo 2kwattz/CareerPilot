@@ -1477,8 +1477,13 @@ router.post('/updateName', auth, async function (req, res) {
     const fullName = req.user.fullName;
     const newName = req.body.newName;
 
+})
 
+// New index 
 
+router.get("/index2", async function(req,res){
+
+    res.render("index2");
 })
 
 // Lockedout Page for validaton attempt count
