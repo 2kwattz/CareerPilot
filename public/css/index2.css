@@ -273,7 +273,15 @@ footer{
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+}
 
+footer a{
+    color: black;
+    text-decoration: none;
+}
+
+footer ul li{
+    list-style-type: none;
 }
 footer h4{
     color: var(--clr-primary);
