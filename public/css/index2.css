@@ -15,15 +15,41 @@
     border-radius: 12px;
     background-color: white;
     border: 0px transparent;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .btn-transp{
-    color: black;
-    border: 1px solid black;
+    color: white;
+    border: 2px solid white;
     background-color: transparent;
     border-radius: 12px;
     padding: 10px;
 }
+
+button a{
+    text-decoration: none;
+}
+
+/* Variables */
+
+:root{
+
+    /* Colors  */
+    --clr-text: black;
+    --clr-primary: rgba(8, 127, 206, 0.8);
+
+    /* Fonts */
+    --ff-title: Arial, Helvetica, sans-serif;
+    --ff-para: Arial, Helvetica, sans-serif;
+}
+
+/* Typography */
+
+h2,h3{
+    font-family: var(--ff-title);
+}
+
+
 
 /* Header */
 
@@ -32,17 +58,25 @@
     background-color: rgb(255, 255, 255);
     display: flex;
     flex-wrap: wrap;
-    border: 2px solid black;
     align-items: center;
     justify-content:space-around;
-
     font-weight: 100;
+    padding:0.5rem;
 
 }
 
 .header-left{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logo Image */
+
+.header-left img{
+    height: 80px;
+    width: 85px;
 }
 
 .navbar{
@@ -64,10 +98,49 @@
 
 .navbar-links li a{
     text-decoration: none;
-    padding: 1.5rem;
+    padding: 1.2rem;
+}
+
+.navbar-links li a:focus{
+    text-decoration: underline;
+}
+
+header a:hover{
+    color: var(--clr-primary);
 }
 
 .header-right a{
     text-decoration: none;
 }
+
+/* HERO Section */
+
+.hero{
+    background-color: var(--clr-primary);
+    background-image: url(/img/hero.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    padding: 1.5em 1em;
+}
+
+.hero h2,p{
+    text-align: left;
+}
+
+.btn-box{
+    display: flex;
+}
+
+.btn-box button{
+    margin: 1rem 0.4rem;
+}
+
+.cover-title{
+    font-weight: 600;
+}
+
 
