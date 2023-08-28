@@ -391,8 +391,8 @@ footer h4{
     }
 
     .navbar-links a{
-        /* color: var(--clr-primary);
-        font-weight: 500; */
+        color: var(--clr-primary);
+        font-weight: 500;
 
     }
 
