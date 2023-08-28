@@ -261,16 +261,17 @@ header a:hover{
 /* Slideshow */
 
 .slideshow{
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
     position: relative;
-    width: 100%;
+    width: 100%;color: white;
 }
 
 
 .sliders{
    /* display: none; */
    overflow: hidden; 
+   padding: 1.5rem 1rem;
 
 }
 
@@ -309,6 +310,47 @@ header a:hover{
     margin: 0 10px;
     cursor: pointer;
 }
+
+/* Individual Sliders */
+
+#slider-1{
+
+background-color: coral;
+}
+
+#slider-2{
+
+    background-color: darkslategray;
+
+}
+
+#slider-3{
+
+    background-color:goldenrod;
+}
+
+#slider-4{
+    background-color: olive;
+
+}
+
+.fade-slideshow{
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade-slideshow{
+    from {opacity: 0.8}
+    to {opacity: 1}
+}
+@keyframes fade-slideshow{
+    from {opacity: 0.8}
+    to {opacity: 1}
+}
+
+
 
 /* Newsletters */
 
