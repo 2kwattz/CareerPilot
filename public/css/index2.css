@@ -387,11 +387,12 @@ footer h4{
         text-align: center;
         transition: 0.3s;
         width: 100%;
+        color: var(--clr-primary);
+        font-weight: 600;
     }
 
     .navbar-links a{
-        color: var(--clr-primary);
-        font-weight: 600;
+        
 
     }
 
