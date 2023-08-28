@@ -378,7 +378,7 @@ footer h4{
     .navbar-links{
         /* display: none; */
 
-        /* position: fixed; */
+        position: fixed;
         left: -100%;
         top: 70px;
         gap: 0;
@@ -387,12 +387,12 @@ footer h4{
         text-align: center;
         transition: 0.3s;
         width: 100%;
-        color: var(--clr-primary);
-        font-weight: 600;
+       
     }
 
     .navbar-links a{
-        
+        /* color: var(--clr-primary);
+        font-weight: 500; */
 
     }
 
