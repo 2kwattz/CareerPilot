@@ -281,7 +281,7 @@ router.get("/", async function (req, res) {
     }
 
     res.status(200).render("index");
-    app.set('title', 'CareerPilot : Home Page');
+    // app.set('title', 'CareerPilot : Home Page');
 });
 
 // Secret Pages ( Only for Authorized Users)

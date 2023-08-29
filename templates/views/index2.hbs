@@ -70,14 +70,14 @@
 
             {{!-- Swiper --}}
 
-            <a class="prev-slideshow">&#10094;</a>
-            <a class="next-slideshow">&#10095;</a>
+            <a class="prev-slideshow" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next-slideshow" onclick="plusSlides(1)">&#10095;</a>
 
             <div class="dotsbox" style="text-align: center">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+                <span class="dot" onclick="currentSlide(1)" ></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
             </div>
         </div>
 
@@ -94,7 +94,7 @@
             </p>
 
             <strong> Thank you for choosing us as your trusted resource! </strong>
-            <button class="btn"> <a href="#"> Know More </a></button>
+            <button class="btn"> <a href="/about"> Know More </a></button>
         </section>
 
         <section class="section">
@@ -112,6 +112,59 @@
     </main>
 
     {{>footer2}}
+
+    <script>
+        const slide = document.querySelectorAll('.sliders'),
+        dot = document.querySelectorAll('.dot');
+        let counter = 1;
+        slidefun(counter);
+
+        let timer = setInterval(autoslide, 7000);
+        function autoslide(){
+            counter += 1;
+            slidefun(counter)
+        }
+
+        function plusSlides(n){
+            counter += n;
+            slidefun(counter)
+            resetTimer();
+        }
+
+        function currentSlide(n){
+            counter = n;
+            slidefun(counter);
+            resetTimer();
+        }
+
+        function resetTimer(){
+            clearInterval(timer);
+            timer = setInterval(autoslide, 7000)
+        }
+        function slidefun(n){
+            let i;
+            for(i = 0;i<slide.length;i++){
+                slide[i].style.display = "none";
+            }
+
+            for(i =0;i<dot.length;i++){
+                dot[i].classList.remove('active')
+            }
+
+            if(n>slide.length){
+                counter = 1;
+
+            }
+
+            if(n<1){
+                counter = slide.length;
+            }
+
+            slide[counter-1].style.display = "block";
+            dot[counter-1].classList.add('active');
+        }
+
+    </script>
 
 </body>
 
