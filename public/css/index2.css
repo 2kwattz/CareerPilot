@@ -70,6 +70,17 @@ button a {
     text-decoration: none;
 }
 
+/* Input */
+
+input{
+    background-color: white;
+    border-radius: 12px;
+    border: 0px transparent;
+    color: black;
+    margin: 8px;
+    padding: 0.5rem;
+}
+
 /* Variables */
 
 :root {
@@ -233,6 +244,7 @@ header a:hover {
     color: white;
     text-align: center;
     padding: 1.5em 1em;
+    /* height: 100vh; */
 }
 
 .hero h2,
@@ -281,8 +293,13 @@ p {
 
 }
 
-.sliders h1,p{
+.sliders h1{
     
+    text-align: center;
+    padding: 0px 22px;
+}
+
+.sliders p{
     text-align: center;
     padding: 0px 22px;
 }
@@ -335,15 +352,20 @@ p {
 #slider-1 {
 
     background-color: coral;
-    /* background-image: url(/img/certifications.jpg); */
+    /* background-image: url(/img/jobs2-cover.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-blend-mode: multiply;
+    background-blend-mode: multiply */
+    color: black !important;
 }
 
 #slider-2 {
 
     background-color: lightseagreen;
+    /* background-image: url(/img/certifications.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply; */
 
 }
 
@@ -410,7 +432,11 @@ p {
     }
 }
 
+/* About Us Section */
 
+#aboutus-section{
+
+}
 
 /* Newsletters */
 

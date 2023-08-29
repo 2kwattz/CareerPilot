@@ -1,0 +1,31 @@
+/* Jobs Hero Cover */
+
+.jobs-hero{
+
+    background-color: rgba(177, 105, 28, 0.7);
+    background-blend-mode: multiply;
+    background-image: url('/img/jobs2-cover.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position: fixed;
+
+    color: white;
+    text-align: center;
+    padding: 1.5em 1em;
+}
+
+
+/* Media Queries */
+
+/* Mobile Screen */
+
+/* Extra small devices */
+
+@media screen and (max-width: 320px) {
+
+  .cover-para{
+    display: none;
+  }
+}
+
