@@ -1295,17 +1295,20 @@ router.post("/forgotpassword", async function (req, res) {
     try {
         const { email } = req.body;
         const user = await registrationData.findOne({ email });
+        let responseMessage;
 
         if (!user) {
             // User not found, display error message
-            return res.send('User not found');
+            responseMessage = " User Not Found ";
+            return res.render("forgotpassword",{responseMessage});
         }
 
         // Generate password reset token and send reset email
         await user.generatePasswordReset();
 
         // Display success message or redirect to a page
-        res.send('Password reset email sent');
+        responseMessage = "Password Reset link has been sent!"
+        res.render("forgotpassword", {responseMessage});
     } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred');
@@ -1345,7 +1348,7 @@ router.post("/securityQuestion", auth, async function (req, res) {
 
 // Forgot Password Redirects
 
-app.post("/resetpassword/:token", async function (req, res) {
+router.post("/resetpassword/:token", async function (req, res) {
     try {
         const token = req.params.token;
         const user = await registrationData.findOne({
@@ -1398,7 +1401,9 @@ router.get("/myprofile", auth, async function (req, res) {
         userBranch: req.user.collegeBranch,
         userCourse: req.user.collegeCourse
     }
-    const userName = req.user.fullName.toUpperCase();
+
+    const capName = userProfile.username.slice(0,1).toUpperCase() + userProfile.username.slice(1,userProfile.username.length).toLowerCase();
+
 
     // Scrap City Information for User Profile
 
@@ -1421,7 +1426,7 @@ router.get("/myprofile", auth, async function (req, res) {
 
     }
 
-    res.status(200).render("userProfile.hbs", { userProfile });
+    res.status(200).render("userProfile.hbs", { userProfile, capName });
 
 });
 
