@@ -21,23 +21,47 @@
         </div>
     </nav>
 
+    {{#if verifyUser}}
+
+    <script> console.log("test 45");</script>
+
+    <li id="dropdown">
+        {{!-- <a href="#" class="profile-icon">
+            <img src="/img/vectors/user.png" alt="Profile" height="30px" width="30px">
+        </a> --}}
+        {{!-- <div class="dropdown-content"> --}}
+            {{!-- <a href="/myprofile">View Profile</a> --}}
+            <a href="/logout">Logout</a>
+        </div>
+    </li>
+
+    {{else}}
     <div class="header-right">
-        <a href="/registration"> Register | </a>
-        <a href="/loginPage"> Sign In </a>
+    <a href="/registration"> Register | </a>
+    <a href="/loginPage"> Sign In </a>
     </div>
+
+    {{/if}}
 </header>
 
 <script>
+
+     // Check if the user is authenticated
+
+
+   
+
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".navbar-links");
 
-    hamburger.addEventListener("click", function(){
+    hamburger.addEventListener("click", function () {
         hamburger.classList.toggle("active");
         navMenu.classList.toggle("active");
 
     })
 
     document.querySelectorAll(".nav-links").forEach(n => {
-        navMenu.hamburger.classList.remove("active")});
+        navMenu.hamburger.classList.remove("active")
+    });
 
 </script>

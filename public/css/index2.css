@@ -87,8 +87,8 @@ input{
 
     /* Colors  */
     --clr-text: black;
-    --clr-primary: rgba(8, 127, 206, 0.8);
-    --clr-hover: rgba(30, 146, 223, 0.8);
+    --clr-primary: rgb(8, 127, 206);
+    --clr-hover: rgb(30, 146, 223);
 
     /* Fonts */
     --ff-title: Arial, Helvetica, sans-serif;
@@ -209,6 +209,10 @@ header a:hover {
 
 .header-right a {
     text-decoration: none;
+}
+
+#dropdown{
+    list-style-type: none;
 }
 
 /* Hamburger */

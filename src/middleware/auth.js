@@ -38,7 +38,7 @@ const auth = async function(req,res, next){
             loginErrorIfAny = `You must log in first\n`;
         }
       
-        res.status(401).render("loginPage", {loginErrorIfAny})
+        res.status(401).render("loginPage", {loginErrorIfAny});
     }
 }
 

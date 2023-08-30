@@ -59,10 +59,6 @@ app.use(cookieParser()); // Initializing CookieParser Middleware
 
 // const ProxyAgent = require('axios-proxy-agent');
 
-// Cross Origin
-
-const cors = require('cors');
-
 
 // Hashing Password
 
@@ -119,6 +115,25 @@ app.use(bodyParser.urlencoded({ extended: false })); //Middlewares for parsing t
 app.use(bodyParser.json());
 // app.use(auth)
 
+// User Login Verification Middleware (Not Working so Commented)
+
+app.use((req, res, next) => {
+    console.log("Middleware part 1 executed");
+    const token = req.cookies.login;
+    if (token) {
+        try {
+            const verifyUser = jwt.verify(token, process.env.SECRET_KEY); // Authenticating user's token with the one stored 
+            console.log(verifyUser);
+            res.locals.verifyUser = verifyUser;
+        } catch (error) {
+            console.log("Token verification failed:", error);
+        }
+    }
+    next(); // Move this line after the verification logic
+    console.log("Middleware executed");
+});
+
+
 // Path to Views Directory 
 app.set('views', './templates/views');
 app.set('view engine', 'hbs');
@@ -140,10 +155,6 @@ const loginData = require('./models/login')
 const feedbackData = require('./models/feedback')
 const registrationData = require('./models/registration');
 
-// Disabling Cross Origin for password reset (atleast for testing purpose)
-
-app.use(cors());
-
 // HEADERS declared for Mimicing Real User while Web Scraping
 
 const headers = {
@@ -154,14 +165,7 @@ const headers = {
     'Cookie': 'cookie_name1=cookie_value1; cookie_name2=cookie_value2'
 };
 
-// User Login Verification Middleware (Not Working so Commented)
 
-// app.use((req, res, next) => {
-//     const userLoggedIn = req.user ? true : false;
-  
-//     res.locals.userLoggedIn = userLoggedIn;
-//     next();
-// });
 
 // User Verification Schema (For User's email verification)
 
