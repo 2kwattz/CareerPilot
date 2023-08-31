@@ -118,7 +118,7 @@ app.use(bodyParser.json());
 // User Login Verification Middleware (Not Working so Commented)
 
 app.use((req, res, next) => {
-    console.log("Middleware part 1 executed");
+
     const token = req.cookies.login;
     if (token) {
         try {
@@ -571,10 +571,10 @@ router.get("/reg2", async function (req, res) {
 
 // Job Page 2
 
-router.get("/jobs2", async function (req, res) {
-    console.log(req);
-    res.render("jobs2");
-});
+// router.get("/jobs", async function (req, res) {
+//     console.log(req);
+//     res.render("jobs");
+// });
 
 // Login Page 2
 

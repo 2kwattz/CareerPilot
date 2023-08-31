@@ -1,47 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    {{>headerMeta}}
+    {{>headerMeta2}}
+    <link rel="stylesheet" href="/css/jobs2.css">
     <title>Jobs : CareerPilot </title>
 </head>
+
 <body>
-    {{>header}}
+    {{>header2}}
 
-    <div class="jobContainer">
+        <main>
+            
+            <div class="jobs-hero">
 
-    <h1 class="section-titles"> Job Search </h1>
+            <h1 class="cover-title"> Jobs </h1>
 
-    </div>
+            <p class="cover-para" style="text-align: center!important;">Explore Endless Opportunities: Your Gateway to Career Success </p>
 
-
-    <form class="form-control" action="/jobs" method="POST">
-
-    <label for="jobKeyword"> Job Keyword </label>
-    <input type="text" placeholder="Enter Job Keyword" name="jobKeyword" id="jobKeyword">
-
-     <label for="jobKeyword"> Job Location </label>
-    <input type="text" placeholder="Enter Job Location" name="jobLocation" id="jobLocation">
-    <button class="btn" type="submit"> Search Jobs </button>
-        <button class="btn" onfocus = "this.value='' "> Clear </button>
-    
-    <div class="jobFilters">
-
-        <p> Work Mode </p>
-
-        Work from office <input type="checkbox"> <br>
-        Hybrid <input type="checkbox"> <br>
-        Remote/WFH <input type="checkbox"> <br>
-    </div>
-
-         <div class="internshipData" id="filterData">
+            <div class="job-search">
+                <form class="form-control" action="/jobs" method="POST">
+                <input type="text" name="jobKeyword" id="jobLocation" placeholder="Looking for? ">
+                <input type="text" placeholder="Enter Job Location" name="jobLocation" id="jobLocation">
+                <button class="btn" type="submit"> Search Jobs </button>
+                <button class="btn" onfocus="this.value='' "> Clear </button>
+                </form>
+            </div>
 
 
-            <div class="linkedinContainer">
-                <h1 class="section-subtitles"> Linkedin Jobs </h1>
+        </main>
 
-                {{#each linkedinData}}
 
-                <div class="internshipContainer">
+    <div class="section">
+
+        <h1 class="section-title"> Job Based on field </h1>
+
+        {{!-- Type of jobs. For direct scrapping --}}
+
+        <div class="categories">
+
+            <div class="cat-items">
+                <img src="/img/jobs/engg.png" alt="Image by Uniconlabs/Flaticons" height="80px" width="80px">
+                <h3>Engineering</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/digital-m.png" alt="" height="80px" width="80px">
+                <h3>Digital Marketing</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/business.png" alt="" height="80px" width="80px">
+                <h3>Business</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/software-d.png" alt="" height="80px" width="80px">
+                <h3>Software Developer</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/ds.png" alt="" height="80px" width="80px">
+                <h3>Data Science</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/law.png" alt="" height="80px" width="80px">
+                <h3>Law</h3>
+                <p>test</p>
+            </div>
+
+        </div>
+
+        {{!-- Result container. Filters + Results --}}
+
+        <div class="result-container">
+
+            {{!-- Filters section --}}
+
+        <div class="filters">
+
+            <div class="filter-cat">
+            <h4 class="section-title"> Top Services </h4>
+
+            </div>
+
+            <div class="filter-cat">
+            <h4 class="section-title"> Top Locations </h4>
+
+            </div>
+
+            <div class="filter-cat">
+            <h4 class="section-title"> Top Salary </h4>
+
+            </div>
+
+
+        </div>
+
+        {{!-- Results --}}
+
+        <div class="results">
+
+              {{#each linkedinData}}
+
+                <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
                     <span> Start Date : </span><br>
@@ -52,53 +115,27 @@
                 </div>
 
                 {{/each}}
-        
-            </div>
 
-            <div class="linkedinContainer">
-                <h1 class="section-subtitles"> JobRapido Jobs </h1>
+                  {{#each linkedinData}}
 
-                {{#each jobRapidoData}}
-
-                <div class="internshipContainer">
+                <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
                     <span> Start Date : </span><br>
-                    <span> Job Duration : </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Job Location : </span>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : {{this.listDate}}</span><br>
+                    <span> Internship Location : {{this.location}}</span>
                     <button class="btn"> View </button>
                 </div>
 
                 {{/each}}
 
-                <div class="linkedinContainer">
-                <h1 class="section-subtitles"> Naukri.com Jobs </h1>
+        </div>
 
-                {{#each naukriDotComJobs}}
-
-                <div class="internshipContainer">
-                    <span> Company Name : {{this.company}}</span><br>
-                    <span> Job Title : {{this.title}} </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Job Duration : </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Job Location : </span>
-                    <button class="btn"> View </button>
-                </div>
-
-                {{/each}}
-
-                {{errorRender.statusCode}}
-                {{errorRender.statusText}}
-                {{errorRender.resStatus}}
-                {{errorRender.resMessage}}
-
-        
-            </div>
-
-    </form>
+        </div>
+    </div>
 
 
 </body>
+
 </html>

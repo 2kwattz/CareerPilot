@@ -251,8 +251,11 @@ header a:hover {
     /* height: 100vh; */
 }
 
-.hero h2,
-p {
+.hero h2 {
+    text-align: left;
+}
+
+.hero p{
     text-align: left;
 }
 
@@ -277,6 +280,11 @@ p {
 
 .section h1 {
     padding: 1.5rem 0rem;
+}
+
+.section-title{
+    color: grey;
+    font-size: 2.5rem;
 }
 
 /* Slideshow */
@@ -438,8 +446,8 @@ p {
 
 /* About Us Section */
 
-#aboutus-section{
-
+#aboutus-section p{
+text-align: left !important;
 }
 
 /* Newsletters */
@@ -507,6 +515,67 @@ footer h4 {
 }
 
 .ft-1 {}
+
+/* Categories */
+
+.categories{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1.5rem;
+}
+
+.cat-items{
+    width: 30%;
+    border: 2px solid grey;
+    margin: 1.4rem;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cat-items img{
+margin:auto;
+}
+
+.cat-items h3,p{
+    text-align: center;
+}
+
+
+/* Result Box */
+
+.result-container{
+    width: 100%;
+}
+
+.results{
+    width: 60%;
+    display: inline-block;
+}
+
+/* Filters */
+
+.filters{
+    border: 1px solid grey;
+    display: inline-block;
+    margin: 0.8rem;
+    padding: 1.8rem 1.3rem;
+    vertical-align: top;
+    width:25%;
+   
+
+}
+.result-box{
+    border: 1px solid grey;
+    display: inline-block;
+    margin: 0.8rem;
+    padding: 1.8rem 1.3rem;
+    width:100%;  
+}
 
 /* Media Queries */
 
