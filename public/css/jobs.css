@@ -23,6 +23,10 @@
 
 @media screen and (max-width: 320px) {
 
+  .section{
+    justify-content: center;
+  }
+
   .cover-para{
     display: none;
   }
@@ -31,12 +35,38 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    width: 100%;
   }
 
   .cat-items{
 
     width:100%;
 
+  }
+
+  .filters{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+
+  
+  .categories{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cat-items{
+
+    width:100%;
+
+  }
+
+  .filters{
+    width: 100%;
   }
 }
 

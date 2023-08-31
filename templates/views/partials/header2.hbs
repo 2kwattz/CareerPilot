@@ -37,8 +37,8 @@
 
     {{else}}
     <div class="header-right">
-    <a href="/registration"> Register | </a>
-    <a href="/loginPage"> Sign In </a>
+        <a href="/registration"> Register | </a>
+        <a href="/loginPage"> Sign In </a>
     </div>
 
     {{/if}}
@@ -46,10 +46,7 @@
 
 <script>
 
-     // Check if the user is authenticated
-
-
-   
+    // Check if the user is authenticated
 
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".navbar-links");
@@ -63,5 +60,24 @@
     document.querySelectorAll(".nav-links").forEach(n => {
         navMenu.hamburger.classList.remove("active")
     });
+
+    console.log("before mahabharat")
+
+    // Navbar Active Link
+
+    const currentPath = window.location.pathname;
+
+    // Get all navigation links
+    const navLinks = document.querySelectorAll('.navbar-links a');
+    console.log("before iteration");
+
+    // Iterate through each navigation link and add the "active" class to the current page's link
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('nav-active'); // Remove the dot before 'nav-active'
+        }
+    });
+
+
 
 </script>

@@ -215,6 +215,8 @@ header a:hover {
     list-style-type: none;
 }
 
+
+
 /* Hamburger */
 
 .hamburger {
@@ -658,6 +660,10 @@ p {
         padding: 0.4rem;
         display: flex;
         flex-wrap: wrap;
+    }
+
+    .nav-active{
+        color: var(--clr-primary);
     }
 
     #subscribe {
