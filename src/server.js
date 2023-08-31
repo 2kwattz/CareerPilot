@@ -273,7 +273,6 @@ router.get("/", async function (req, res) {
             location = $(this).find('[data-test="employer-location"]').text()
             // listDate = $(this).find(".job-search-card__listdate").text()
             // company = $(this).find(".base-search-card__subtitle").text()
-
             // Pushing Scrapped Title and Location into an Array
 
             companiesData.push({ title, location });
