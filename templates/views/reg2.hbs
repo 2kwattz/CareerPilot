@@ -2,23 +2,24 @@
 <html lang="en">
 
 <head>
-  {{>headerMeta}}
+  {{>headerMeta2}}
   <link rel="stylesheet" href="/css/loginBox.css">
+  <link rel="stylesheet" href="/css/registration.css">
+
   <title></title>
 </head>
 
 <body>
-  {{>header}}
+  {{>header2}}
 
-  {{!-- Registration section spanning an entire page --}}
+  {{!-- Registration section --}}
 
-  <div class="section-reg">
+  <div class="reg-container">
 
     {{!-- Leftmost image section --}}
 
-    <div class="reg-img-left">
+    <div class="reg-left">
       <div class="gradient-overlay">
-
 
         <img src="/img/logos/logo-white.png" height="20%" width="25%" alt="CareerPilot Logo">
 
@@ -53,40 +54,95 @@
 
         <h3> Or Sign Up with an Email </h3>
 
-        <form class="form-control">
-          <input type="text" class="scholarshipKeyword" name="fullName" placeholder="Full Name" required><br>
-          <input type="email" class="scholarshipKeyword" name="email" placeholder="Email address" required><br>
-          <input type="password" class="scholarshipKeyword" name="password" placeholder="Password" required><br>
-          <input type="password" class="scholarshipKeyword" name="confirmPassword" placeholder="Confirm Password"
-            required><br>
-          <label class="radio gender">
-
-            <input type="radio" name="gender" value="male" checked>
-            <span> Male </span>
-          </label>
-
-          <label class="radio gender">
-            <input type="radio" name="gender"  value="female">
-            <span> Female </span>
-          </label><br>
-
-          <select class="scholarshipKeyword">
-            <option value="Current Status" disabled="disabled" selected="selected" name="currentStatus" required>Please
-              select your current status </option>
-            <option value="Student">Student</option>
-            <option value="Graduated">Graduated</option>
-          </select><br>
-
-          <button class="btn" type="submit"> Sign Up </button>
+        <div class="registration-form">
 
 
+          <form class="form-control" method="POST" action="/registration">
+
+            <div class="reg-sections" id="reg-sec-1">
+              {{!-- Name, Email & Password --}}
+
+              <input type="text" class="scholarshipKeyword" name="fullName" placeholder="Full Name" required><br>
+              <input type="email" class="scholarshipKeyword" name="email" placeholder="Email address" required><br>
+              <input type="password" class="scholarshipKeyword" name="password" placeholder="Password" required><br>
+              <input type="password" class="scholarshipKeyword" name="confirmPassword" placeholder="Confirm Password"
+                required><br>
+
+              {{!-- Gender --}}
+              <label class="radio gender">
+
+                <input type="radio" name="gender" value="male" checked>
+                <span> Male </span>
+              </label>
+
+              <label class="radio gender">
+                <input type="radio" name="gender" value="female">
+                <span> Female </span>
+              </label><br>
+
+
+
+            </div>
+
+            <div class="reg-sections" id="reg-sec-2">
+
+              <input type="text" class="scholarshipKeyword" name="age" placeholder="Age" required><br>
+
+              <input type="text" placeholder="Choose City" name="city">
+              <input type="text" placeholder="Choose State" name="state">
+              <select class="reg-select" name="country-sel" id="country">
+                <option value=""> Country </option>
+              </select>
+              <input type="text" placeholder="Enter Pincode" required name="Pincode">
+
+            </div>
+
+            <div class="reg-sections" id="reg-sec-3">
+
+              <input type="text" placeholder="Enter your college name" required name="collegeName">
+              <input type="text" class="form-control" placeholder="Enter your Branch" required name="collegeBranch">
+              <input type="text" placeholder="Enter your course" required name="collegeCourse">
+              <textarea rows="1" cols="3" id="interests" name="interests"> </textarea>
+              <br1>
+
+            </div>
+
+            <div class="reg-sections" id="reg-sec-4">
+
+              <select class="reg-select" name="secQuestion" required>
+                <option value="" disabled selected>Choose your security question</option>
+                <option value="What is your mother's maiden name?"> What is your mother's maiden name? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="Which fictional character would you like to meet in real life?"> Which fictional
+                  character would you like to meet in real life? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+              </select>
+              <input type="text" placeholder="Enter Answer" required name="secQuestionAnswer">
+            </div>
+            <button class="btn" type="submit"> Sign Up </button>
+        </div>
       </div>
-      </form>
+
     </div>
+    </form>
+
 
   </div>
 
-  {{>footer}}
+  </div>
+
+  </div>
+
+  {{>footer2}}
 </body>
 
 </html>

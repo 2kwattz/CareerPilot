@@ -3,11 +3,11 @@
     height: 100vh;
 }
 
-.reg-img-left {
+.reg-left {
     width: 40%;
 }
 
-.reg-img-left::before {
+.reg-left::before {
 
     content: "";
     /* background: linear-gradient(to bottom, #ff0000, #00ff00); */
@@ -38,7 +38,7 @@
 }
 
 
-.reg-img-left h1 {
+.reg-left h1 {
 
     color: white;
     font-family: 'karla', Geneva, Tahoma, sans-serif;
@@ -49,7 +49,7 @@
 
 }
 
-.reg-img-left h2 {
+.reg-left h2 {
     color: white;
     font-family: 'karla', Geneva, Tahoma, sans-serif;
     font-size: 1.5rem;
@@ -89,14 +89,14 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .reg-img-left::before {
+    .reg-left::before {
 
         width: 100%;
     }
 
     ;
 
-    .reg-img-left {
+    .reg-left {
         width: 100%;
         height: 90%;
     }
@@ -128,14 +128,14 @@
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
 
-    .reg-img-left::before {
+    .reg-left::before {
 
         width: 100%;
     }
 
     ;
 
-    .reg-img-left {
+    .reg-left {
         width: 100%;
         height: 90%;
     }
