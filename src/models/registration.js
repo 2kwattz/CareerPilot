@@ -10,7 +10,6 @@ const mailgun = require('mailgun-js')({
     domain: 'sandboxb60c058465804065bb1c4c58d505e807.mailgun.org',
 });
 
-
 // Registration Schemas
 
 const registrationSchema = new mongoose.Schema({
@@ -27,9 +26,8 @@ const registrationSchema = new mongoose.Schema({
 
     gender:{
         type: String,
-        // required: true,
-        minlength: [2, "Minimum length should be 2 characters"],
-        maxlength:[50, "Full Name cannot exceed more than 50 characters"],
+        required: true,
+        enum: ['male', 'female'],
         lowercase: true,
         trim: true,
     },
@@ -59,13 +57,6 @@ const registrationSchema = new mongoose.Schema({
         maxlength:[50, "Full Name cannot exceed more than 50 characters"],
         lowercase: true,
         trim: true,
-    },
-
-    semester:{
-        type:Number,
-        lowercase: true,
-        trim: true,
-
     },
 
     interests:{
@@ -137,6 +128,25 @@ const registrationSchema = new mongoose.Schema({
 
     secQuestion:{
         type: String,
+        enum: [
+            "What is the name of your first crush?",
+            "Who's your favourite communist?",
+            "What is your mother's maiden name?",
+            "Which fictional character would you like to meet in real life?",
+            "What's the weirdest job you've ever had or wanted?",
+            "What's the weirdest thing you've ever eaten?",
+            "What's your favorite movie quote?",
+            "If you could have dinner with any historical figure, who would it be?",
+            "What's the most bizarre food combination you secretly enjoy?",
+            "What is your biggest weakness?",
+            "If you had to live in a fictional world from a book, game, or movie, which one would it be?",
+            "What is your favorite childhood place to visit?",
+            "What is your favorite childhood actor or actress?",
+            "What's your secret guilty pleasure TV show?",
+            "What's the oddest phobia you have?",
+            "What's the most unusual thing you've ever won in a contest?",
+            "If you could have any mythical creature as a pet, what would it be?"
+        ],
         required: true,
     },
 

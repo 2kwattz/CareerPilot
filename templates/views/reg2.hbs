@@ -51,6 +51,7 @@
         <div class="login-icons">
           <img src="">
         </div>
+        </div>
 
         <h3> Or Sign Up with an Email </h3>
 
@@ -59,7 +60,7 @@
 
           <form class="form-control" method="POST" action="/registration">
 
-            <div class="reg-sections" id="reg-sec-1">
+            <div class="reg-sections" id="part1">
               {{!-- Name, Email & Password --}}
 
               <input type="text" class="scholarshipKeyword" name="fullName" placeholder="Full Name" required><br>
@@ -79,70 +80,75 @@
                 <input type="radio" name="gender" value="female">
                 <span> Female </span>
               </label><br>
-
-
-
+              <button class="btn" onclick="nextPart(2)"> Next </button>
             </div>
 
-            <div class="reg-sections" id="reg-sec-2">
+            <div class="reg-sections" id="part2">
 
               <input type="text" class="scholarshipKeyword" name="age" placeholder="Age" required><br>
 
               <input type="text" placeholder="Choose City" name="city">
               <input type="text" placeholder="Choose State" name="state">
-              <select class="reg-select" name="country-sel" id="country">
-                <option value=""> Country </option>
-              </select>
-              <input type="text" placeholder="Enter Pincode" required name="Pincode">
-
+              <input type="text" placeholder="Choose Country" name="country">
+              
+              <input type="text" placeholder="Enter Pincode" required name="Pincode"><br>
+              <button type="button" class="btn" onclick="prevPart(1)">Previous</button>
+              <button type="button" class="btn" onclick="nextPart(3)">Next</button>
             </div>
 
-            <div class="reg-sections" id="reg-sec-3">
+            <div class="reg-sections" id="part3">
 
               <input type="text" placeholder="Enter your college name" required name="collegeName">
               <input type="text" class="form-control" placeholder="Enter your Branch" required name="collegeBranch">
               <input type="text" placeholder="Enter your course" required name="collegeCourse">
               <textarea rows="1" cols="3" id="interests" name="interests"> </textarea>
-              <br1>
-
-            </div>
-
-            <div class="reg-sections" id="reg-sec-4">
-
+              <br>
               <select class="reg-select" name="secQuestion" required>
                 <option value="" disabled selected>Choose your security question</option>
-                <option value="What is your mother's maiden name?"> What is your mother's maiden name? </option>
                 <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="Who's your favourite communist?"> Who's your favourite communist? </option>
+                <option value="What is your mother's maiden name?"> What is your mother's maiden name? </option>
                 <option value="Which fictional character would you like to meet in real life?"> Which fictional
                   character would you like to meet in real life? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
-                <option value="What is the name of your first crush?"> What is the name of your first crush? </option>
+                <option value="What's the weirdest job you've ever had or wanted?"> What's the weirdest job you've ever
+                  had or wanted? </option>
+                <option value="What's the weirdest thing you've ever eaten?">What's the weirdest thing you've ever
+                  eaten? </option>
+                <option value="What's your favorite movie quote?">What's your favorite movie quote? </option>
+                <option value="If you could have dinner with any historical figure, who would it be?"> If you could have
+                  dinner with any historical figure, who would it be? </option>
+                <option value="What's the most bizarre food combination you secretly enjoy?">What's the most bizarre
+                  food combination you secretly enjoy? </option>
+                <option value="What is your biggest weakness?">What is your biggest weakness? </option>
+                <option
+                  value="If you had to live in a fictional world from a book,game or movie, which one would it be?">If
+                  you had to live in a fictional world from a book,game or movie, which one would it be?</option>
+                <option value="What is your favorite childhood place to visit?">What is your favorite childhood place to
+                  visit? </option>
+                <option value="What is your favorite childhood actor or actress?"> What is your favorite childhood actor
+                  or actress? </option>
+                <option value="What's your secret guilty pleasure TV show?">What's your secret guilty pleasure TV show?
+                </option>
+                <option value="What's the oddest phobia you have?"> What's the oddest phobia you have? </option>
+                <option value="What's the most unusual thing you've ever won in a contest?">What's the most unusual
+                  thing you've ever won in a contest?</option>
+                <option value="If you could have any mythical creature as a pet, what would it be?"> If you could have
+                  any mythical creature as a pet, what would it be? </option>
+
               </select>
               <input type="text" placeholder="Enter Answer" required name="secQuestionAnswer">
+              <button type="button" class="btn" onclick="prevPart(2)">Previous</button>
+              <button class="btn" type="submit"> Sign Up </button>
+
             </div>
-            <button class="btn" type="submit"> Sign Up </button>
+            <br>
+          </form>
         </div>
-      </div>
+        </div>
 
-    </div>
-    </form>
+        <script src="/js/registration.js"></script>
 
-
-  </div>
-
-  </div>
-
-  </div>
-
-  {{>footer2}}
+        {{!-- {{>footer2}} --}}
 </body>
 
 </html>

@@ -1051,7 +1051,7 @@ router.get('/accountcreation', async function (req, res) {
 })
 
 router.get('/registration', function (req, res) {
-    res.status(200).render("registration");
+    res.status(200).render("reg2");
 });
 
 router.post('/registration', async function (req, res) {
@@ -1074,7 +1074,6 @@ router.post('/registration', async function (req, res) {
                 city: req.body.city,
                 state: req.body.state,
                 country: req.body.country,
-                semester: req.body.semester,
                 currentStatus: req.body.currentStatus,
                 secQuestion: req.body.secQuestion,
                 secQuestionAnswer: req.body.secQuestionAnswer,
@@ -1109,7 +1108,7 @@ router.post('/registration', async function (req, res) {
             // }
 
             const userName = await req.user.fullName.toUpperCase();
-            res.status(201).render("accountcreation", { userName });
+            res.status(201).redirect("accountcreation", { userName });
         }
 
         else {
