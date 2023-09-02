@@ -10,6 +10,7 @@ const request = require('request'); // Web Scraping Tool 1
 const cheerio = require('cheerio'); // Selector for Web Scraping
 const puppeteer = require('puppeteer'); // Web Scraping Tool 2
 const hbs = require('hbs'); // Importing Template Engine HBS
+const compression = require('compression')
 
 // Defining paths 
 const path = require('path'); // for defining  static and template paths
@@ -42,6 +43,9 @@ const mailgun = require('mailgun-js')({
 
 // const db = client.db('careerpilot'); // For Updating Collections 
 
+// Compression Middleware for speed optimization
+
+app.use(compression())
 
 // BCrypt Hashing Algorithm for Security
 
