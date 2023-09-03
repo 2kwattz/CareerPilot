@@ -275,6 +275,11 @@ header a:hover {
 
 /* General Section */
 
+.section-container {
+    width: 100%;
+    /* height: 100vh; */
+}
+
 .section {
     padding: 1rem 1.5rem;
     line-height: 2;
@@ -535,16 +540,16 @@ footer h4 {
     text-align: left;
     vertical-align: top;
     align-items: flex-start;
-    
+
 }
 
-.ft-1 p{
+.ft-1 p {
     /* width: 20%; */
     /* padding: 10px; */
     text-align: left;
 }
 
-#ft-end{
+#ft-end {
     display: block;
     text-align: center;
     font-size: 0.8rem;
@@ -630,14 +635,14 @@ p {
         display: none;
     }
 
-    .footer{
+    .footer {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
     }
 
-    .ft-1{
+    .ft-1 {
         width: 100%;
         text-align: center;
     }
@@ -662,7 +667,7 @@ p {
         flex-wrap: wrap;
     }
 
-    .nav-active{
+    .nav-active {
         color: var(--clr-primary);
     }
 
@@ -726,20 +731,18 @@ p {
         margin: 0px;
     }
 
-    .footer{
+    .footer {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
     }
 
-    .ft-1{
+    .ft-1 {
         width: 100%;
         text-align: center;
     }
 
 }
 
-@media screen and (max-width: 768px) {
-
-}
+@media screen and (max-width: 768px) {}

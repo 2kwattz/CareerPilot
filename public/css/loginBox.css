@@ -1,7 +1,4 @@
-.section-reg {
-    width: 100%;
-    /* height: 100vh; */
-}
+
 
 .reg-left {
     width: 40%;
@@ -119,8 +116,6 @@
     }
 
 
-
-
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -132,8 +127,6 @@
 
         width: 100%;
     }
-
-    ;
 
     .reg-left {
         width: 100%;
