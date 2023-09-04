@@ -1,0 +1,16 @@
+/* Certifications Hero Cover */
+
+.cert-hero{
+
+    background-color: lightseagreen;
+    background-blend-mode: multiply;
+    background-image: url('/img/cert/cert.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position: fixed;
+
+    color: white;
+    text-align: center;
+    padding: 1.5em 1em;
+}

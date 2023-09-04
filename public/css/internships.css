@@ -1,0 +1,16 @@
+/* Internships Hero Cover */
+
+.intern-hero{
+
+    background-color:gray;
+    background-blend-mode: multiply;
+    background-image: url('/img/internships/cover.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position: fixed;
+
+    color: white;
+    text-align: center;
+    padding: 1.5em 1em;
+}

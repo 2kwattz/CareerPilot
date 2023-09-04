@@ -10,25 +10,26 @@
 <body>
     {{>header2}}
 
-        <main>
-            
-            <div class="jobs-hero">
+    <main>
+
+        <div class="jobs-hero">
 
             <h1 class="cover-title"> Jobs </h1>
 
-            <p class="cover-para" style="text-align: center!important;">Explore Endless Opportunities: Your Gateway to Career Success </p>
+            <p class="cover-para" style="text-align: center!important;">Explore Endless Opportunities: Your Gateway to
+                Career Success </p>
 
             <div class="job-search">
                 <form class="form-control" action="/jobs" method="POST">
-                <input type="text" name="jobKeyword" id="jobLocation" placeholder="Looking for? ">
-                <input type="text" placeholder="Enter Job Location" name="jobLocation" id="jobLocation">
-                <button class="btn" type="submit"> Search Jobs </button>
-                <button class="btn" onfocus="this.value='' "> Clear </button>
+                    <input type="text" name="jobKeyword" id="jobLocation" placeholder="Looking for? ">
+                    <input type="text" placeholder="Enter Job Location" name="jobLocation" id="jobLocation">
+                    <button class="btn" type="submit"> Search Jobs </button>
+                    <button class="btn" onfocus="this.value='' "> Clear </button>
                 </form>
             </div>
 
 
-        </main>
+    </main>
 
 
     <div class="section">
@@ -78,31 +79,37 @@
 
             {{!-- Filters section --}}
 
-        <div class="filters">
+            <div class="filters">
 
-            <div class="filter-cat">
-            <h4 class="section-title"> Top Services </h4>
+                <div class="filter-cat">
+                    <h4 class="section-title"> Top Services </h4>
+                    Show/Hide JobRapido Posting <input type="checkbox"> <br>
+                    Show/Hide LinkedIn Posting<input type="checkbox"> <br>
+
+
+                </div>
+
+                <div class="filter-cat">
+                    <h4 class="section-title"> Top Locations </h4>
+                    Work from office <input type="checkbox"> <br>
+                    Hybrid <input type="checkbox"> <br>
+                    Remote/WFH <input type="checkbox"> <br>
+
+                </div>
+
+                <div class="filter-cat">
+                    <h4 class="section-title"> Top Salary </h4>
+
+                </div>
+
 
             </div>
 
-            <div class="filter-cat">
-            <h4 class="section-title"> Top Locations </h4>
+            {{!-- Results --}}
 
-            </div>
+            <div class="results">
 
-            <div class="filter-cat">
-            <h4 class="section-title"> Top Salary </h4>
-
-            </div>
-
-
-        </div>
-
-        {{!-- Results --}}
-
-        <div class="results">
-
-              {{#each linkedinData}}
+                {{#each linkedinData}}
 
                 <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
@@ -116,7 +123,7 @@
 
                 {{/each}}
 
-                  {{#each linkedinData}}
+                {{#each linkedinData}}
 
                 <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
@@ -130,7 +137,7 @@
 
                 {{/each}}
 
-        </div>
+            </div>
 
         </div>
     </div>

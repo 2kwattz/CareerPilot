@@ -323,8 +323,12 @@ router.get("/signup", function (req, res) {
     res.status(200).send("test");
 });
 
+// router.get("/certifications", function(req,res){
+//     res.status(200).render("certifications")
+// })
+
 router.get("/courses", function (req, res) {
-    res.status(200).render("courses");
+    res.status(200).render("certifications2");
 })
 
 router.post("/courses", auth, async function (req, res) {
@@ -353,11 +357,9 @@ router.post("/courses", auth, async function (req, res) {
     }
 
     // Scrapping W3Schools Certifications
-
     async function scrapW3schools() {
         const response = await axios.get(courseSources.w3schools);
         const $ = cheerio.load(response.data);
-
         const w3Internships = $(".productgrid--item");
         w3Internships.each(function () {
             title = $(this).find('.productitem--title a').text().trim();
@@ -398,17 +400,17 @@ router.post("/courses", auth, async function (req, res) {
 
     await microsoftScrapper();
 
-    res.status(200).render("courses", { w3Courses, microsoftCourses });
+    res.status(200).render("certifications2", { w3Courses});
 })
 
 router.get("/internships", function (req, res) {
     console.log(req);
-    res.status(200).render("internships");
+    res.status(200).render("internships2");
 });
 
 router.post("/internships", auth, async function (req, res) {
 
-    let internshipKeyword = req.body.internshipSearch;
+    let internshipKeyword = req.body.internshipKeyword;
     const jobLocation = req.body.location;
     console.log(internshipKeyword);
 
@@ -524,9 +526,7 @@ router.post("/internships", auth, async function (req, res) {
             errorMsg = error;
             console.log(error);
             // res.render("internships",{errorMsg})
-
         }
-
         // res.send(internshalaData);
     }
 

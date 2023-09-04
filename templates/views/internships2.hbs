@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    {{>headerMeta2}}
+    <link rel="stylesheet" href="/css/internships.css">
+    <title>Internships : CareerPilot </title>
+</head>
+<body>
+    {{>header2}}
+
+     <div class="intern-hero">
+
+            <h1 class="cover-title"> Internships </h1>
+
+            <p class="cover-para" style="text-align: center!important;">Explore Endless Opportunities: Your Gateway to
+                Career Success </p>
+
+            <div class="job-search">
+                <form class="form-control" action="/internships" method="POST">
+                    <input type="text" name="internshipKeyword" id="internshipKeyword" placeholder="Looking for? ">
+                    <button class="btn" type="submit"> Search Internships </button>
+                    <button class="btn" onfocus="this.value='' "> Clear </button>
+                </form>
+            </div>
+        
+        </div>
+
+
+        {{>footer2}}
+</body>
+</html>
