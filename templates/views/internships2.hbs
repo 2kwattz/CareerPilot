@@ -1,32 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    
+
     {{>headerMeta2}}
     <link rel="stylesheet" href="/css/internships.css">
     <title>Internships : CareerPilot </title>
 </head>
+
 <body>
     {{>header2}}
 
-     <div class="intern-hero">
+    <div class="intern-hero">
 
-            <h1 class="cover-title"> Internships </h1>
+        <h1 class="cover-title"> Internships </h1>
 
-            <p class="cover-para" style="text-align: center!important;">Explore Endless Opportunities: Your Gateway to
-                Career Success </p>
+        <p class="cover-para" style="text-align: center!important;">Explore Endless Opportunities: Your Gateway to
+            Career Success </p>
 
-            <div class="job-search">
-                <form class="form-control" action="/internships" method="POST">
-                    <input type="text" name="internshipKeyword" id="internshipKeyword" placeholder="Looking for? ">
-                    <button class="btn" type="submit"> Search Internships </button>
-                    <button class="btn" onfocus="this.value='' "> Clear </button>
-                </form>
+        <div class="job-search">
+            <form class="form-control" action="/internships" method="POST">
+                <input type="text" name="internshipKeyword" id="internshipKeyword" placeholder="Looking for? ">
+                <button class="btn" type="submit"> Search Internships </button>
+                <button class="btn" onfocus="this.value='' "> Clear </button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h1 class="section-title"> Internship Based on field </h1>
+
+        {{!-- Type of jobs. For direct scrapping --}}
+
+        <div class="categories">
+
+            <div class="cat-items">
+                <img src="/img/jobs/engg.png" alt="Image by Uniconlabs/Flaticons" height="80px" width="80px">
+                <h3>Engineering</h3>
+                <p>test</p>
             </div>
-        
+            <div class="cat-items">
+                <img src="/img/jobs/digital-m.png" alt="" height="80px" width="80px">
+                <h3>Digital Marketing</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/business.png" alt="" height="80px" width="80px">
+                <h3>Business</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/software-d.png" alt="" height="80px" width="80px">
+                <h3>Software Developer</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/ds.png" alt="" height="80px" width="80px">
+                <h3>Data Science</h3>
+                <p>test</p>
+            </div>
+            <div class="cat-items">
+                <img src="/img/jobs/law.png" alt="" height="80px" width="80px">
+                <h3>Law</h3>
+                <p>test</p>
+            </div>
+
+        </div>
+
+        {{!-- Result container. Filters + Results --}}
+
+        <div class="result-container">
+
+            {{!-- Filters section --}}
+
+            <div class="filters">
+
+                <div class="filter-cat">
+                    <h4 class="section-title"> Top Services </h4>
+                    Show/Hide JobRapido Posting <input type="checkbox"> <br>
+                    Show/Hide LinkedIn Posting<input type="checkbox"> <br>
+                </div>
+
+                <div class="filter-cat">
+                    <h4 class="section-title"> Top Locations </h4>
+                    Work from office <input type="checkbox"> <br>
+                    Hybrid <input type="checkbox"> <br>
+                    Remote/WFH <input type="checkbox"> <br>
+
+                </div>
+
+                <div class="filter-cat">
+                    <h4 class="section-title"> Top Salary </h4>
+
+                </div>
+
+
+            </div>
+
+            {{!-- Results --}}
+
+            <div class="results">
+
+               {{#each internshalaData}}
+
+                <div class="result-box">
+                    <span> Company Name : {{this.title}}</span><br>
+                    <span> Job Title : {{this.jobTitle}} </span><br>
+                    <span> Stripend : {{this.stripend}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Location : {{this.location}}</span>
+                    <button class="btn open-modal-btn"> View Details </button>
+                    <a class="btn" href="{{this.redirectLink}}" target="_blank"> Apply </a>
+                </div>
+                {{/each}}
+
+                {{#each linkedinData}}
+
+                <div class="result-box">
+                    <span> Company Name : {{this.company}}</span><br>
+                    <span> Job Title : {{this.title}} </span><br>
+                    <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br>
+                    <span> Start Date : {{this.listDate}}</span><br>
+                    <span> Internship Location : {{this.location}}</span>
+                    <button class="btn"> View </button>
+                </div>
+
+                {{/each}}
+
+            </div>
+
         </div>
 
 
         {{>footer2}}
 </body>
+
 </html>

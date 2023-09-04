@@ -551,7 +551,7 @@ router.post("/internships", auth, async function (req, res) {
     // console.log(jobLocation);
     // console.log(internshipSources.linkedin)
 
-    res.status(200).render("internships", { linkedinData, internshalaData, errorMsg });
+    res.status(200).render("internships2", { linkedinData, internshalaData, errorMsg });
 
 })
 
