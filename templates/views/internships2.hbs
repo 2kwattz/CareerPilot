@@ -86,8 +86,8 @@
 
                 <div class="filter-cat">
                     <h4 class="section-title"> Top Services </h4>
-                    Show/Hide JobRapido Posting <input type="checkbox"> <br>
-                    Show/Hide LinkedIn Posting<input type="checkbox"> <br>
+                    <button class="btn" onclick="toggleInternshala()"> Show/Hide Internshala Posting </button> <br>
+                    <button class="btn" onclick="toggleLinkedin()"> Show/Hide LinkedIn Posting </button> <br> <br>
                 </div>
 
                 <div class="filter-cat">
@@ -106,7 +106,7 @@
 
                 {{#each internshalaData}}
 
-                <div class="result-box">
+                <div class="result-box internshalaContainer">
                     <span> Company Name : {{this.title}}</span><br>
                     <span> Job Title : {{this.jobTitle}} </span><br>
                     <span class="salary"> Stripend : {{this.stripend}} </span><br>
@@ -121,7 +121,7 @@
 
                 {{#each linkedinData}}
 
-                <div class="result-box">
+                <div class="result-box linkedinContainer">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
                     <span> Start Date : </span><br>
@@ -137,7 +137,42 @@
 
         </div>
 
+
+        <script src="/js/modals.js"></script>
+
         <script>
+
+            function popupOpen() {
+
+                alert("Still Under development!!");
+            }
+
+
+
+            const errorBox = document.querySelector('.errorNotifications');
+            errorBox.style.display = none;
+            const dataContainer = document.getElementById('filterData');
+
+            function toggleInternshala() {
+
+                const internshalaContainer = document.getElementsByClassName("internshalaContainer")[0];
+                if (internshalaContainer.style.display !== 'none') {
+                    internshalaContainer.style.display = 'none';
+                } else {
+                    internshalaContainer.style.display = 'block';
+                }
+            }
+
+            function toggleLinkedin() {
+
+                const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
+                if (linkedinContainer.style.display !== 'none') {
+                    linkedinContainer.style.display = 'none';
+                } else {
+                    linkedinContainer.style.display = 'block';
+                }
+            }
+
 
             document.addEventListener('DOMContentLoaded', function () {
                 const minSalaryInput = document.getElementById('minSalary');
