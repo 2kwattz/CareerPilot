@@ -563,7 +563,6 @@ router.get("intredirect", auth, async function (req, res) {
 
 })
 
-
 // New UI Pages. Will be replaced later on
 
 // Registration Page 2
