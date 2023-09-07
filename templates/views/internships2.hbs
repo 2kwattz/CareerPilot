@@ -77,6 +77,13 @@
 
             <div class="filters">
 
+                <div id="filter-cat">
+                    <h4 class="section-title">Stripend</h4>
+                    <input type="number" id="minSalary" placeholder="Min Salary">
+                    <input type="number" id="maxSalary" placeholder="Max Salary"><br>
+                    <button class="btn" id="salaryFilter">Filter</button>
+                </div>
+
                 <div class="filter-cat">
                     <h4 class="section-title"> Top Services </h4>
                     Show/Hide JobRapido Posting <input type="checkbox"> <br>
@@ -91,24 +98,18 @@
 
                 </div>
 
-                <div class="filter-cat">
-                    <h4 class="section-title"> Top Salary </h4>
-
-                </div>
-
-
             </div>
 
             {{!-- Results --}}
 
-            <div class="results">
+            <div class="results" id="internshipListing">
 
-               {{#each internshalaData}}
+                {{#each internshalaData}}
 
                 <div class="result-box">
                     <span> Company Name : {{this.title}}</span><br>
                     <span> Job Title : {{this.jobTitle}} </span><br>
-                    <span> Stripend : {{this.stripend}} </span><br>
+                    <span class="salary"> Stripend : {{this.stripend}} </span><br>
                     <span> Start Date : </span><br>
                     <span> Internship Duration : </span><br>
                     <span> Start Date : </span><br>
@@ -136,7 +137,43 @@
 
         </div>
 
+        <script>
 
+            document.addEventListener('DOMContentLoaded', function () {
+                const minSalaryInput = document.getElementById('minSalary');
+                const maxSalaryInput = document.getElementById('maxSalary');
+                const filterButton = document.getElementById('salaryFilter');
+
+                filterButton.addEventListener('click', function () {
+                    const minSalary = parseFloat(minSalaryInput.value);
+                    const maxSalary = parseFloat(maxSalaryInput.value);
+
+                    // Get all result boxes
+                    const resultBoxes = document.querySelectorAll('.result-box');
+
+                    // Loop through each result box
+                    resultBoxes.forEach(function (box) {
+                        // Parse the salary from the box's content
+                        const salaryElement = box.querySelector('.salary');
+                        if (salaryElement) {
+                            const salary = parseFloat(salaryElement.textContent);
+
+                            // Check if salary is within the specified range
+                            if ((!minSalary || salary >= minSalary) && (!maxSalary || salary <= maxSalary)) {
+                                // Show the box if it matches the criteria
+                                box.style.display = 'block';
+                            } else {
+                                // Hide the box if it doesn't match
+                                box.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+
+
+
+        </script>
 </body>
 
 </html>
