@@ -1,0 +1,16 @@
+.sec-left{
+    width: 40%;
+    display: inline-block!important;
+    display: flex;
+}
+
+.sec-right{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    width: 40% !important;;
+    margin:0px;
+    text-align: center;
+    
+   
+}

@@ -165,16 +165,16 @@
 
             function toggleLinkedin() {
 
-                const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
-                if (linkedinContainer.style.display !== 'none') {
-                    linkedinContainer.style.display = 'none';
-                } else {
-                    linkedinContainer.style.display = 'block';
-                }
+            const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
+            if (linkedinContainer.style.display !== 'none') {
+                linkedinContainer.style.display = 'none';
+            } else {
+                linkedinContainer.style.display = 'block';
             }
+        }
 
 
-            document.addEventListener('DOMContentLoaded', function () {
+            
                 const minSalaryInput = document.getElementById('minSalary');
                 const maxSalaryInput = document.getElementById('maxSalary');
                 const filterButton = document.getElementById('salaryFilter');
@@ -204,10 +204,6 @@
                         }
                     });
                 });
-            });
-
-
-
         </script>
 </body>
 
