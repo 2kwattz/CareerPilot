@@ -87,7 +87,7 @@
                 <div class="filter-cat">
                     <h4 class="section-title"> Top Services </h4>
                     <button class="btn" onclick="toggleInternshala()"> Show/Hide Internshala Posting </button> <br>
-                    <button class="btn" onclick="toggleLinkedin()"> Show/Hide LinkedIn Posting </button> <br> <br>
+                    <button class="btn" onclick="togglelinkedin()"> Show/Hide LinkedIn Posting </button> <br> <br>
                 </div>
 
                 <div class="filter-cat">
@@ -120,8 +120,9 @@
                 {{/each}}
 
                 {{#each linkedinData}}
+                <div class="linkedinContainer">
 
-                <div class="result-box linkedinContainer">
+                <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
                     <span> Start Date : </span><br>
@@ -129,6 +130,7 @@
                     <span> Start Date : {{this.listDate}}</span><br>
                     <span> Internship Location : {{this.location}}</span>
                     <button class="btn"> View </button>
+                </div>
                 </div>
 
                 {{/each}}
@@ -163,47 +165,48 @@
                 }
             }
 
-            function toggleLinkedin() {
+            function togglelinkedin() {
 
-            const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
-            if (linkedinContainer.style.display !== 'none') {
-                linkedinContainer.style.display = 'none';
-            } else {
-                linkedinContainer.style.display = 'block';
+                const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
+                console.log("Inside Linkedin Filter Function")
+                if (linkedinContainer.style.display !== 'none') {
+                    console.log("Inside If Block Filter")
+                    linkedinContainer.style.display = 'none';
+                } else {
+                    linkedinContainer.style.display = 'block';
+                    console.log("Inside else Block Filter")
+                }
             }
-        }
 
+            const minSalaryInput = document.getElementById('minSalary');
+            const maxSalaryInput = document.getElementById('maxSalary');
+            const filterButton = document.getElementById('salaryFilter');
 
-            
-                const minSalaryInput = document.getElementById('minSalary');
-                const maxSalaryInput = document.getElementById('maxSalary');
-                const filterButton = document.getElementById('salaryFilter');
+            filterButton.addEventListener('click', function () {
+                const minSalary = parseFloat(minSalaryInput.value);
+                const maxSalary = parseFloat(maxSalaryInput.value);
 
-                filterButton.addEventListener('click', function () {
-                    const minSalary = parseFloat(minSalaryInput.value);
-                    const maxSalary = parseFloat(maxSalaryInput.value);
+                // Get all result boxes
+                const resultBoxes = document.querySelectorAll('.result-box');
 
-                    // Get all result boxes
-                    const resultBoxes = document.querySelectorAll('.result-box');
+                // Loop through each result box
+                resultBoxes.forEach(function (box) {
+                    // Parse the salary from the box's content
+                    const salaryElement = box.querySelector('.salary');
+                    if (salaryElement) {
+                        const salary = parseFloat(salaryElement.textContent);
 
-                    // Loop through each result box
-                    resultBoxes.forEach(function (box) {
-                        // Parse the salary from the box's content
-                        const salaryElement = box.querySelector('.salary');
-                        if (salaryElement) {
-                            const salary = parseFloat(salaryElement.textContent);
-
-                            // Check if salary is within the specified range
-                            if ((!minSalary || salary >= minSalary) && (!maxSalary || salary <= maxSalary)) {
-                                // Show the box if it matches the criteria
-                                box.style.display = 'block';
-                            } else {
-                                // Hide the box if it doesn't match
-                                box.style.display = 'none';
-                            }
+                        // Check if salary is within the specified range
+                        if ((!minSalary || salary >= minSalary) && (!maxSalary || salary <= maxSalary)) {
+                            // Show the box if it matches the criteria
+                            box.style.display = 'block';
+                        } else {
+                            // Hide the box if it doesn't match
+                            box.style.display = 'none';
                         }
-                    });
+                    }
                 });
+            });
         </script>
 </body>
 
