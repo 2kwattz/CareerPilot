@@ -104,6 +104,8 @@
 
             <div class="results" id="internshipListing">
 
+                <h1> Internshala </h1>
+
                 {{#each internshalaData}}
 
                 <div class="result-box internshalaContainer">
@@ -119,10 +121,12 @@
                 </div>
                 {{/each}}
 
-                {{#each linkedinData}}
-                <div class="linkedinContainer">
+                <h1> Linkedin </h1>
 
-                <div class="result-box">
+                {{#each linkedinData}}
+
+
+                <div class="result-box linkedinContainer">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
                     <span> Start Date : </span><br>
@@ -130,7 +134,6 @@
                     <span> Start Date : {{this.listDate}}</span><br>
                     <span> Internship Location : {{this.location}}</span>
                     <button class="btn"> View </button>
-                </div>
                 </div>
 
                 {{/each}}
@@ -167,7 +170,7 @@
 
             function togglelinkedin() {
 
-                const linkedinContainer = document.getElementsByClassName("linkedinContainer")[0];
+                const linkedinContainer = document.getElementsByClassName("result-box")[1];
                 console.log("Inside Linkedin Filter Function")
                 if (linkedinContainer.style.display !== 'none') {
                     console.log("Inside If Block Filter")
