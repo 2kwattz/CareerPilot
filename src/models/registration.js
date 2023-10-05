@@ -24,6 +24,10 @@ const registrationSchema = new mongoose.Schema({
       
     },
 
+    profileImage : {
+        type:String
+    },
+
     gender:{
         type: String,
         required: true,

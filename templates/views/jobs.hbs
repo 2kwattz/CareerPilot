@@ -43,32 +43,32 @@
             <div class="cat-items">
                 <img src="/img/jobs/engg.png" alt="Image by Uniconlabs/Flaticons" height="80px" width="80px">
                 <h3>Engineering</h3>
-                <p>test</p>
+        
             </div>
             <div class="cat-items">
                 <img src="/img/jobs/digital-m.png" alt="" height="80px" width="80px">
                 <h3>Digital Marketing</h3>
-                <p>test</p>
+           
             </div>
             <div class="cat-items">
                 <img src="/img/jobs/business.png" alt="" height="80px" width="80px">
                 <h3>Business</h3>
-                <p>test</p>
+          
             </div>
             <div class="cat-items">
                 <img src="/img/jobs/software-d.png" alt="" height="80px" width="80px">
                 <h3>Software Developer</h3>
-                <p>test</p>
+            
             </div>
             <div class="cat-items">
                 <img src="/img/jobs/ds.png" alt="" height="80px" width="80px">
                 <h3>Data Science</h3>
-                <p>test</p>
+               
             </div>
             <div class="cat-items">
                 <img src="/img/jobs/law.png" alt="" height="80px" width="80px">
                 <h3>Law</h3>
-                <p>test</p>
+              
             </div>
 
         </div>
@@ -97,10 +97,10 @@
 
                 </div>
 
-                <div class="filter-cat">
+                {{!-- <div class="filter-cat">
                     <h4 class="section-title"> Top Salary </h4>
 
-                </div>
+                </div> --}}
 
 
             </div>
@@ -114,24 +114,25 @@
                 <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Internship Duration : </span><br>
-                    <span> Start Date : {{this.listDate}}</span><br>
-                    <span> Internship Location : {{this.location}}</span>
-                    <button class="btn"> View </button>
+                    {{!-- <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br> --}}
+                    <span> Job Posted : {{this.listDate}}</span><br>
+                    <span> Job Location : {{this.location}}</span>
+                    <button class="btn"> View Details </button>
+                    <button class="btn"> Apply </button>
                 </div>
 
                 {{/each}}
 
-                {{#each linkedinData}}
+                {{#each jobRapidoData}}
 
                 <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
-                    <span> Start Date : </span><br>
-                    <span> Internship Duration : </span><br>
-                    <span> Start Date : {{this.listDate}}</span><br>
-                    <span> Internship Location : {{this.location}}</span>
+                    {{!-- <span> Start Date : </span><br>
+                    <span> Internship Duration : </span><br> --}}
+                    {{!-- <span> Start Date : {{this.listDate}}</span><br> --}}
+                    <span> Job Location : {{this.location}}</span>
                     <button class="btn"> View </button>
                 </div>
 

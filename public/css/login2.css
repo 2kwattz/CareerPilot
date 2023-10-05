@@ -14,3 +14,10 @@
     
    
 }
+
+.inner-container{
+    width:100%;
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+}

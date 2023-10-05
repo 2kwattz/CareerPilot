@@ -767,8 +767,9 @@ router.post("/jobs", auth, async function (req, res) {
         jrJobs.each(function () {
             title = $(this).find('.result-item__title').text().trim();
             company = $(this).find('.result-item__company').text().trim();
+            location = $(this).find('.result-item__location-label').text().trim();
 
-            jobRapidoData.push({ title, company });
+            jobRapidoData.push({ title, company, location });
 
             // console.log(jobRapidoData);
         });
@@ -1083,6 +1084,7 @@ router.post('/registration', async function (req, res) {
                 collegeCourse: req.body.collegeCourse,
                 collegeName: req.body.collegeName,
                 collegeBranch: req.body.collegeBranch,
+                profileImage: req.body.profileImage
                 // verified: false  // Added recently for UV
             });
 
@@ -1404,7 +1406,8 @@ router.get("/myprofile", auth, async function (req, res) {
         userClg: req.user.collegeName,
         userAge: req.user.age,
         userBranch: req.user.collegeBranch,
-        userCourse: req.user.collegeCourse
+        userCourse: req.user.collegeCourse,
+        userAvatar: req.user.profilePicture
     }
 
     const capName = userProfile.username.slice(0,1).toUpperCase() + userProfile.username.slice(1,userProfile.username.length).toLowerCase();
@@ -1433,6 +1436,19 @@ router.get("/myprofile", auth, async function (req, res) {
 
     res.status(200).render("userProfile.hbs", { userProfile, capName });
 
+});
+
+router.post("/myprofile", async function(req,res){
+//    const addProfilePicture =  new registrationData({
+//         profileImage: req.body.profileImage,
+// })
+const updatedImage = req.body.updateImage;
+await registrationData.updateOne(
+    { profileImage: updatedImage },
+    { $set: { profileImage: updatedImage } })
+
+// await addProfilePicture.save();
+res.render("myprofile", {updatedImage});
 });
 
 router.get("/success", async function (req, res) {
@@ -1473,7 +1489,7 @@ router.post("/namechange", auth, async function (req, res) {
     );
     const message = "Name Changed successfully\n";
     console.log('Name updated successfully');
-    res.render("myprofile", { message }); // Redirect to the user's profile page
+    res.render("namechange", { message }); // Redirect to the user's profile page
 
     // else {
     //     console.log('No matching user found to update');

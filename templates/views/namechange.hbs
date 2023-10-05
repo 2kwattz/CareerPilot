@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {{>headerMeta}}
+  {{>headerMeta2}}
     <title>Change Name : CareerPilot </title>
 </head>
 <body>
-    {{>header}}
+    {{>header2}}
 
-    <div class="container">
+    <div class="generalized-hero">
         <h1> Change Name </h1>
     </div>
 
-    <form action="/namechange" method="POST" style="text-align: center">
+    <form action="/namechange" method="POST" style="text-align: center" class="form-g">
     
     <label for="currentName"> Current Name : {{currentName}}</label><br>
     <input type="text" name="updatedName"placeholder="Enter new full name" required><br>
     <input type="text" placeholder="Repeat your full name" required><br>
 
        <button class="btn" type="submit"> Change Name </button>
+       <br>
+
+       {{message}}
     
     </form>
+
 
     
 </body>

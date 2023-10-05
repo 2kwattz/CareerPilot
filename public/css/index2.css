@@ -253,6 +253,20 @@ header a:hover {
     /* height: 100vh; */
 }
 
+.generalized-hero{
+    background-color: rgba(99, 63, 199, 0.7);
+    background-blend-mode: multiply;
+    background-image: url('/img/g-cover.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position: fixed;
+
+    color: white;
+    text-align: center;
+    padding: 2.5em 1em;
+}
+
 .hero h2 {
     text-align: left;
 }
@@ -278,6 +292,10 @@ header a:hover {
 .section-container {
     width: 100%;
     /* height: 100vh; */
+}
+
+.form-g{
+    padding: 1.5rem;
 }
 
 .section {
