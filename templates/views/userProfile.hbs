@@ -10,16 +10,16 @@
 
     {{message}}
 
-   {{#if user.profilePicture}}
+   {{!-- {{#if user.profilePicture}} --}}
     <!-- Content to display if user has a profile picture -->
     <img src="{{userProfile.userAvatar}}">
-{{else}}
+{{!-- {{else}} --}}
     <!-- Content to display if user does not have a profile picture -->
-{{/if}}
+{{!-- {{/if}} --}}
 
 
     <h1 class="section-titles index-para"> {{capName}}</h1>
-    <form method="POST" action="/myprofile" role="form" enctype="multiport/form-data">
+    <form action="/upload" method="POST" role="form" enctype="multiport/form-data">
     <input type="file" name="updateImage"> Upload Profile Picture 
     <button class="btn" type="submit"> Save Changes </button>
     </form>

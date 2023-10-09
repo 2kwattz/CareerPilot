@@ -32,6 +32,14 @@ const city = require('country-state-city').City;
 
 const { google } = require('googleapis');
 
+// Multer for storing Profile Picture (User's DP)
+
+const multer = require('multer');
+
+// Multer configuration
+const storage = multer.memoryStorage(); // Store files in memory (you can configure this as per your needs)
+const upload = multer({ storage: storage });
+
 // MailGun for Nodemailer
 
 const mailgun = require('mailgun-js')({
@@ -1084,7 +1092,7 @@ router.post('/registration', async function (req, res) {
                 collegeCourse: req.body.collegeCourse,
                 collegeName: req.body.collegeName,
                 collegeBranch: req.body.collegeBranch,
-                profileImage: req.body.profileImage
+                profileImage: req.file.profileImage
                 // verified: false  // Added recently for UV
             });
 
@@ -1393,6 +1401,37 @@ router.get("/sitemap", function (req, res) {
 
 // User Profile
 
+// Profile Picture Updation
+
+router.get("/upload", auth, async function(req,res){
+res.send("Only POST Requests are allowed. Sorry\n")
+})
+
+app.post('/upload', upload.single('updateImage'), async(req, res) => {
+    // Access the uploaded file using req.file
+    const uploadedFile = req.file;
+
+    // await registrationData.updateOne(
+    //     { profileImage: uploadedFile },
+    //     { $set: { profileImage: uploadedFile.buffer } })
+   
+    if (!uploadedFile) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    try {
+        
+        await registrationData.findByIdAndUpdate(req.user._id, {
+            profileImage: uploadedFile.buffer, // Store file buffer in the database
+        });
+
+        res.send('File uploaded successfully!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.get("/myprofile", auth, async function (req, res) {
     console.log(req);
 
@@ -1442,14 +1481,26 @@ router.post("/myprofile", async function(req,res){
 //    const addProfilePicture =  new registrationData({
 //         profileImage: req.body.profileImage,
 // })
-const updatedImage = req.body.updateImage;
+const updatedImage = req.files.updateImage;
+// profileImage: {
+//     data: profileImage.data, // Convert the uploaded image to Buffer
+//     contentType: profileImage.mimetype // Get the content type of the uploaded image
+// }
 await registrationData.updateOne(
     { profileImage: updatedImage },
     { $set: { profileImage: updatedImage } })
 
+    // const registrationData = new RegistrationData({
+    //     // Set other fields in your schema here
+    //     // ...
+    // });
+
+    // await registrationData.save(); 
+
 // await addProfilePicture.save();
 res.render("myprofile", {updatedImage});
 });
+
 
 router.get("/success", async function (req, res) {
     const userName = await req.user.fullName.toUpperCase();
