@@ -12,14 +12,16 @@
 
    {{!-- {{#if user.profilePicture}} --}}
     <!-- Content to display if user has a profile picture -->
-    <img src="{{userProfile.userAvatar}}">
+    {{profileImageData}}
+    <img src=`{{uploadedFile}}` alt="Profile Image">
+
 {{!-- {{else}} --}}
     <!-- Content to display if user does not have a profile picture -->
 {{!-- {{/if}} --}}
 
 
     <h1 class="section-titles index-para"> {{capName}}</h1>
-    <form action="/upload" method="POST" role="form" enctype="multiport/form-data">
+    <form action="/myprofile" method="POST" role="form" enctype="multipart/form-data">
     <input type="file" name="updateImage"> Upload Profile Picture 
     <button class="btn" type="submit"> Save Changes </button>
     </form>

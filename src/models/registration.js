@@ -25,8 +25,11 @@ const registrationSchema = new mongoose.Schema({
     },
 
     profileImage : {
-        data: Buffer, // Store image data as a Buffer
-        contentType: String 
+        // data: Buffer, // Store image data as a Buffer
+        // contentType: String 
+
+        type: Buffer
+
     },
 
     gender:{

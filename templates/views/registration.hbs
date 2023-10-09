@@ -19,7 +19,7 @@
 
     <div id="loader"><img src="/img/other/loadingAirplane.gif" height: "40px" width="40px"></div>
 
-    <form class="form-reg-control" action="/registration" method="POST">
+    <form class="form-reg-control" action="/registration" method="POST" enctype="multipart/form-data">
         <input type="text" class="form-control" placeholder="Enter Full Name" required name="fullName" id="name">
         <input type="text" class="form-control" placeholder="Enter Email Address" required name="email" id="email">
          <div class="error-message" id="emailError"></div>
@@ -68,7 +68,7 @@
         <label class="check-box"> Remember Me? <input type="checkbox"> </label>
 
         <label> Upload Profile Picture </label>
-        <input type="file" name="profileImage">
+        <input type="file" name="updateImage">
 
     </form>
 

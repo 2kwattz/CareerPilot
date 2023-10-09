@@ -40,6 +40,14 @@ const multer = require('multer');
 const storage = multer.memoryStorage(); // Store files in memory (you can configure this as per your needs)
 const upload = multer({ storage: storage });
 
+// Multer Middleware
+
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static('uploads'));
+
+
+
+
 // MailGun for Nodemailer
 
 const mailgun = require('mailgun-js')({
@@ -176,8 +184,6 @@ const headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'Cookie': 'cookie_name1=cookie_value1; cookie_name2=cookie_value2'
 };
-
-
 
 // User Verification Schema (For User's email verification)
 
@@ -408,7 +414,7 @@ router.post("/courses", auth, async function (req, res) {
 
     await microsoftScrapper();
 
-    res.status(200).render("certifications2", { w3Courses});
+    res.status(200).render("certifications2", { w3Courses });
 })
 
 router.get("/internships", function (req, res) {
@@ -515,16 +521,16 @@ router.post("/internships", auth, async function (req, res) {
                 // .then(response => {
                 //     const imageBuffer = Buffer.from(response.data, 'binary');
 
-                    // Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
-                    // const base64Image = imageBuffer.toString('base64');
-                    // image.set('Content-Type', 'image/jpeg'); // Content Type as JPEG
+                // Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
+                // const base64Image = imageBuffer.toString('base64');
+                // image.set('Content-Type', 'image/jpeg'); // Content Type as JPEG
                 // })
                 // .catch(error => {
                 //     console.error('Failed to fetch image:', error);
                 // });
-                
-                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend,postStatus });
-                
+
+                internshalaData.push({ title, location, jobTitle, redirectLink, stripend, postStatus });
+
                 console.log(internshalaData);
             });
         }
@@ -559,7 +565,7 @@ router.post("/internships", auth, async function (req, res) {
     // console.log(jobLocation);
     // console.log(internshipSources.linkedin)
 
-    res.status(200).render("internships2", { linkedinData, internshalaData});
+    res.status(200).render("internships2", { linkedinData, internshalaData });
 
 })
 
@@ -1066,9 +1072,17 @@ router.get('/registration', function (req, res) {
     res.status(200).render("reg2");
 });
 
-router.post('/registration', async function (req, res) {
+router.post('/registration', upload.single('updateImage'), async function (req, res) {
 
     // Create a new user in our database
+
+    const uploadedFile = req.file;
+    //for testing purpose
+    console.log(uploadedFile); 
+
+
+    // Converting the Image to Buffer
+    // const bufferData = uploadedFile.buffer;
 
     try {
         const password = req.body.password;
@@ -1092,7 +1106,7 @@ router.post('/registration', async function (req, res) {
                 collegeCourse: req.body.collegeCourse,
                 collegeName: req.body.collegeName,
                 collegeBranch: req.body.collegeBranch,
-                profileImage: req.file.profileImage
+                profileImage: uploadedFile
                 // verified: false  // Added recently for UV
             });
 
@@ -1315,7 +1329,7 @@ router.post("/forgotpassword", async function (req, res) {
         if (!user) {
             // User not found, display error message
             responseMessage = " User Not Found ";
-            return res.render("forgotpassword",{responseMessage});
+            return res.render("forgotpassword", { responseMessage });
         }
 
         // Generate password reset token and send reset email
@@ -1323,7 +1337,7 @@ router.post("/forgotpassword", async function (req, res) {
 
         // Display success message or redirect to a page
         responseMessage = "Password Reset link has been sent!"
-        res.render("forgotpassword", {responseMessage});
+        res.render("forgotpassword", { responseMessage });
     } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred');
@@ -1403,32 +1417,35 @@ router.get("/sitemap", function (req, res) {
 
 // Profile Picture Updation
 
-router.get("/upload", auth, async function(req,res){
-res.send("Only POST Requests are allowed. Sorry\n")
+router.get("/upload", auth, async function (req, res) {
+    res.send("Only POST Requests are allowed. Sorry\n")
 })
 
-app.post('/upload', upload.single('updateImage'), async(req, res) => {
+app.post('/upload',auth, upload.single('updateImage'), async (req, res) => {
     // Access the uploaded file using req.file
     const uploadedFile = req.file;
 
-    // await registrationData.updateOne(
-    //     { profileImage: uploadedFile },
-    //     { $set: { profileImage: uploadedFile.buffer } })
-   
+
     if (!uploadedFile) {
         return res.status(400).send('No file uploaded.');
     }
 
     try {
-        
-        await registrationData.findByIdAndUpdate(req.user._id, {
-            profileImage: uploadedFile.buffer, // Store file buffer in the database
-        });
+
+        // Converting the Image to Buffer
+        const bufferData = Buffer.from(req.file.buffer.buffer);
+
+        await registrationData.updateOne(
+            { profileImage: bufferData },
+            { $set: { profileImage: bufferData } })
+
+        console.log(bufferData)
 
         res.send('File uploaded successfully!');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        console.log(req.file.buffer)
+        res.status(500).send(error);
     }
 });
 
@@ -1446,10 +1463,10 @@ router.get("/myprofile", auth, async function (req, res) {
         userAge: req.user.age,
         userBranch: req.user.collegeBranch,
         userCourse: req.user.collegeCourse,
-        userAvatar: req.user.profilePicture
+        userAvatar: req.user.profileImage
     }
 
-    const capName = userProfile.username.slice(0,1).toUpperCase() + userProfile.username.slice(1,userProfile.username.length).toLowerCase();
+    const capName = userProfile.username.slice(0, 1).toUpperCase() + userProfile.username.slice(1, userProfile.username.length).toLowerCase();
 
 
     // Scrap City Information for User Profile
@@ -1473,22 +1490,49 @@ router.get("/myprofile", auth, async function (req, res) {
 
     }
 
-    res.status(200).render("userProfile.hbs", { userProfile, capName });
+    // Profile Picture Buffer
+
+    const profileImageData = req.user.profileImage;
+    // const base64Image = profileImageData.toString('base64');
+
+    res.status(200).render("userProfile.hbs", { userProfile, capName, profileImageData });
 
 });
 
-router.post("/myprofile", async function(req,res){
-//    const addProfilePicture =  new registrationData({
-//         profileImage: req.body.profileImage,
-// })
-const updatedImage = req.files.updateImage;
-// profileImage: {
-//     data: profileImage.data, // Convert the uploaded image to Buffer
-//     contentType: profileImage.mimetype // Get the content type of the uploaded image
-// }
-await registrationData.updateOne(
-    { profileImage: updatedImage },
-    { $set: { profileImage: updatedImage } })
+router.post("/myprofile",auth,upload.single('updateImage'), async function (req, res) {
+    //    const addProfilePicture =  new registrationData({
+    //         profileImage: req.body.profileImage,
+    // })
+
+    const uploadedFile = req.file;
+
+    
+    if (!uploadedFile) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    try {
+
+        // Converting the Image to Buffer
+        const bufferData = Buffer.from(req.file.buffer.buffer);
+
+        await registrationData.updateOne(
+            { profileImage: bufferData },
+            { $set: { profileImage: uploadedFile.buffer } })
+
+        console.log(bufferData)
+
+        res.send('File uploaded successfully!');
+    } catch (error) {
+        console.error(error);
+        console.log(req.file.buffer)
+        res.status(500).send(error);
+    }
+    
+    
+    // await registrationData.updateOne(
+    //     { profileImage: updatedImage },
+    //     { $set: { profileImage: updatedImage } })
 
     // const registrationData = new RegistrationData({
     //     // Set other fields in your schema here
@@ -1497,8 +1541,8 @@ await registrationData.updateOne(
 
     // await registrationData.save(); 
 
-// await addProfilePicture.save();
-res.render("myprofile", {updatedImage});
+    // await addProfilePicture.save();
+    res.render("myprofile", { uploadedFile });
 });
 
 
@@ -1510,6 +1554,10 @@ router.get("/success", async function (req, res) {
 router.get("/settings", auth, async function (req, res) {
 
     res.status(200).render("settings");
+})
+
+router.get("/setting",auth, async function(req,res){
+    res.status(200).render("settings2");
 })
 
 // Updating Account Settings 
@@ -1558,16 +1606,16 @@ router.post('/updateName', auth, async function (req, res) {
 
 // New index 
 
-router.get("/index2", async function(req,res){
+router.get("/index2", async function (req, res) {
 
     res.render("index2");
 })
 
 // Lockedout Page for validaton attempt count
 
-router.get("/lockedout", async function(req,res){
+router.get("/lockedout", async function (req, res) {
     res.render("lockedout");
-    
+
 })
 
 //  Error Handling Middleware
