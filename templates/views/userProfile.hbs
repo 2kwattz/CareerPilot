@@ -12,8 +12,15 @@
 
    {{!-- {{#if user.profilePicture}} --}}
     <!-- Content to display if user has a profile picture -->
-    {{profileImageData}}
-    <img src=`{{uploadedFile}}` alt="Profile Image">
+
+    <center>
+
+    <img src="data:image/jpg;base64,{{profileImageData}}" height="250px" width="300px" alt="Profile Image">
+    </center>
+
+
+
+
 
 {{!-- {{else}} --}}
     <!-- Content to display if user does not have a profile picture -->

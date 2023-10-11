@@ -57,7 +57,7 @@
         <div class="registration-form">
 
 
-          <form class="form-control" method="POST" action="/registration">
+          <form class="form-control" method="POST" action="/registration" enctype="multipart/form-data">
 
             <div class="reg-sections" id="part1">
               {{!-- Name, Email & Password --}}
@@ -137,7 +137,7 @@
               </select>
               <input type="text" placeholder="Enter Answer" required name="secQuestionAnswer">
                 <label> Upload Profile Picture </label>
-        <input type="file" name="profileImage">
+        <input type="file" name="updateImage">
               <button type="button" class="btn" onclick="prevPart(2)">Previous</button>
               <button class="btn" type="submit"> Sign Up </button>
 

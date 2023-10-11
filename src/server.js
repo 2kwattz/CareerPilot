@@ -1029,7 +1029,6 @@ app.post('/login', async function (req, res) {
         // Generating tokens via middleware
 
         const token = await emailIsMatch.generateAuthToken();
-        console.log("Email JWT Token is generated via route/login. Token << " + token);
 
         // Set Cookie based on jwt token
 
@@ -1076,10 +1075,7 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
 
     // Create a new user in our database
 
-    const uploadedFile = req.file;
-    //for testing purpose
-    console.log(uploadedFile); 
-
+    const profilePicture = req.file.buffer.toString('base64');
 
     // Converting the Image to Buffer
     // const bufferData = uploadedFile.buffer;
@@ -1106,16 +1102,16 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
                 collegeCourse: req.body.collegeCourse,
                 collegeName: req.body.collegeName,
                 collegeBranch: req.body.collegeBranch,
-                profileImage: uploadedFile
+                profileImage: profilePicture
                 // verified: false  // Added recently for UV
             });
 
-            console.log(registerUser);
+           
 
             // JWT Token middleware
 
             const token = await registerUser.generateAuthToken();
-            console.log("The token part is " + token);
+            // console.log("The token part is " + token);
 
             // Set Cookie based on jwt token
 
@@ -1134,17 +1130,21 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
             //     res.status(201).render("index");
             // }
 
-            const userName = await req.user.fullName.toUpperCase();
-            res.status(201).redirect("accountcreation", { userName });
+            const userName = req.user.fullName.toUpperCase();
+            res.status(201).redirect(`/accountcreation?userName=${userName}`);
+
+            // res.status(201).redirect("accountcreation", { userName });
         }
 
         else {
             res.send("Passwords are not matching\n")
         }
+
     }
     catch (error) {
 
         res.status(400).send(error);
+        console.log(error)
     }
     // newUser.save().then(function(){
     //     res.status(201).send(newUser);
@@ -1433,10 +1433,10 @@ app.post('/upload',auth, upload.single('updateImage'), async (req, res) => {
     try {
 
         // Converting the Image to Buffer
-        const bufferData = Buffer.from(req.file.buffer.buffer);
+        const bufferData = req.file.buffer.toString('base64');
 
         await registrationData.updateOne(
-            { profileImage: bufferData },
+            { _id: req.user._id },
             { $set: { profileImage: bufferData } })
 
         console.log(bufferData)
@@ -1467,8 +1467,7 @@ router.get("/myprofile", auth, async function (req, res) {
     }
 
     const capName = userProfile.username.slice(0, 1).toUpperCase() + userProfile.username.slice(1, userProfile.username.length).toLowerCase();
-
-
+    console.log(userProfile.userAvatar);
     // Scrap City Information for User Profile
 
     // Temp Display based on user's city
@@ -1492,7 +1491,7 @@ router.get("/myprofile", auth, async function (req, res) {
 
     // Profile Picture Buffer
 
-    const profileImageData = req.user.profileImage;
+    const profileImageData = await req.user.profileImage;
     // const base64Image = profileImageData.toString('base64');
 
     res.status(200).render("userProfile.hbs", { userProfile, capName, profileImageData });
@@ -1514,11 +1513,13 @@ router.post("/myprofile",auth,upload.single('updateImage'), async function (req,
     try {
 
         // Converting the Image to Buffer
-        const bufferData = Buffer.from(req.file.buffer.buffer);
+        // const bufferData = Buffer.from(req.file.buffer);
+        const bufferData = req.file.buffer.toString('base64');
 
         await registrationData.updateOne(
-            { profileImage: bufferData },
-            { $set: { profileImage: uploadedFile.buffer } })
+            // { profileImage: bufferData },
+            { _id: req.user._id },
+            { $set: { profileImage: bufferData } })
 
         console.log(bufferData)
 
