@@ -517,17 +517,19 @@ router.post("/internships", auth, async function (req, res) {
 
                 // Company Logo Rendering
 
-                // axios.get(imgSources, { responseType: 'arraybuffer' })
-                // .then(response => {
-                //     const imageBuffer = Buffer.from(response.data, 'binary');
+                axios.get(imgSources, { responseType: 'arraybuffer' })
+                .then(response => {
+                    const imageBuffer = Buffer.from(response.data, 'binary');
 
-                // Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
-                // const base64Image = imageBuffer.toString('base64');
-                // image.set('Content-Type', 'image/jpeg'); // Content Type as JPEG
-                // })
-                // .catch(error => {
-                //     console.error('Failed to fetch image:', error);
-                // });
+                //Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
+                const base64Image = imageBuffer.toString('base64');
+                const dataURI = `data:image/jpeg;base64,${base64Image}`;
+                internshalaData.push(dataURI);
+         
+                })
+                .catch(error => {
+                    console.error('Failed to fetch image:', error);
+                });
 
                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend, postStatus });
 
@@ -1075,7 +1077,11 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
 
     // Create a new user in our database
 
+
+
     const profilePicture = req.file.buffer.toString('base64');
+
+
 
     // Converting the Image to Buffer
     // const bufferData = uploadedFile.buffer;
@@ -1106,7 +1112,7 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
                 // verified: false  // Added recently for UV
             });
 
-           
+            console.log(registerUser);
 
             // JWT Token middleware
 

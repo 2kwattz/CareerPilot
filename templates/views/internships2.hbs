@@ -5,6 +5,10 @@
 
     {{>headerMeta2}}
     <link rel="stylesheet" href="/css/internships.css">
+
+    {{!-- Importing CSS for the Modal (Popup) box --}}
+    <link rel="stylesheet" href="/css/internshipsPage/modalbox.css">
+
     <title>Internships : CareerPilot </title>
 </head>
 
@@ -112,6 +116,7 @@
                     <span> Job Title : {{this.jobTitle}} </span><br>
                     <span class="salary"> Stripend : {{this.stripend}} </span><br>
                     <span> Internship Location : {{this.location}}</span>
+                    {{!-- <span> <img src="{{this.dataURI}}"></span> --}}
                     <button class="btn open-modal-btn"> View Details </button>
                     <a class="btn" href="{{this.redirectLink}}" target="_blank"> Apply </a>
                 </div>
@@ -135,7 +140,6 @@
         </div>
 
 
-        <script src="/js/modals.js"></script>
 
         <script>
 
@@ -203,6 +207,23 @@
                 });
             });
         </script>
+
+        {{!-- Box Modal --}}
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+
+                <h3> Internship details </h3>
+
+                
+
+                <a class="btn external-link-btn" href="{{this.redirectLink}}" target="_blank"> View Details </a>
+                <div id="modal-data">
+                    <!-- Dynamic data will be injected here -->
+                </div>
+            </div>
+        </div>
+        <script src="js/modals.js"></script>
 </body>
 
 </html>

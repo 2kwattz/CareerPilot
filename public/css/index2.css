@@ -638,6 +638,12 @@ p {
     width: 100%;
 }
 
+/* Loading bar */
+
+#loading-bar{
+    display: none;
+}
+
 /* Media Queries */
 
 /* Mobile Screen */
