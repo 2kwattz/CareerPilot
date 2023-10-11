@@ -21,7 +21,8 @@ body {
     /* left:0; */
     z-index: -1;
     text-align: center;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    /* background-color: #bec3c941; */
+    box-shadow: 2px 0px 10px 0px lightgrey;
 }
 
 .sidebar:hover{
@@ -43,9 +44,28 @@ body {
     padding: 10px;
     cursor: pointer;
     transition: 0.3s;
+    display: flex;
+    
+}
+
+.tab a{
+    text-decoration: none;
+    color: black;
+}
+
+.tab img{
+    margin: 0px 10px;
 }
 
 .tab:hover {
     background-color: #555;
     color: white;
+}
+
+.tab:hover a{
+    color: white;
+}
+
+.content{
+    background-color: #BEC3C9;
 }

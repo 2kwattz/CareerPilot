@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{>headerMeta}}
+    {{>headerMeta2}}
     <title> Contact Us : CareerPilot</title>
 </head>
 <body>
     {{>header2}}
 
-    <h1 class="section-titles"> Contact Us </h1>
-    <p class="section-para index-para">
+    <h1 class="cover-title" style="text-align: center"> Contact Us </h1>
+    <p class="cover-para" style="margin: 40px 130px;">
         Thank you for your interest in contacting us! We value your feedback, inquiries, and suggestions. 
         Please feel free to reach out to us using the contact form below. We appreciate your time and will do our best to respond promptly.
     </p> 
 
     <form class="form-control" action="/contactus" method="POST">
 
-    
+    <center>
+
         <input type="text" name="username" id="name" placeholder="Name*" required><br><br>
         <input type="email" name="email" id="email" placeholder="Email Address*" required><br><br>
         <input type="text" name="subject" id="subject" placeholder="Subject*" required><br><br>
         <textarea rows="13" cols="53" name="message" id="message"></textarea><br><br>
         <button class="btn" type="submit"> Send </button>
         <button class="btn"> Clear </button>
+
+    </center>
 
     
     </form>

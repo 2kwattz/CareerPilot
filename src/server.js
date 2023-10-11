@@ -1346,7 +1346,7 @@ router.post("/forgotpassword", async function (req, res) {
 
 });
 
-router.get("/securityQuestion", auth, async function (req, res) {
+router.get("/securityQuestion",auth, async function (req, res) {
 
     const securityQuestion = await req.user.secQuestion;
 
