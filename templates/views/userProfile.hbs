@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    {{>headerMeta}}
+    {{>headerMeta2}}
+    <link rel="stylesheet" href="css/userprofile.css">
     <title>My Profile : CareerPilot </title>
 </head>
+
 <body>
 
-    {{>header}}
+    {{>header2}}
 
     {{message}}
 
-   {{!-- {{#if user.profilePicture}} --}}
+    {{!-- {{#if user.profilePicture}} --}}
     <!-- Content to display if user has a profile picture -->
 
-    <center>
+    <div class="profile-cover-img">
+        {{!-- <img src="img/profile/cover.jpg" alt="Cover Photo"> --}}
 
-    <img src="data:image/jpg;base64,{{profileImageData}}" height="250px" width="300px" alt="Profile Image">
-    </center>
+    </div>
+
+    <div class="profilePicture">
+
+        <img src="data:image/jpg;base64,{{profileImageData}}" height="200px" width="250px" alt="Profile Image">
+
+    <h1 id="profile-name"> {{capName}}</h1>
+    </div>
 
 
 
 
 
-{{!-- {{else}} --}}
+
+    {{!-- {{else}} --}}
     <!-- Content to display if user does not have a profile picture -->
-{{!-- {{/if}} --}}
+    {{!-- {{/if}} --}}
 
 
-    <h1 class="section-titles index-para"> {{capName}}</h1>
     <form action="/myprofile" method="POST" role="form" enctype="multipart/form-data">
-    <input type="file" name="updateImage"> Upload Profile Picture 
-    <button class="btn" type="submit"> Save Changes </button>
+        <input type="file" name="updateImage"> Upload Profile Picture
+        <button class="btn" type="submit"> Save Changes </button>
     </form>
 
 
@@ -40,11 +50,11 @@
 
         <h1 class="section-subtitles"> About Information </h1>
 
-        <br> Gender : {{userProfile.userGender}} 
+        <br> Gender : {{userProfile.userGender}}
         <br> City : {{userProfile.userCity}} , {{userProfile.userState}}
         <br> Status : {{userProfile.userStatus}}
         <br> Age : {{userProfile.userAge}}
-       
+
         <br> <button class="btn" onclick="editProfile()"> Edit Info </button>
     </div>
 
@@ -52,23 +62,24 @@
 
         <h1 class="section-subtitles"> Educational Information </h1>
 
-        <br> College : {{userProfile.userClg}} 
-        <br> Branch : {{userProfile.userBranch}} 
+        <br> College : {{userProfile.userClg}}
+        <br> Branch : {{userProfile.userBranch}}
         <br> Course : {{userProfile.userCourse}}
         <br> Interests : {{userProfile.interests}}
-       
+
 
         <br> <button class="btn" onclick="editProfile()"> Edit Info </button>
     </div>
 
     <script>
 
-        function editProfile(){
+        function editProfile() {
 
             alert("Still in development!!!");
         }
     </script>
     {{footer}}
-    
+
 </body>
+
 </html>
