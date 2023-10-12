@@ -318,16 +318,11 @@ router.get("/dashboard", auth, async function (req, res) {
     const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApiKey}`;
 
     const newsResponse = await axios.get(newsApiUrl);
-
     const articleTitles = [];
-
     const apiResponseStatus = newsResponse.data.status;
     console.log(apiResponseStatus);
-
     var responseArray = [];
-
     const totalArticles = newsResponse.data.totalResults;
-
     console.log(newsResponse.data.articles);
 
     res.status(200).render("dashboard", { userName, newsResponse });
@@ -404,7 +399,6 @@ router.post("/courses", auth, async function (req, res) {
                 microsoftCourses.push({ title, image });
                 console.log(microsoftCourses);
             });
-
         }
         catch (error) {
 
@@ -438,13 +432,11 @@ router.post("/internships", auth, async function (req, res) {
 
     let linkedinObj = [];
     let internshalaObj = [];
-
     let extras = [];
 
     // Error Message
 
     let errorMsg;
-
 
     // Internship Sources Object 
 
@@ -575,8 +567,6 @@ router.post("/internships", auth, async function (req, res) {
 
 router.get("intredirect", auth, async function (req, res) {
     console.log(req);
-
-
 })
 
 // New UI Pages. Will be replaced later on
