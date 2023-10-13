@@ -1606,7 +1606,13 @@ router.post('/updateName', auth, async function (req, res) {
 router.get("/index2", async function (req, res) {
 
     res.render("index2");
-})
+});
+
+// Privacy Policy
+
+app.get("/privacypolicy", async function(req,res){
+    res.render("help/privacypolicy");
+});
 
 // Lockedout Page for validaton attempt count
 
@@ -1681,6 +1687,7 @@ app.use(function (err, req, res, next) {
 
     }
 });
+
 
 //  404 error page
 

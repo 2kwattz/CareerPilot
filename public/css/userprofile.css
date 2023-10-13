@@ -33,6 +33,16 @@
     display: inline-block;
 }
 
+.profilePicture h1{
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-top: -20px;
+}
+
+.profilePicture img{
+    border: 3px solid white;
+}
+
 #profile-name{
     display: inline;
     margin-left: 50px;
