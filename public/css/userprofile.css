@@ -29,14 +29,18 @@
 .profilePicture{
     position: relative;
     top: -90px;
-    margin: 30px;
-    display: inline-block;
+    /* margin: 30px; */
+    display: flex;
+    width: fit-content;
+    /* width:100%; */
+
 }
 
-.profilePicture h1{
+.profile-container h1{
     font-size: 1.8rem;
     font-weight: 500;
-    margin-top: -20px;
+    /* margin-top: -20px; */
+    color: rgb(90, 90, 90);
 }
 
 .profilePicture img{
@@ -44,10 +48,39 @@
 }
 
 #profile-name{
-    display: inline;
-    margin-left: 50px;
+    display: inline-block;
+    /* margin-left: 50px; */
     /* margin-top: -30px; */
-    position: relative;
+    /* position: relative;
     top: -50px;
-    left: -30px;
+    left: -30px; */
+}
+
+#edu{
+    display: inline;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.profile-container{
+    display: flex;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.profile-container h1,p{
+    margin-left: 20px;
+}
+
+/* Vertical Line */
+
+.vertical-line {
+    border-left: 1px solid black; /* You can adjust the color and thickness of the line */
+    height: 95px; /* Set the height of the vertical line */
+    margin: 0 10px; /* Optional: You can adjust the margin to position the line */
+    margin-left: 60px;
 }

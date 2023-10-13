@@ -21,13 +21,29 @@
 
     </div>
 
+    <div class="profile-container">
+
+
     <div class="profilePicture">
         <span>
 
         <img src="data:image/jpg;base64,{{profileImageData}}" height="200px" width="250px" alt="Profile Image">
         </span>
-        
+
+    </div>
+        <div class="profile-info">
         <h1 id="profile-name"> {{capName}}</h1>
+        <p id="edu"> {{userProfile.userCity}}</p>
+
+        </div>
+
+        <div class="vertical-line"></div>
+
+        <div class="profile-info">
+        <h1 id="profile-name"> {{userProfile.userClg}}</h1>
+        <p id="edu"> {{userProfile.userCity}}</p>
+
+        </div>
 
     </div>
 
