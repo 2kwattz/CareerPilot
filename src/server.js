@@ -510,18 +510,18 @@ router.post("/internships", auth, async function (req, res) {
                 // Company Logo Rendering
 
                 axios.get(imgSources, { responseType: 'arraybuffer' })
-                .then(response => {
-                    const imageBuffer = Buffer.from(response.data, 'binary');
+                    .then(response => {
+                        const imageBuffer = Buffer.from(response.data, 'binary');
 
-                //Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
-                const base64Image = imageBuffer.toString('base64');
-                const dataURI = `data:image/jpeg;base64,${base64Image}`;
-                internshalaData.push(dataURI);
-         
-                })
-                .catch(error => {
-                    console.error('Failed to fetch image:', error);
-                });
+                        //Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
+                        const base64Image = imageBuffer.toString('base64');
+                        const dataURI = `data:image/jpeg;base64,${base64Image}`;
+                        internshalaData.push(dataURI);
+
+                    })
+                    .catch(error => {
+                        console.error('Failed to fetch image:', error);
+                    });
 
                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend, postStatus });
 
@@ -624,6 +624,8 @@ router.post("/jobs", auth, async function (req, res) {
     const microsoftData = []; // Scrapping Microsoft
     const jobRapidoData = []; // Scrapping Job Rapido
     const bjoData = []; // Scrapping BestJobsOnline Portal
+    const wwr = [];
+    const wwrAbout = [];
 
     // Error Responses
 
@@ -637,7 +639,8 @@ router.post("/jobs", auth, async function (req, res) {
         microsoft: `https://jobs.careers.microsoft.com/global/en/search?q=${jobKeyword}&lc=India&l=en_us&pg=1&pgSz=20&o=Relevance&flt=true`,
         linkedin: `https://www.linkedin.com/jobs/search?keywords=${jobKeyword}&location=${jobLocation}&geoId=102713980&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0`,
         jobRapido: `https://in.jobrapido.com/?w=${jobKeyword}&l=india&r=auto&shm=all`,
-        bestJobsOnline: `https://in.best-jobs-online.com/serp/1/?position=${jobKeyword}&location=${jobLocation}`
+        bestJobsOnline: `https://in.best-jobs-online.com/serp/1/?position=${jobKeyword}&location=${jobLocation}`,
+        wwr: `https://weworkremotely.com/remote-jobs/search?search_uuid=&term=${jobKeyword}&button=&sort=any_time`
     }
 
     // Scrapping LinkedIn
@@ -648,6 +651,9 @@ router.post("/jobs", auth, async function (req, res) {
         const $ = cheerio.load(response.data);
 
         const linkedinInternships = $(".base-card");
+
+        // Scrapping Outer Job Details
+        
         linkedinInternships.each(function () {
             title = $(this).find(".base-search-card__title").text();
             location = $(this).find('.job-search-card__location').text().trim()
@@ -668,25 +674,25 @@ router.post("/jobs", auth, async function (req, res) {
 
     // Scrapping NaukriDotCom
 
-    async function naukriDotCom() {
-        const response = await axios.get(jobSources.naukriDotCom, { headers });
-        // console.log(response.data);
-        const $ = cheerio.load(response.data);
-        console.log("check1");
-        const naukriJobs = $(".jobTupleHeader");
-        naukriJobs.each(function () {
-            title = $(this).find('.title').text().trim();
-            console.log("check2");
-            company = $(this).find('.companyInfo a').text().trim();
-            console.log("check3");
+    // async function naukriDotCom() {
+    //     const response = await axios.get(jobSources.naukriDotCom, { headers });
+    //     // console.log(response.data);
+    //     const $ = cheerio.load(response.data);
+    //     console.log("check1");
+    //     const naukriJobs = $(".jobTupleHeader");
+    //     naukriJobs.each(function () {
+    //         title = $(this).find('.title').text().trim();
+    //         console.log("check2");
+    //         company = $(this).find('.companyInfo a').text().trim();
+    //         console.log("check3");
 
-            naukriDotComJobs.push({ title, company });
-            console.log("check4");
-            // console.log(naukriDotComJobs);
-        })
-    }
+    //         naukriDotComJobs.push({ title, company });
+    //         console.log("check4");
+    //         // console.log(naukriDotComJobs);
+    //     })
+    // }
 
-    await naukriDotCom();
+    // await naukriDotCom();
 
     // Scrapping ZipRecruiter
 
@@ -770,6 +776,8 @@ router.post("/jobs", auth, async function (req, res) {
         const $ = cheerio.load(response.data);
         console.log("check1");
         const jrJobs = $(".result-item");
+
+        // Scrapping Outer Job Details 
         jrJobs.each(function () {
             title = $(this).find('.result-item__title').text().trim();
             company = $(this).find('.result-item__company').text().trim();
@@ -786,28 +794,64 @@ router.post("/jobs", auth, async function (req, res) {
 
     // Scrapping BestJobsOnline Portal
 
-    async function scrapBJO() {
+    // async function scrapBJO() {
 
-        const response = await axios.get(jobSources.bestJobsOnline, { headers });
-        console.log(response.data);
+    //     const response = await axios.get(jobSources.bestJobsOnline, { headers });
+    //     console.log(response.data);
+    //     const $ = cheerio.load(response.data);
+    //     console.log("check1");
+    //     const bjoJobs = $(".my-8");
+    //     bjoJobs.each(function () {
+    //         title = $(this).find('.sm:flex sm:shrink sm:grow-0 sm:flex-col h3').text().trim();
+    //         // company = $(this).find('.result-item__company').text().trim();
+
+    //         bjoData.push({ title });
+
+    //         console.log(bjoJobs);
+    //     });
+    // }
+
+
+    // await scrapBJO()
+
+    async function scrapWwr() {
+        const response = await axios.get(jobSources.wwr, { headers });
+        // console.log(response.data);
         const $ = cheerio.load(response.data);
-        console.log("check1");
-        const bjoJobs = $(".my-8");
-        bjoJobs.each(function () {
-            title = $(this).find('.sm:flex sm:shrink sm:grow-0 sm:flex-col h3').text().trim();
-            // company = $(this).find('.result-item__company').text().trim();
+        console.log("check jn");
+        const wwrJobs = $(".feature");
 
-            bjoData.push({ title });
+        // Scrapping Outer Job Details
+        wwrJobs.each(function () {
+            title = $(this).find('.title').text().trim();
+            company = $(this).find('.company').text().trim();
+            featured = $(this).find('.featured').text().trim();
+            link = $(this).find('.feature a').attr('href').trim();
+            // location = $(this).find('.result-item__location-label').text().trim();
 
-            console.log(bjoJobs);
-        });
+            const redirectLink = `https://weworkremotely.com${link}`;
+            console.log(redirectLink);
+
+            // Scrapping Inner Details of Individual Job Posting such as description 
+
+            async function scrapDetails() {
+                const response = await axios.get(redirectLink, { headers });
+                const $ = cheerio.load(response.data);
+                console.log("Inner function reached\n")
+                global.aboutJob = $('#AboutDesktop').text();
+                console.log(about);
+                wwrAbout.push(global.aboutJob);
+            }
+            
+            scrapDetails();
+            wwr.push({ title, company, featured, link, redirectLink});
+            console.log(wwrAbout);
+        })
     }
 
+    await scrapWwr()
 
-    await scrapBJO()
-
-
-    res.status(200).render("jobs", { linkedinData, jobRapidoData, naukriDotComJobs, errorRender });
+    res.status(200).render("jobs", { linkedinData, wwr, wwrAbout, jobRapidoData, errorRender });
 });
 
 router.get("/hackathons", function (req, res) {
@@ -1342,7 +1386,7 @@ router.post("/forgotpassword", async function (req, res) {
 
 });
 
-router.get("/securityQuestion",auth, async function (req, res) {
+router.get("/securityQuestion", auth, async function (req, res) {
 
     const securityQuestion = await req.user.secQuestion;
 
@@ -1417,7 +1461,7 @@ router.get("/upload", auth, async function (req, res) {
     res.send("Only POST Requests are allowed. Sorry\n")
 })
 
-app.post('/upload',auth, upload.single('updateImage'), async (req, res) => {
+app.post('/upload', auth, upload.single('updateImage'), async (req, res) => {
     // Access the uploaded file using req.file
     const uploadedFile = req.file;
 
@@ -1494,14 +1538,14 @@ router.get("/myprofile", auth, async function (req, res) {
 
 });
 
-router.post("/myprofile",auth,upload.single('updateImage'), async function (req, res) {
+router.post("/myprofile", auth, upload.single('updateImage'), async function (req, res) {
     //    const addProfilePicture =  new registrationData({
     //         profileImage: req.body.profileImage,
     // })
 
     const uploadedFile = req.file;
 
-    
+
     if (!uploadedFile) {
         return res.status(400).send('No file uploaded.');
     }
@@ -1525,8 +1569,8 @@ router.post("/myprofile",auth,upload.single('updateImage'), async function (req,
         console.log(req.file.buffer)
         res.status(500).send(error);
     }
-    
-    
+
+
     // await registrationData.updateOne(
     //     { profileImage: updatedImage },
     //     { $set: { profileImage: updatedImage } })
@@ -1553,7 +1597,7 @@ router.get("/settings", auth, async function (req, res) {
     res.status(200).render("settings");
 })
 
-router.get("/setting",auth, async function(req,res){
+router.get("/setting", auth, async function (req, res) {
     res.status(200).render("settings2");
 })
 
@@ -1610,7 +1654,7 @@ router.get("/index2", async function (req, res) {
 
 // Privacy Policy
 
-app.get("/privacypolicy", async function(req,res){
+app.get("/privacypolicy", async function (req, res) {
     res.render("help/privacypolicy");
 });
 

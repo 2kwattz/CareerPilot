@@ -4,6 +4,7 @@
 <head>
     {{>headerMeta2}}
     <link rel="stylesheet" href="/css/jobs.css">
+    <link rel="stylesheet" href="css/internshipsPage/modalbox.css">
     <title>Jobs : CareerPilot </title>
 </head>
 
@@ -117,7 +118,8 @@
                     {{!-- <span> Start Date : </span><br>
                     <span> Internship Duration : </span><br> --}}
                     <span> Job Posted : {{this.listDate}}</span><br>
-                    <span> Job Location : {{this.location}}</span>
+                    <span> Job Location : {{this.location}}</span><br>
+                    <span> Source : Linkedin </span><br>
                     <button class="btn"> View Details </button>
                     <button class="btn"> Apply </button>
                 </div>
@@ -129,11 +131,28 @@
                 <div class="result-box">
                     <span> Company Name : {{this.company}}</span><br>
                     <span> Job Title : {{this.title}} </span><br>
-                    {{!-- <span> Start Date : </span><br>
-                    <span> Internship Duration : </span><br> --}}
+                    {{!-- <span> Internship Duration : </span><br>  --}}
                     {{!-- <span> Start Date : {{this.listDate}}</span><br> --}}
-                    <span> Job Location : {{this.location}}</span>
-                    <button class="btn"> View </button>
+                    <span> Job Location : {{this.location}}</span><br>
+                    <span> Source : JobRapido </span><br>
+                    <button class="btn"> View Details </button>
+                      <button class="btn"> Apply </button>
+                </div>
+
+                {{/each}}
+
+                 {{#each wwr}}
+
+                <div class="result-box">
+                    <span> Company Name : {{this.company}}</span><br>
+                    <span> Job Title : {{this.title}} </span><br>
+                    <span> Job Location : {{this.location}}</span><br>
+                    <span> Source : WeWorkRemotely </span><br>
+                    
+                    <span> {{this.featured}} </span><br>
+                    {{!-- <span> Start Date : {{this.listDate}}</span><br> --}}
+                    <button class="btn open-modal-btn"> View Details</button>
+                    <button class="btn"> <a href="{{this.redirectLink}}" target="_blank"> Apply </a> </button>
                 </div>
 
                 {{/each}}
@@ -143,6 +162,21 @@
         </div>
     </div>
 
+    <div id="modal" class="modal">
+    <div class="modal-content">
+
+
+        <h3> Job details </h3>
+
+        <a class="btn external-link-btn" href="{{this.redirectLink}}" target="_blank"> View Details </a> 
+        <div id="modal-data">
+        {{#each wwrAbout}}
+            {{this.about}}
+             {{/each}}
+        </div>
+    </div>
+</div>
+ <script src="/js/modals.js"></script>
 
 </body>
 
