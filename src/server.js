@@ -653,7 +653,7 @@ router.post("/jobs", auth, async function (req, res) {
         const linkedinInternships = $(".base-card");
 
         // Scrapping Outer Job Details
-        
+
         linkedinInternships.each(function () {
             title = $(this).find(".base-search-card__title").text();
             location = $(this).find('.job-search-card__location').text().trim()
@@ -839,7 +839,7 @@ router.post("/jobs", auth, async function (req, res) {
                 const $ = cheerio.load(response.data);
                 console.log("Inner function reached\n")
                 global.aboutJob = $('#AboutDesktop').text();
-                console.log(about);
+                console.log(global.aboutJob);
                 wwrAbout.push(global.aboutJob);
             }
             
