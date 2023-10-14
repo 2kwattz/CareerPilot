@@ -71,6 +71,16 @@ Password changing through email added 70%.
 49. Added a popup box for View details section. Yet to fill
 50. Error Middlewares added. for eg a custom error page for specific errors
 51. Logout system for Single Session and All devices functionality added
+52. User Profile Picture functionality added using Multer 
+53. Static cover photo added, UI Improved
+54. Modal Box for Internship and Job Portals for Redirect Link Added
+55. Job Description for WWR Jobs scrapped for Modal Popup Box
+56. Account Settings UI 20% Done
+57. Stripend Based Search for Internship Portal 50% functional
+58. Functionality to update and display User's profile picture added
+59. Static Pages like Sitemap, Privacy policy added
+60. Process of converting Old UI with the New One is ongoing 
+
 
 
 
