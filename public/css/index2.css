@@ -750,6 +750,13 @@ p {
         display: none;
     }
 
+    /* Logout Label */
+
+    #dropdown{
+        display: none;
+    }
+
+
     /* Newsletters Section */
 
     .newsletters {
@@ -770,4 +777,49 @@ p {
 
 }
 
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 768px) {
+
+    /* Navbar Logo */
+
+    .header-left p{
+        display: none;
+    }
+
+    .categories{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .cat-items{
+        width: 80%;
+    }
+
+
+    /* Result Container */
+
+    .result-container{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Filter Section */
+
+    .filters{
+        width: 80%;
+    }
+
+    /* Result Section */
+
+    .results{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+}
