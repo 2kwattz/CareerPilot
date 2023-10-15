@@ -182,7 +182,10 @@
             const filterButton = document.getElementById('salaryFilter');
 
             filterButton.addEventListener('click', function () {
-                const minSalary = parseFloat(minSalaryInput.value);
+                let minSalary = minSalary.slice(2,minSalary.length);
+                minSalary = minSalary.replace(/,/g, '');
+                minSalary = parseFloat(minSalaryInput.value);
+                console.log(minSalary);
                 const maxSalary = parseFloat(maxSalaryInput.value);
 
                 console.log(`Logged Value of Min Salary is ${minSalary}`)
