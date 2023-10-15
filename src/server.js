@@ -374,6 +374,13 @@ router.post("/courses", auth, async function (req, res) {
             title = $(this).find('.productitem--title a').text().trim();
             price = $(this).find('span[class="money"]').text().trim();
             image = $(this).find('productitem--image-primary img').attr('src');
+
+            // Refining Scrapped Data
+
+            // Removing special characters and commas from price text and typecasting it to number
+
+            price = parseInt(price.replace(/[$,]/g, '').trim());
+
             w3Courses.push({ title, price, image });
             courseTitles.push(title);
             // console.log(w3Courses);
@@ -498,6 +505,12 @@ router.post("/internships", auth, async function (req, res) {
                 postStatus = $(this).find('.status-container .ic-16-reschedule').text()
                 // listDate = $(this).find(".job-search-card__listdate").text()
                 // link = $(this).find(".base-card__full-link").text()
+
+                // Refining Processed Data
+
+                // Removing Special Characters, Commas etc for easier filtering purpose
+                
+                stripend = parseInt(stripend.replace(/[₹,]/g, '').trim());
 
                 // View Internship Details
 

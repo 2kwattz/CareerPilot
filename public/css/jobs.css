@@ -19,6 +19,22 @@
   text-align: center;
 }
 
+/* Container Padding */
+
+.container-padding{
+  margin: 20px 20px;
+  text-align: left !important;
+}
+
+.container-padding p{
+  text-align: left !important;
+}
+
+.container-padding h1{
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
 /* Media Queries */
 
 /* Mobile Screen */
