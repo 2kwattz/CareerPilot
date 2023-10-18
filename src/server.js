@@ -542,6 +542,19 @@ router.post("/internships", auth, async function (req, res) {
                 //         console.error('Failed to fetch image:', error);
                 //     });
 
+                // Scrap Innerdetails
+
+                async function scrapDetails() {
+                    const response = await axios.get(redirectLink, { headers });
+                    const $ = cheerio.load(response.data);
+                    console.log("Inner function reached\n")
+                    global.aboutJob = $('#AboutDesktop').text();
+                    console.log(about);
+                    wwrAbout.push(global.aboutJob);
+                }
+    
+                scrapDetails();
+
                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend});
 
                 console.log(internshalaData);
