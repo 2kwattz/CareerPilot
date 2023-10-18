@@ -106,35 +106,42 @@
 
             {{!-- Results --}}
 
-            <div class="results" id="internshipListing">
+            <div class="results">
+                <div id="internshipListing">
 
-                {{#each internshalaData}}
+                    {{#each internshalaData}}
 
-                <div class="result-box internshalaContainer">
-                    <span> Company Name : {{this.title}}</span><br>
-                    <span> Job Title : {{this.jobTitle}} </span><br>
-                    <span class="salary"> Stripend : ₹ <span class="refined-value">{{this.stripend}}</span> / Month </span><br>
-                    <span> Internship Location : {{this.location}}</span><br>
-                    <span> Source : Internshala </span><br>
-                    {{!-- <span> <img src="{{this.dataURI}}"></span> --}}
-                    <button class="btn open-modal-btn"> View Details </button>
-                    <a class="btn" href="{{this.redirectLink}}" target="_blank"> Apply </a>
-                </div>
-                {{/each}}
-
-                {{#each linkedinData}}
-
-                <div class="result-box linkedinContainer">
-                    <span> Company Name : {{this.company}}</span><br>
-                    <span> Job Title : {{this.title}} </span><br>
-                    <span> Start Date : {{this.listDate}}</span><br>
-                    <span> Internship Location : {{this.location}}</span><br>
-                    <span> Source : Linkedin</span><br>
-                    <button class="btn"> View </button>
+                    <div class="result-box internshalaContainer">
+                        <span> Company Name : {{this.title}}</span><br>
+                        <span> Job Title : {{this.jobTitle}} </span><br>
+                        <span class="salary"> Stripend : ₹ <span class="refined-value">{{this.stripend}}</span> / Month
+                        </span><br>
+                        <span> Internship Location : {{this.location}}</span><br>
+                        <span> Source : Internshala </span><br>
+                        {{!-- <span> <img src="{{this.dataURI}}"></span> --}}
+                        <button class="btn open-modal-btn"> View Details </button>
+                        <a class="btn" href="{{this.redirectLink}}" target="_blank"> Apply </a>
+                    </div>
+                    {{/each}}
                 </div>
 
-                {{/each}}
+                <div id="linkedinListing">
 
+
+                    {{#each linkedinData}}
+
+                    <div class="result-box linkedinContainer">
+                        <span> Company Name : {{this.company}}</span><br>
+                        <span> Job Title : {{this.title}} </span><br>
+                        <span> Start Date : {{this.listDate}}</span><br>
+                        <span> Internship Location : {{this.location}}</span><br>
+                        <span> Source : Linkedin</span><br>
+                        <button class="btn"> View </button>
+                    </div>
+
+                    {{/each}}
+
+                </div>
             </div>
 
         </div>
@@ -148,15 +155,13 @@
                 alert("Still Under development!!");
             }
 
-
-
             const errorBox = document.querySelector('.errorNotifications');
             errorBox.style.display = none;
             const dataContainer = document.getElementById('filterData');
 
             function toggleInternshala() {
 
-                const internshalaContainer = document.getElementsByClassName("internshalaContainer")[0];
+                const internshalaContainer = document.getElementById("internshipListing");
                 if (internshalaContainer.style.display !== 'none') {
                     internshalaContainer.style.display = 'none';
                 } else {
@@ -177,41 +182,7 @@
                 }
             }
 
-            const minSalaryInput = document.getElementById('minSalary');
-            const maxSalaryInput = document.getElementById('maxSalary');
-            const filterButton = document.getElementById('salaryFilter');
-
-            filterButton.addEventListener('click', function () {
-                let minSalary = minSalary.slice(2,minSalary.length);
-                minSalary = minSalary.replace(/,/g, '');
-                minSalary = parseFloat(minSalaryInput.value);
-                console.log(minSalary);
-                const maxSalary = parseFloat(maxSalaryInput.value);
-
-                console.log(`Logged Value of Min Salary is ${minSalary}`)
-
-                // Get all result boxes
-                const resultBoxes = document.querySelectorAll('.result-box');
-
-                // Loop through each result box
-                resultBoxes.forEach(function (box) {
-                    // Parse the salary from the box's content
-                    const salaryElement = box.querySelector('.salary');
-                    if (salaryElement) {
-                        const salary = parseFloat(salaryElement.textContent);
-
-                        // Check if salary is within the specified range
-                        if ((!minSalary || salary >= minSalary) && (!maxSalary || salary <= maxSalary)) {
-                            // Show the box if it matches the criteria
-                            box.style.display = 'block';
-                        } else {
-                            // Hide the box if it doesn't match
-                            box.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        </script>
+            </script>
 
         {{!-- Box Modal --}}
 
@@ -220,7 +191,7 @@
 
                 <h3> Internship details </h3>
 
-                
+
 
                 <a class="btn external-link-btn" href="{{this.redirectLink}}" target="_blank"> View Details </a>
                 <div id="modal-data">
@@ -229,7 +200,7 @@
             </div>
         </div>
         <script src="js/modals.js"></script>
-        <script src="js/filters.js"></script>
+        <script src="js/internshipFilters.js"></script>
 </body>
 
 </html>

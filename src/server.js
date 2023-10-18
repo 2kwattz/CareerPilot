@@ -474,6 +474,7 @@ router.post("/internships", auth, async function (req, res) {
                 // Pushing LinkedinData in an Array
 
                 linkedinData.push({ title, location, listDate, company });
+                console.log(linkedinData)
             })
         }
 
@@ -510,7 +511,12 @@ router.post("/internships", auth, async function (req, res) {
 
                 // Removing Special Characters, Commas etc for easier filtering purpose
                 
-                stripend = parseInt(stripend.replace(/[₹,]/g, '').trim());
+                // stripend = parseInt(stripend.replace(/[₹,]/g, '').trim());
+
+                if (stripend && stripend.trim() !== "") {
+                    // Remove special characters and convert to integer
+                    stripend = parseInt(stripend.replace(/[₹,]/g, '').trim());
+                }
 
                 // View Internship Details
 
@@ -522,21 +528,21 @@ router.post("/internships", auth, async function (req, res) {
 
                 // Company Logo Rendering
 
-                axios.get(imgSources, { responseType: 'arraybuffer' })
-                    .then(response => {
-                        const imageBuffer = Buffer.from(response.data, 'binary');
+                // axios.get(imgSources, { responseType: 'arraybuffer' })
+                //     .then(response => {
+                //         const imageBuffer = Buffer.from(response.data, 'binary');
 
-                        //Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
-                        const base64Image = imageBuffer.toString('base64');
-                        const dataURI = `data:image/jpeg;base64,${base64Image}`;
-                        internshalaData.push(dataURI);
+                //         //Converting Image to BASE64 String as Binary image cannot be directly stored in an Array
+                //         const base64Image = imageBuffer.toString('base64');
+                //         const dataURI = `data:image/jpeg;base64,${base64Image}`;
+                //         internshalaData.push(dataURI);
 
-                    })
-                    .catch(error => {
-                        console.error('Failed to fetch image:', error);
-                    });
+                //     })
+                //     .catch(error => {
+                //         console.error('Failed to fetch image:', error);
+                //     });
 
-                internshalaData.push({ title, location, jobTitle, redirectLink, stripend, postStatus });
+                internshalaData.push({ title, location, jobTitle, redirectLink, stripend});
 
                 console.log(internshalaData);
             });
