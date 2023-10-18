@@ -1,3 +1,5 @@
+// Min Max Salary Filter
+
 const filterButton = document.getElementById('salaryFilter');
 
 filterButton.addEventListener('click', function () {
@@ -35,3 +37,7 @@ filterButton.addEventListener('click', function () {
         console.log("Invalid input. Please enter valid numbers for min and max salary.");
     }
 });
+
+// Location Filter
+
+const locationFilter = document.getElementById("intLocationFilter")
