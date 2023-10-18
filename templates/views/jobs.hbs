@@ -94,7 +94,7 @@
                     <h4 class="section-title"> Top Services </h4>
                     <button class="btn" onclick="toggleJobRapido()"> Show/Hide Job Rapido Posting </button> <br>
                     <button class="btn" onclick="togglelinkedin()"> Show/Hide LinkedIn Posting </button> <br>
-                    <button class="btn" onclick="togglelinkedin()"> Show/Hide WWR Posting </button> <br> <br> <br>
+                    <button class="btn" onclick="toggleWwr()"> Show/Hide WWR Posting </button> <br> <br> <br>
 
 
                 </div>
@@ -119,6 +119,8 @@
 
             <div class="results">
 
+                <div id="linkedinListingJobs">
+
                 {{#each linkedinData}}
 
                 <div class="result-box">
@@ -134,7 +136,9 @@
                 </div>
 
                 {{/each}}
+                </div>
 
+                <div id="jobRapidoListing">
                 {{#each jobRapidoData}}
 
                 <div class="result-box">
@@ -149,6 +153,10 @@
                 </div>
 
                 {{/each}}
+
+                </div>
+
+
 
                  {{#each wwr}}
 
@@ -185,6 +193,44 @@
         </div>
     </div>
 </div>
+
+ <script>
+
+            function popupOpen() {
+
+                alert("Still Under development!!");
+            }
+
+            const errorBox = document.querySelector('.errorNotifications');
+            errorBox.style.display = none;
+            const dataContainer = document.getElementById('filterData');
+
+            function toggleJobRapido() {
+
+                const jrContainer = document.getElementById("jobRapidoListing");
+                if (jrContainer.style.display !== 'none') {
+                    jrContainer.style.display = 'none';
+                } else {
+                    jrContainer.style.display = 'block';
+                }
+            }
+
+            function togglelinkedin() {
+
+                const linkedinContainer = document.getElementById("linkedinListingJobs");
+                console.log("Inside Linkedin Filter Function")
+                if (linkedinContainer.style.display !== 'none') {
+                    console.log("Inside If Block Filter")
+                    linkedinContainer.style.display = 'none';
+                } else {
+                    linkedinContainer.style.display = 'block';
+                    console.log("Inside else Block Filter")
+                }
+            }
+
+            </script>
+
+
  <script src="/js/modals.js"></script>
 
 </body>
