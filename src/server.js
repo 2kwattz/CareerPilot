@@ -261,9 +261,6 @@ const scholarshipWebsites = [
 
 console.log(`Verifying SECRET_KEY functionality by simply pasting it here... ${process.env.SECRET_KEY}\n`);
 
-
-
-
 // Routes
 
 // Index Home Page
@@ -434,6 +431,7 @@ router.post("/internships", auth, async function (req, res) {
     const linkedinData = [];
     const internshalaData = [];
     let internshalaDataExp = [];
+    let wwrAbout = [];
 
     // Predefined Internshala and Linkedin Objects for rendering
 
@@ -474,7 +472,7 @@ router.post("/internships", auth, async function (req, res) {
                 // Pushing LinkedinData in an Array
 
                 linkedinData.push({ title, location, listDate, company });
-                console.log(linkedinData)
+             
             })
         }
 
@@ -524,7 +522,7 @@ router.post("/internships", auth, async function (req, res) {
                 // Getting Company's Logo
 
                 const imgSources = `https://www.internshala.com/${companyLogo}`;
-                console.log(imgSources)
+                // console.log(imgSources)
 
                 // Company Logo Rendering
 
@@ -544,20 +542,28 @@ router.post("/internships", auth, async function (req, res) {
 
                 // Scrap Innerdetails
 
-                async function scrapDetails() {
-                    const response = await axios.get(redirectLink, { headers });
-                    const $ = cheerio.load(response.data);
-                    console.log("Inner function reached\n")
-                    global.aboutJob = $('#AboutDesktop').text();
-                    console.log(about);
-                    wwrAbout.push(global.aboutJob);
-                }
-    
-                scrapDetails();
+                
+                
+            //     try {
+            //     async function scrapDetails() {
+            //         const response = await axios.get(redirectLink, { headers });
+            //         const $ = cheerio.load(response.data);
+            //         console.log("Inner function reached\n")
+            //         const aboutJob = $('#AboutDesktop').text();
+            //         console.log(aboutJob);
+            //         wwrAbout.push(aboutJob);
+            //     }
+                
+            //     scrapDetails();
+            // } catch (innerError) {
+            //     console.log(innerError)
+            // }
 
                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend});
 
-                console.log(internshalaData);
+                // console.log(internshalaData);
+
+                // console.log(wwrAbout)
             });
         }
 
@@ -866,18 +872,24 @@ router.post("/jobs", auth, async function (req, res) {
 
             // Scrapping Inner Details of Individual Job Posting such as description 
 
-            async function scrapDetails() {
-                const response = await axios.get(redirectLink, { headers });
-                const $ = cheerio.load(response.data);
-                console.log("Inner function reached\n")
-                global.aboutJob = $('#AboutDesktop').text();
-                console.log(global.aboutJob);
-                wwrAbout.push(global.aboutJob);
+            try{
+                
+                async function scrapDetails() {
+                     const response = await axios.get(redirectLink, { headers });
+                     const $ = cheerio.load(response.data);
+                     console.log("Inner function reached\n")
+                     global.aboutJob = $('#AboutDesktop').text();
+                     console.log(global.aboutJob);
+                     wwr.push(global.aboutJob);
+                 }
+                 scrapDetails();
+            } catch(error){
+                console.log(error);
             }
             
-            scrapDetails();
+            
             wwr.push({ title, company, featured, link, redirectLink});
-            console.log(wwrAbout);
+            console.log(wwr);
         })
     }
 
