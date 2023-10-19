@@ -54,10 +54,7 @@
            <span> <div class="profile-items"> <img src="/img/vectors/city.svg" height="25px" width="25px"> City : {{userProfile.userCity}} , {{userProfile.userState}} , {{userProfile.userCountry}} </div> </span><br>
            <span> <div class="profile-items"> <img src="/img/vectors/age.svg" height="25px" width="25px"> Age : {{userProfile.userAge}} </div> </span><br>
            <span> <div class="profile-items"> <img src="/img/vectors/gender.svg" height="25px" width="25px"> Email : {{userProfile.userEmail}} </div> </span><br>
-            <br>
-            <br> 
-            <br> 
-
+     
         </div>
 
         <div class="profile-info">
@@ -101,11 +98,20 @@
     <!-- Content to display if user does not have a profile picture -->
     {{!-- {{/if}} --}}
 
+    {{!-- Grey-bg-container for center aligning purpose --}}
+
+    <div class="grey-bg-container">
+
+    <div class="grey-background">
 
     <form action="/myprofile" method="POST" role="form" enctype="multipart/form-data">
         <input type="file" name="updateImage"> Upload Profile Picture
         <button class="btn" type="submit"> Save Changes </button>
     </form>
+
+    </div>
+
+    </div>
 
     <script>
 
@@ -114,7 +120,7 @@
             alert("Still in development!!!");
         }
     </script>
-    {{footer}}
+    {{>footer2}}
 
 </body>
 

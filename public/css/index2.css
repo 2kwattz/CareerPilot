@@ -264,7 +264,7 @@ header a:hover {
     /* height: 100vh; */
 }
 
-.generalized-hero{
+.generalized-hero {
     background-color: rgba(99, 63, 199, 0.7);
     background-blend-mode: multiply;
     background-image: url('/img/g-cover.jpg');
@@ -305,7 +305,7 @@ header a:hover {
     /* height: 100vh; */
 }
 
-.form-g{
+.form-g {
     padding: 1.5rem;
 }
 
@@ -617,7 +617,7 @@ p {
 
 /* Success Container (When user creates new account  */
 
-.success-container{
+.success-container {
 
     display: flex;
     flex-direction: column;
@@ -626,10 +626,33 @@ p {
     align-items: center;
 }
 
-.success-container h1,p{
-padding: 1rem;
+.success-container h1,
+p {
+    padding: 1rem;
 }
 
+/* Grey Background */
+
+.grey-background {
+    background-color: rgb(243, 243, 243);
+    padding: 50px;
+    width: 60%;
+}
+
+.grey-background input[type="file"] {
+
+    background-color: rgb(243, 243, 243);
+}
+
+.grey-bg-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0px;
+    margin-top: 60px;
+}
 
 
 /* Result Box */
@@ -666,7 +689,7 @@ padding: 1rem;
 
 /* Loading bar */
 
-#loading-bar{
+#loading-bar {
     display: none;
 }
 
@@ -778,7 +801,7 @@ padding: 1rem;
 
     /* Logout Label */
 
-    #dropdown{
+    #dropdown {
         display: none;
     }
 
@@ -807,24 +830,24 @@ padding: 1rem;
 
     /* Navbar Logo */
 
-    .header-left p{
+    .header-left p {
         display: none;
     }
 
-    .categories{
+    .categories {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
     }
 
-    .cat-items{
+    .cat-items {
         width: 80%;
     }
 
 
     /* Result Container */
 
-    .result-container{
+    .result-container {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
@@ -834,13 +857,13 @@ padding: 1rem;
 
     /* Filter Section */
 
-    .filters{
+    .filters {
         width: 80%;
     }
 
     /* Result Section */
 
-    .results{
+    .results {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
