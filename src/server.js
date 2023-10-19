@@ -958,19 +958,25 @@ router.post("/scholarships", async function (req, res) {
         const $ = cheerio.load(response.data);
         const scholarshipContainers = $(".resume-item");
 
+        
+        
         scholarshipContainers.each(function () {
-
+            
             title = $(this).find(".right h3").text().trim();
             location = $(this).find('.skills').children().first().text().trim();
             validity = $(this).find('small').text().trim();
             description = $(this).find(".right p").children().eq(3).text().trim();
+            redirectLink = $(this).find("")
+            redirectDomain = scholarshipSources.scholarshipForme;
             // company = $(this).find(".base-search-card__subtitle").text()
-            sFormeData.push({ title, location, description, validity });
+            sFormeData.push({ title, location, description, validity, redirectDomain });
         })
+
+        redirectDomain = scholarshipSources.scholarshipForme;
 
         // console.log(sFormeData);
         console.log(scholarshipSources.scholarshipForme);
-        res.status(200).render("scholarships", { sFormeData });
+        res.status(200).render("scholarships", { sFormeData});
 
     }
 

@@ -1,0 +1,20 @@
+/* Scholarships Hero Cover */
+
+.scholarship-hero{
+
+    background-color:gray;
+    background-blend-mode: multiply;
+    background-image: url('/img/scholarship/cover.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position: fixed;
+
+    color: white;
+    text-align: center;
+    padding: 3.5em 1em;
+}
+
+.results a{
+    text-decoration: none;
+}
