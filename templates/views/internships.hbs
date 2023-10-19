@@ -73,7 +73,6 @@
 
                 <h1 class="section-subtitles"> Internshala Internships </h1>
 
-
                 {{#each internshalaData}}
 
                 <div class="internshipContainer">
@@ -88,8 +87,6 @@
                     <a class="btn" href="{{this.redirectLink}}" target="_blank"> Apply </a>
                 </div>
                 {{/each}}
-
-
 
             </div>
 
@@ -112,7 +109,6 @@
 
                 {{/each}}
 
-
             </div>
 
             <div class="topMNCsContainer">
@@ -120,11 +116,7 @@
 
             </div>
 
-
         </div>
-
-
-
     </div>
 
     {{!-- Box Modal --}}
@@ -141,6 +133,7 @@
     </div>
 </div>
 
+ {{>footer2}}
 
     <script src="/js/modals.js"></script>
 
@@ -150,8 +143,6 @@
 
             alert("Still Under development!!");
         }
-
-     
 
         const errorBox = document.querySelector('.errorNotifications');
         errorBox.style.display = none;
@@ -178,6 +169,8 @@
         }
 
     </script>
+
+   
 
 </body>
 

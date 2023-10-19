@@ -23,7 +23,7 @@
             <div class="job-search">
                 <form class="form-control" action="/jobs" method="POST">
                     <input type="text" name="jobKeyword" id="jobLocation" placeholder="Looking for? ">
-                    <input type="text" placeholder="Enter Job Location" name="jobLocation" id="jobLocation">
+                    {{!-- <input type="text" placeholder="Enter Job Location" name="jobLocation" id="jobLocation"> --}}
                     <button class="btn" type="submit"> Search Jobs </button>
                     <button class="btn" onfocus="this.value='' "> Clear </button>
                 </form>
@@ -230,6 +230,8 @@
 
             </script>
 
+
+ {{>footer2}}
 
  <script src="/js/modals.js"></script>
 

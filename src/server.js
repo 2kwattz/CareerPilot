@@ -1095,7 +1095,7 @@ app.get("/services", function (req, res) {
 // Login and registration
 
 app.get('/loginPage', function (req, res) {
-    res.render("loginPage");
+    res.render("login2");
 });
 
 app.post('/login', async function (req, res) {
@@ -1132,7 +1132,7 @@ app.post('/login', async function (req, res) {
         }
 
         else {
-            res.status(201).render("loginPage", { errorMsg });
+            res.status(201).render("login2", { errorMsg });
         }
     }
 
@@ -1309,7 +1309,7 @@ router.get("/logout", auth, async function (req, res) {
         await req.user.save();
 
         //  Rendering Login Page
-        res.render("loginPage")
+        res.render("login2")
     }
     catch (error) {
         res.send(error);
@@ -1329,7 +1329,7 @@ router.get("/logoutAll", auth, async function (req, res) {
 
         const logoutMessage = ` You have been Logged Out from all devices`;
         //  Rendering Login Page
-        res.render("loginPage", { logoutMessage });
+        res.render("login2", { logoutMessage });
 
     }
     catch (error) {
@@ -1385,13 +1385,13 @@ router.post("/resetpassword", auth, async function (req, res) {
 
         if (updateResult.nModified > 0) {
             console.log('Password reset successful');
-            res.redirect('/loginPage'); // Redirect to the login page or any other appropriate page
+            res.redirect('/login2'); // Redirect to the login page or any other appropriate page
         }
         else {
             const message = "Password has been changed successfully!!";
             console.log('User not found');
             // res.status(404).send('User not found');
-            res.render("loginPage", { message });
+            res.render("login2", { message });
         }
     }
 

@@ -35,10 +35,10 @@ const auth = async function(req,res, next){
 
         if(loginErrorIfAny.errorName == `JsonWebTokenError`){
 
-            loginErrorIfAny = `You must log in first\n`;
+            loginErrorIfAny = `You must log in first\n\n`;
         }
       
-        res.status(401).render("loginPage", {loginErrorIfAny});
+        res.status(401).render("login2", {loginErrorIfAny});
     }
 }
 
