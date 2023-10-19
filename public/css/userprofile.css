@@ -95,3 +95,40 @@
 }
 
 /* Profile Sections */
+
+.profile-container{
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+.profile-info{
+    width: 35%;
+    padding: 10px;
+    margin: 5px 0px;
+}
+
+.profile-info span{
+    width: fit-content;
+    display: inline-block;
+}
+
+.profile-info img{
+    width: fit-content;
+    display: inline;
+    padding: 3px;
+    margin: 5px;
+
+}
+
+
+/* Profile Img Vectors */
+
+.profile-items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}

@@ -1546,6 +1546,7 @@ router.get("/myprofile", auth, async function (req, res) {
         username: req.user.fullName,
         userCity: req.user.city.slice(0,1).toUpperCase() + req.user.city.slice(1,req.user.city.length).toLowerCase(),
         userState: req.user.state,
+        userCountry: req.user.country,
         userGender: req.user.gender,
         userStatus: req.user.currentStatus,
         userInterests: req.user.interests,
@@ -1553,7 +1554,8 @@ router.get("/myprofile", auth, async function (req, res) {
         userAge: req.user.age,
         userBranch: req.user.collegeBranch,
         userCourse: req.user.collegeCourse,
-        userAvatar: req.user.profileImage
+        userAvatar: req.user.profileImage,
+        userEmail : req.user.email
     }
 
     const capName = userProfile.username.slice(0, 1).toUpperCase() + userProfile.username.slice(1, userProfile.username.length).toLowerCase();
