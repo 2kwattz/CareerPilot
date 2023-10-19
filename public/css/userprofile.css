@@ -123,6 +123,10 @@
 
 }
 
+.profile-info p{
+    text-align: left;
+}
+
 
 /* Profile Img Vectors */
 
@@ -131,4 +135,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+}
+
+/* Hr Tag */
+
+.profile-info hr{
+    background-color: var(--clr-primary);
+    height: 2.5px;
+    width: 150px;
+    margin-bottom: 15px;
 }

@@ -17,7 +17,7 @@
     <!-- Content to display if user has a profile picture -->
 
     <div class="profile-cover-img">
-        
+        {{!-- <img src="img/profile/cover.jpg" alt="Cover Photo"> --}}
 
     </div>
 
@@ -49,11 +49,11 @@
 
     <div class="profile-info-container">
         <div class="profile-info">
-            <h1 id="profile-name"> Personal Information </h1>
+            <h1 id="profile-name"> Personal Information </h1><hr>
            <span> <div class="profile-items"> <img src="/img/vectors/env-email.svg" height="25px" width="25px"> Gender : {{userProfile.userGender}} </div> </span><br>
-           <span> <div class="profile-items"> <img src="/img/vectors/env-email.svg" height="25px" width="25px"> City : {{userProfile.userCity}} , {{userProfile.userState}} , {{userProfile.userCountry}} </div> </span><br>
-           <span> <div class="profile-items"> <img src="/img/vectors/env-email.svg" height="25px" width="25px"> Age : {{userProfile.userAge}} </div> </span><br>
-           <span> <div class="profile-items"> <img src="/img/vectors/env-email.svg" height="25px" width="25px"> Email : {{userProfile.userEmail}} </div> </span><br>
+           <span> <div class="profile-items"> <img src="/img/vectors/city.svg" height="25px" width="25px"> City : {{userProfile.userCity}} , {{userProfile.userState}} , {{userProfile.userCountry}} </div> </span><br>
+           <span> <div class="profile-items"> <img src="/img/vectors/age.svg" height="25px" width="25px"> Age : {{userProfile.userAge}} </div> </span><br>
+           <span> <div class="profile-items"> <img src="/img/vectors/gender.svg" height="25px" width="25px"> Email : {{userProfile.userEmail}} </div> </span><br>
             <br>
             <br> 
             <br> 
@@ -61,7 +61,8 @@
         </div>
 
         <div class="profile-info">
-            <h1 id="profile-name"> Educational Information </h1>
+            <h1 id="profile-name"> Educational Information </h1><hr>
+            <span> <div class="profile-items"> <img src="/img/vectors/clg.svg" height="25px" width="25px"> College : {{userProfile.userClg}} </div> </span><br>
             <br> College : {{userProfile.userClg}}
             <br> Branch : {{userProfile.userBranch}}
             <br> Course : {{userProfile.userCourse}}
