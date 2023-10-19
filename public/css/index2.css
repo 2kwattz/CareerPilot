@@ -615,6 +615,22 @@ p {
     text-align: center;
 }
 
+/* Success Container (When user creates new account  */
+
+.success-container{
+
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.success-container h1,p{
+padding: 1rem;
+}
+
+
 
 /* Result Box */
 

@@ -652,6 +652,18 @@ h3 {
     padding: 10px 10px;
 }
 
+/* Success Container (When user creates new account  */
+
+.success-container{
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /*  MEDIA QUERIES AND RESPONSIVENESS STUFF*/
 
 

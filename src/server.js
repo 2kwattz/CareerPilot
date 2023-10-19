@@ -1196,7 +1196,7 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
                 // verified: false  // Added recently for UV
             });
 
-            console.log(registerUser);
+            // console.log(registerUser);
 
             // JWT Token middleware
 
@@ -1220,8 +1220,8 @@ router.post('/registration', upload.single('updateImage'), async function (req, 
             //     res.status(201).render("index");
             // }
 
-            const userName = req.user.fullName.toUpperCase();
-            res.status(201).redirect(`/accountcreation?userName=${userName}`);
+            // const userName = req.user.fullName.toUpperCase();
+            res.status(201).redirect("accountcreation");
 
             // res.status(201).redirect("accountcreation", { userName });
         }
@@ -1544,7 +1544,7 @@ router.get("/myprofile", auth, async function (req, res) {
 
     const userProfile = {
         username: req.user.fullName,
-        userCity: req.user.city,
+        userCity: req.user.city.slice(0,1).toUpperCase() + req.user.city.slice(1,req.user.city.length).toLowerCase(),
         userState: req.user.state,
         userGender: req.user.gender,
         userStatus: req.user.currentStatus,
@@ -1637,9 +1637,25 @@ router.post("/myprofile", auth, upload.single('updateImage'), async function (re
 });
 
 
-router.get("/success", async function (req, res) {
-    const userName = await req.user.fullName.toUpperCase();
-    res.status(200).render("accountcreation", { userName })
+router.get("/success",auth, async function (req, res) {
+
+    const userProfile = {
+        username: req.user.fullName.slice(0,1).toUpperCase() + req.user.fullName.slice(1,req.user.fullName.length).toLowerCase(),
+        userCity: req.user.city,
+        userState: req.user.state,
+        userGender: req.user.gender,
+        userStatus: req.user.currentStatus,
+        userInterests: req.user.interests,
+        userClg: req.user.collegeName,
+        userAge: req.user.age,
+        userBranch: req.user.collegeBranch,
+        userCourse: req.user.collegeCourse,
+        userAvatar: req.user.profileImage
+    }
+
+    
+
+    res.status(200).render("accountcreation", { userProfile })
 })
 
 router.get("/settings", auth, async function (req, res) {

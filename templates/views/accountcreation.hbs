@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{>headerMeta}}
+    {{>headerMeta2}}
     <title> Welcome to CareerPilot </title>
 </head>
 <body>
 
-    {{header}}
+    {{header2}}
 
-    <div class="section-grey">
+    <center>
 
-        <h1 class="section-titles"> Welcome to CarrerPilot, {{userName}} </h1>
-        <p class="index-para"> Now what to do? </p>
+    <div class="success-container">
+
+        <h1 class="section-title"> Welcome to CarrerPilot, {{userProfile.username}} </h1>
+        <p class="para"> Now what to do? </p>
         <button class="btn"> <a href="/dashboard"> Visit Dashboard </a></button>
     </div>
+
+    </center>
+
     
 </body>
 </html>
