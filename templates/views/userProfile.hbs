@@ -24,24 +24,24 @@
     <div class="profile-container">
 
 
-    <div class="profilePicture">
-        <span>
+        <div class="profilePicture">
+            <span>
 
-        <img src="data:image/jpg;base64,{{profileImageData}}" height="200px" width="250px" alt="Profile Image">
-        </span>
+                <img src="data:image/jpg;base64,{{profileImageData}}" height="200px" width="250px" alt="Profile Image">
+            </span>
 
-    </div>
+        </div>
         <div class="profile-info">
-        <h1 id="profile-name"> {{capName}}</h1>
-        <p id="edu"> {{userProfile.userCity}}</p>
+            <h1 id="profile-name"> {{capName}}</h1>
+            <p id="edu"> {{userProfile.userCity}}</p>
 
         </div>
 
         <div class="vertical-line"></div>
 
         <div class="profile-info">
-        <h1 id="profile-name"> {{userProfile.userClg}}</h1>
-        <p id="edu"> {{userProfile.userCity}}</p>
+            <h1 id="profile-name"> {{userProfile.userClg}}</h1>
+            <p id="edu"> {{userProfile.userCity}}</p>
 
         </div>
 
@@ -49,26 +49,47 @@
 
     <div class="profile-info-container">
         <div class="profile-info">
-        <h1 id="profile-name"> Personal Information </h1>
-        <p id="edu"> {{userProfile.userCity}}</p>
+            <h1 id="profile-name"> Personal Information </h1>
+            <br> Gender : {{userProfile.userGender}}
+            <br> City : {{userProfile.userCity}} , {{userProfile.userState}}
+            <br> Status : {{userProfile.userStatus}}
+            <br> Age : {{userProfile.userAge}}
 
         </div>
 
         <div class="profile-info">
-        <h1 id="profile-name"> Educational Information </h1>
-        <p id="edu"> {{userProfile.userCity}}</p>
+            <h1 id="profile-name"> Educational Information </h1>
+            <br> College : {{userProfile.userClg}}
+            <br> Branch : {{userProfile.userBranch}}
+            <br> Course : {{userProfile.userCourse}}
+            <br> Interests : {{userProfile.interests}}
+
 
         </div>
 
         <div class="profile-info">
-        <h1 id="profile-name"> Skills / Interests </h1>
-        <p id="edu"> {{userProfile.userCity}}</p>
+            <h1 id="profile-name"> Skills / Interests </h1>
+            <br>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JAVASCRIPT</li>
+                <li> NodeJs </li>
+              
+            </ul>
 
         </div>
 
         <div class="profile-info">
-        <h1 id="profile-name"> Certifications </h1>
-        <p id="edu"> {{userProfile.userCity}}</p>
+            <h1 id="profile-name"> Certifications </h1><br>
+             <ul>
+                <li>SoloLearn : Master HTML in 2 Weeks </li>
+                <li>Microsoft Azure : Cloud Computing </li>
+                <li>Infosys : Full Stack Web Development By Mukesh</li>
+                <li> Udemy :  NodeJs Certified Developer </li>
+              
+            </ul>
+         
 
         </div>
     </div>
