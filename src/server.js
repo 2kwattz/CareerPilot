@@ -628,16 +628,13 @@ router.get("/login2", async function (req, res) {
     res.status(200).render("login2");
 })
 
+// Sample page to show the internal server error 
+
 router.get("/test", async function (req, res) {
 
-    res.status(200).render("test");
+    res.status(200).render("test67");
 
 })
-
-router.get("/grants", function (req, res) {
-    console.log(req);
-    res.status(200).render("grants");
-});
 
 // Current Jobs Page
 
@@ -1439,10 +1436,6 @@ router.post("/forgotpassword", async function (req, res) {
 router.get("/securityQuestion", auth, async function (req, res) {
 
     const securityQuestion = await req.user.secQuestion;
-
-    // Test for secQuestion in db
-    console.log(securityQuestion);
-
     res.render("securityQuestion", { securityQuestion });
 });
 
