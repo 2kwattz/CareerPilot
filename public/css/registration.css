@@ -5,6 +5,12 @@
     height: 100vh;
 }
 
+/* Form Alignment */
+
+.reg-img-right{
+    margin-left: 250px !important;
+}
+
 /* Registration dividers */
 
 #part2{
@@ -16,5 +22,5 @@
 }
 
 footer{
- 
+    
 }

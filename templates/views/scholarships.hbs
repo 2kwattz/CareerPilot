@@ -25,7 +25,7 @@
 
             <form method="POST" action="/scholarships">
 
-                <h2 class="section-titles"> India's No. #1 Scholarship Search Engine </h2>
+                <h2 class="section-title" style="color: black: !important;"> India's No. #1 Scholarship Search Engine </h2>
            
                 <br>
                 <label for="education"> Your Goal/Education </label>
@@ -71,15 +71,25 @@
     <div class="section">
         <div class="filters">
 
-            <h1 class="section-subtitles"> Filters</h1>
+
+            <h1 class="section-title"> Filters</h1>
+
+            <div class="filter-cat">
 
             <h4> Sort by </h4>
 
             <button class="btn" id="ascendingButton" onclick="sortData('asc')">Sort Ascending</button>
             <button class="btn" id="descendingButton" onclick="sortData('desc')">Sort Descending</button>
+            </div>
 
-            <br><br> <label> Hide/Show Scholarship Forme </label> <input type="checkbox" name="internshalaToggle"
-                onchange="toggleInternshala()">
+
+            <div class="filter-cat">
+                    <h4 class="section-title"> Top Services </h4>
+                    <button class="btn" onclick="toggleInternshala()"> Show/Hide W3Schools Posting </button> <br>
+                    <button class="btn" onclick="togglelinkedin()"> Show/Hide Other Posting </button> <br> <br>
+                </div>
+
+            
             {{!-- <br> <label> Hide/Show Linkedin </label> <input type="checkbox" name="internshalaToggle"
                 onchange="toggleLinkedin()">
             <br> <label> Only Show Top Companies </label> <input type="checkbox" name="internshalaToggle"
