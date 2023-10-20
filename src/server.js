@@ -150,7 +150,7 @@ app.use((req, res, next) => {
         }
     }
     next(); // Move this line after the verification logic
-    console.log("Middleware executed");
+    // console.log("Middleware executed");
 });
 
 

@@ -47,6 +47,7 @@
 
     </div>
 
+
     <div class="profile-info-container">
         <div class="profile-info">
             <h1 id="profile-name"> Personal Information </h1><hr>
@@ -62,7 +63,8 @@
             <span> <div class="profile-items"> <img src="/img/vectors/clg.svg" height="25px" width="25px"> College : {{userProfile.userClg}} </div> </span><br>
             <span> <div class="profile-items"> <img src="/img/vectors/branch.svg" height="25px" width="25px"> Branch : {{userProfile.userBranch}} </div> </span><br>
             <span> <div class="profile-items"> <img src="/img/vectors/course.svg" height="25px" width="25px"> Course : {{userProfile.userCourse}} </div> </span><br>
-               <span> <div class="profile-items"> <img src="/img/vectors/code-b.svg" height="25px" width="25px"> Interests : Full Stack Web Development </div> </span><br>
+            <span> <div class="profile-items"> <img src="/img/vectors/code-b.svg" height="25px" width="25px"> Interests : Full Stack Web Development </div> </span><br>
+
 
 
         </div>
@@ -105,7 +107,7 @@
     <div class="grey-background">
 
     <form action="/myprofile" method="POST" class="pfp-control" role="form" enctype="multipart/form-data">
-        <input type="file" name="updateImage"><p>Upload Profile Picture</p> 
+        <input type="file" name="updateImage">Upload Profile Picture
         <button class="btn" type="submit"> Save Changes </button>
     </form>
 

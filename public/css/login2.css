@@ -11,8 +11,6 @@
     width: 40% !important;;
     margin:0px;
     text-align: center;
-    
-   
 }
 
 .inner-container{
@@ -20,4 +18,14 @@
     display: flex;
     justify-content: baseline;
     align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+
+    /* Styles for mobile phones */
+
+    .inner-container{
+        display: flex;
+        flex-direction: column;
+    }
 }

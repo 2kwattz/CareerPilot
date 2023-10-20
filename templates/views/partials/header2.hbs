@@ -40,6 +40,7 @@
     </div>
 
     {{/if}}
+
 </header>
 
 <script>
@@ -48,10 +49,13 @@
 
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".navbar-links");
+    const loginElement = document.querySelector(".header-right");
 
     hamburger.addEventListener("click", function () {
         hamburger.classList.toggle("active");
         navMenu.classList.toggle("active");
+        navMenu.appendChild(loginElement);
+     
 
     })
 
