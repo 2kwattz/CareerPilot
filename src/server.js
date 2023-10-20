@@ -561,9 +561,6 @@ router.post("/internships", auth, async function (req, res) {
 
                 internshalaData.push({ title, location, jobTitle, redirectLink, stripend});
 
-                // console.log(internshalaData);
-
-                // console.log(wwrAbout)
             });
         }
 

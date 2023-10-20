@@ -145,3 +145,45 @@
     width: 150px;
     margin-bottom: 15px;
 }
+
+/* Media Queries */
+
+@media screen and (max-width: 479px) {
+
+    input[type="file"]{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .profilePicture{
+        margin:auto;
+        width: 100%;
+        display: block;
+        z-index: 8;
+    }
+
+    .profile-info{
+        width: 80%;
+    }
+
+    .profile-info h1{
+        font-size: 2.5rem;
+    }
+
+    .profile-info p{
+        font-size: 1.6rem;
+    }
+
+    .vertical-line{
+        display: none;
+    }
+
+    /* Profile Info Container */
+
+    .profile-info-container{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+}

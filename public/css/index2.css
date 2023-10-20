@@ -85,11 +85,13 @@ button a {
 input {
     background-color: white;
     border-radius: 12px;
+    /* border-bottom: 3px solid var(--clr-primary); */
     border: 0px transparent;
     color: black;
     margin: 8px;
     padding: 0.5rem;
 }
+
 
 /* Variables */
 
