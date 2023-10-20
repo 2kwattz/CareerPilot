@@ -4,27 +4,28 @@
     width: 40%;
 }
 
-.reg-left{
+.reg-left::before {
 
+    content: "";
     /* background: linear-gradient(to bottom, #ff0000, #00ff00); */
     background-image: url('/img/regcover.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     height:100%;
     width: 40%;
-    background-color: var(--clr-primary);
-    background-blend-mode: multiply;
+    position: absolute;
+    left: 0;
     z-index: 1;
 
 }
 
-/* .gradient-overlay {
+.gradient-overlay {
     position: absolute;
     left: 0;
     width: 40%;
     height: 100%;
     background: linear-gradient(to bottom, rgb(52, 152, 219, 0.8), rgb(30, 46, 58, 0.5));
-    opacity: 70%; 
+    /* opacity: 70%; */
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -32,7 +33,7 @@
     align-items: center;
     z-index: 2;
 }
- */
+
 
 .reg-left h1 {
 
@@ -42,6 +43,7 @@
     font-weight: 800;
     text-align: center;
     width: 70%;
+
 }
 
 .reg-left h2 {
@@ -58,6 +60,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .reg-img-right {
@@ -86,7 +89,9 @@
     .reg-left::before {
 
         width: 100%;
-    };
+    }
+
+    ;
 
     .reg-left {
         width: 100%;
@@ -95,10 +100,10 @@
 
     .gradient-overlay {
 
-        /* position: absolute;
+        position: absolute;
         left: 0;
         top: 20;
-        width: 100%; */
+        width: 100%;
     }
 
     .reg-img-right {
@@ -107,6 +112,7 @@
         /* position: relative; */
         /* bottom: 0; */
         /* right:0; */
+
     }
 
 
