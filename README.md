@@ -13,7 +13,8 @@ Features of CareerPilot
 from different sources on a single platform
 3. Get different types of course recommendations and suggestions related to your stream
 4. Implementaion of CareerAdvice AI Chatbot to solve all of your queries
-5. Search for Internships, Jobs, Certification courses, Scholarships from various different sources on a single platform with advanced filters 
+5. Search for Internships, Jobs, Certification courses, Scholarships from various different sources on a single platform with advanced filters
+6. Planning to add chat messaging functionalities soon
 
 
 Technical Specifications
