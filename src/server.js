@@ -640,7 +640,7 @@ router.get("/jobs", function (req, res) {
     res.status(200).render("jobs");
 });
 
-router.post("/jobs", auth, async function (req, res) {
+router.post("/jobs", async function (req, res) {
 
     // Form data taken from User
 
