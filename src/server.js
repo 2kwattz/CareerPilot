@@ -420,7 +420,7 @@ router.get("/internships", function (req, res) {
     res.status(200).render("internships2");
 });
 
-router.post("/internships", auth, async function (req, res) {
+router.post("/internships", async function (req, res) {
 
     let internshipKeyword = req.body.internshipKeyword;
     const jobLocation = req.body.location;
