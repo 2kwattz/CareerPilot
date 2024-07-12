@@ -1,5 +1,4 @@
 # CareerPilot
-
 #### Author :  Roshan Bhatia 
 #### Instagram : @2kwattz
 #### Hosted on : careerpilot.me (Will take some time to load)
