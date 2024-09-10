@@ -98,9 +98,6 @@ Work to be done in future
 7. Dark/Light mode option in settings tab
 8. To add a Sign in with google and facebook option
 
-
-
-
 Why CareerPilot?
 
 Every year more than 6 crore of Indian graduates from diverse background and with diversity in
